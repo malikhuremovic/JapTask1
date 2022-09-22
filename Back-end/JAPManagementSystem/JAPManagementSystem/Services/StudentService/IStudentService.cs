@@ -1,4 +1,4 @@
-﻿using JAPManagementSystem.DTOs;
+﻿using JAPManagementSystem.DTOs.Student;
 using JAPManagementSystem.Models;
 
 namespace JAPManagementSystem.Services.StudentService
@@ -7,10 +7,8 @@ namespace JAPManagementSystem.Services.StudentService
     {
         Task<ServiceResponse<GetStudentDto>> AddStudent(AddStudentDto newStudent);
         Task<ServiceResponse<List<GetStudentDto>>> GetAllStudents();
-        Task<ServiceResponse<List<GetStudentDto>>> GetStudentByName(string studentName);
+        ServiceResponse<List<GetStudentDto>> GetStudentsWithParams(int page, int pageSize, string? firstName, string? lastName, string? email, string? selectionName, int sort);
         Task<ServiceResponse<GetStudentDto>> ModifyStudent(ModifyStudentDto modifiedStudent);
         Task<ServiceResponse<string>> DeleteStudent(int studentId);
-
-
     }
 }
