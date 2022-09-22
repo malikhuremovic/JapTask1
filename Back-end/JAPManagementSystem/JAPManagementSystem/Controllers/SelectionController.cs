@@ -1,7 +1,9 @@
-﻿using JAPManagementSystem.DTOs;
+﻿using JAPManagementSystem.DTOs.Selection;
+using JAPManagementSystem.DTOs.Student;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Services.SelectionService;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace JAPManagementSystem.Controllers
 {
@@ -39,7 +41,19 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
-        [HttpGet("get/id/{selectionId}")]
+        [HttpGet("get")]
+        public ActionResult<ServiceResponse<List<GetSelectionDto>>> GetSelectionsWithParams(string? name, int japProgramId, int sort = 1, int page = 1, int pageSize = 10)
+        {
+            ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
+            response = _selectionService.GetSelectionsWithParams(page, pageSize, name, japProgramId, sort);
+            if (!response.Success)
+            {
+                return StatusCode(500, response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("get/id")]
         public async Task<ActionResult<ServiceResponse<GetSelectionDto>>> GetSelectionById(int selectionId)
         {
             ServiceResponse<GetSelectionDto> response = new ServiceResponse<GetSelectionDto>();
@@ -51,19 +65,19 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
-        [HttpGet("get/name/{selectionName}")]
-        public async Task<ActionResult<ServiceResponse<GetSelectionDto>>> GetSelectionByName(string selectionName)
+        [HttpPut("modify")]
+        public async Task<ActionResult<ServiceResponse<GetSelectionDto>>> ModifySelection(ModifySelectionDto modifiedSelection)
         {
             ServiceResponse<GetSelectionDto> response = new ServiceResponse<GetSelectionDto>();
-            response = await _selectionService.GetSelectionByName(selectionName);
+            response = await _selectionService.ModifySelection(modifiedSelection);
             if (response.Success == false)
             {
-                return NotFound(response);
+                return BadRequest(response);
             }
             return Ok(response);
         }
 
-        [HttpDelete("delete/name/{selectionName}")]
+        [HttpDelete("delete/name")]
         public async Task<ActionResult<ServiceResponse<List<GetSelectionDto>>>> DeleteSelectionByName(string selectionName)
         {
             ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
@@ -74,18 +88,5 @@ namespace JAPManagementSystem.Controllers
             }
             return Ok(response);
         }
-
-        [HttpPut("modify")]
-        public async Task<ActionResult<ServiceResponse<GetSelectionDto>>> ModifySelection(ModifySelectionDto modifiedSelection)
-        {
-            ServiceResponse<GetSelectionDto> response = new ServiceResponse<GetSelectionDto>();
-            response = await _selectionService.ModifySelection(modifiedSelection);
-            if(response.Success == false)
-            {
-                return BadRequest(response);
-            }
-            return Ok(response);
-        }
-
     }
 }
