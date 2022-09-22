@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JAPManagementSystem.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("/api/[controller]")]
     public class ProgramController : ControllerBase
@@ -29,7 +29,7 @@ namespace JAPManagementSystem.Controllers
             return StatusCode(201, response);
         }
 
-        [HttpGet("all")]
+        [HttpGet("get/all")]
         public async Task<ActionResult<ServiceResponse<List<GetProgramDto>>>> GetAllProgram()
         {
             ServiceResponse<List<GetProgramDto>> response = new ServiceResponse<List<GetProgramDto>>();

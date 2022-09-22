@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JAPManagementSystem.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("/api/[controller]")]
     public class StudentController : ControllerBase
