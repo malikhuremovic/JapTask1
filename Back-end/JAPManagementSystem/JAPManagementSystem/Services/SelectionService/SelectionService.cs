@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
-using JAPManagementSystem.DTOs;
+using JAPManagementSystem.DTOs.Selection;
+using JAPManagementSystem.DTOs.Student;
 using JAPManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -78,28 +80,6 @@ namespace JAPManagementSystem.Services.SelectionService
             return response;
         }
 
-        public async Task<ServiceResponse<GetSelectionDto>> GetSelectionByName(string selectionName)
-        {
-            ServiceResponse<GetSelectionDto> response = new ServiceResponse<GetSelectionDto>();
-            try
-            {
-                var selection = await _context.Selections.FirstOrDefaultAsync(s => s.Name.Equals(selectionName));
-                if (selection == null)
-                {
-                    response.Message = "No selection found with the name of: " + selectionName;
-                }
-                else
-                {
-                    response.Data = _mapper.Map<GetSelectionDto>(selection);
-                }
-            }
-            catch (Exception exc)
-            {
-                response.Message = exc.Message;
-                response.Success = false;
-            }
-            return response;
-        }
         public async Task<ServiceResponse<List<GetSelectionDto>>> DeleteSelectionByName(string selectionName)
         {
             ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
@@ -162,6 +142,32 @@ namespace JAPManagementSystem.Services.SelectionService
             }
             return response;
         }
+        public ServiceResponse<List<GetSelectionDto>> GetSelectionsWithParams(int pageNumber, int pageSize, string? name, int japProgramId, int sort)
+        {
+            ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
+            Filters<Selection> filters = new Filters<Selection>();
+            filters.Add(!string.IsNullOrEmpty(name), s => s.Name.Contains(name));
+            filters.Add(japProgramId > 0, s => s.JapProgramId == japProgramId);
 
+            Sorts<Selection> sorts = new Sorts<Selection>();
+            sorts.Add(sort == 1, s => s.Name);
+            sorts.Add(sort == 2, s => s.DateStart);
+            sorts.Add(sort == 3, s => s.DateEnd);
+            sorts.Add(sort == 4, s => s.JapProgramId);
+
+            try
+            {
+                var selections = _context.Selections.Include("JapProgram").Paginate(pageNumber, pageSize, sorts, filters);
+                response.Data = selections.Results.Select(s => _mapper.Map<GetSelectionDto>(s)).ToList();
+                response.Message = "You have fetched a page no. " + pageNumber + " with " + selections.RecordCount + " selection(s).";
+            }
+            catch (Exception exc)
+            {
+                response.Message = exc.Message;
+                response.Success = false;
+            }
+            return response;
+        }
     }
 }
+

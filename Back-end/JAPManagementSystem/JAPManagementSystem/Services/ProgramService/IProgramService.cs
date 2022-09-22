@@ -1,5 +1,5 @@
 ﻿using JAPManagementSystem.Models;
-using JAPManagementSystem.DTOs;
+using JAPManagementSystem.DTOs.Program;
 
 namespace JAPManagementSystem.Services.ProgramService
 {

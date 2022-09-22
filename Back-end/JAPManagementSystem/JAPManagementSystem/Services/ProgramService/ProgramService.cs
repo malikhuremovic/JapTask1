@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using JAPManagementSystem.Data;
-using JAPManagementSystem.DTOs;
+using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 

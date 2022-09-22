@@ -1,7 +1,8 @@
-﻿using JAPManagementSystem.DTOs;
+﻿using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Services.ProgramService;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace JAPManagementSystem.Controllers
 {
@@ -28,7 +29,7 @@ namespace JAPManagementSystem.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<ServiceResponse<List<GetProgramDto>>>> GetAllPrograms()
+        public async Task<ActionResult<ServiceResponse<List<GetProgramDto>>>> GetAllProgram()
         {
             ServiceResponse<List<GetProgramDto>> response = new ServiceResponse<List<GetProgramDto>>();
             response = await _programService.GetAllPrograms();

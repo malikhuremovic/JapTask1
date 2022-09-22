@@ -1,7 +1,8 @@
-﻿using JAPManagementSystem.DTOs;
+﻿using JAPManagementSystem.DTOs.Student;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Services.StudentService;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace JAPManagementSystem.Controllers
 {
@@ -39,14 +40,14 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
-        [HttpGet("get/name/{studentName}")]
-        public async Task<ActionResult<ServiceResponse<List<GetStudentDto>>>> GetStudentByName(string studentName)
+        [HttpGet("get")]
+        public ActionResult<ServiceResponse<List<GetStudentDto>>> GetStudentsWithParams(string? firstName, string? lastName, string? email, string? selectionName, int page = 1, int pageSize = 10, int sort = 1)
         {
             ServiceResponse<List<GetStudentDto>> response = new ServiceResponse<List<GetStudentDto>>();
-            response = await _studentService.GetStudentByName(studentName);
+            response = _studentService.GetStudentsWithParams(page, pageSize, firstName, lastName, email, selectionName, sort);
             if (!response.Success)
             {
-                return BadRequest(response);
+                return StatusCode(500, response);
             }
             return Ok(response);
         }
@@ -74,7 +75,5 @@ namespace JAPManagementSystem.Controllers
             }
             return Ok(response);
         }
-
-
     }
 }
