@@ -94,9 +94,8 @@ namespace JAPManagementSystem.Migrations
                     b.Property<int?>("SelectionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -28,6 +28,16 @@ namespace JAPManagementSystem.Services.SelectionService
                 {
                     selection.Students.Add(student);
                 }
+                var japProgram = await _context.JapPrograms.FirstOrDefaultAsync(jp => jp.Id == newSelection.JapProgramId);
+                if(japProgram != null)
+                {
+                    selection.JapProgramId = japProgram.Id;
+                    selection.JapProgram = japProgram;
+                }
+                else
+                {
+                    throw new Exception("JAP program with the Id of " + newSelection.JapProgramId + " does not exist.");
+                }
                 _context.Selections.Add(selection);
                 await _context.SaveChangesAsync();
                 response.Data = _mapper.Map<GetSelectionDto>(selection);
