@@ -1,11 +1,13 @@
 ﻿using JAPManagementSystem.DTOs.Student;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Services.StudentService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace JAPManagementSystem.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("/api/[controller]")]
     public class StudentController : ControllerBase
