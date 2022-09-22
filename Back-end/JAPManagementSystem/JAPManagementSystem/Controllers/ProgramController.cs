@@ -1,11 +1,12 @@
 ﻿using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Services.ProgramService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace JAPManagementSystem.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("/api/[controller]")]
     public class ProgramController : ControllerBase
