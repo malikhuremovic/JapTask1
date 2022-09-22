@@ -7,7 +7,7 @@
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty; 
         public StudentStatus Status { get; set; } = StudentStatus.InProgram;
-        public int? SelectionId { get; set; } = null;
-        public Selection? Selection { get; set; } = null;
+        public int? SelectionId { get; set; }
+        public Selection? Selection { get; set; }
     }
 }
