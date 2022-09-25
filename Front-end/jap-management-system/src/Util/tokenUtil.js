@@ -3,7 +3,7 @@ const setAccessToken = token => {
 };
 
 const getAccessToken = () => {
-  localStorage.getItem('access_token');
+  return localStorage.getItem('access_token');
 };
 
 let utils = {

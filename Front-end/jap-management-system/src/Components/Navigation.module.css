@@ -1,0 +1,32 @@
+header {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 12vh;
+}
+
+.header__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+}
+
+.logo {
+  width: 250px;
+  margin-top: 0.7rem;
+  transition: all 0.2s;
+}
+
+nav:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.user {
+  margin: 1rem;
+}
+
+.user span {
+  margin-left: 1rem;
+  font-weight: 500;
+}

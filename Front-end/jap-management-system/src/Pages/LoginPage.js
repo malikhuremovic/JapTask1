@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
+
 import userService from '../Services/userService';
 import tokenUtil from '../Util/tokenUtil';
+
+import Navigation from '../Components/Navigation';
 
 import { Button, Form } from 'react-bootstrap';
 import classes from './LoginPage.module.css';
@@ -13,6 +16,8 @@ const LoginPage = () => {
 
   let INITIAL_LOGIN_INFO_STATE = { show: false, success: false };
   const [loginInfo, setLoginInfo] = useState(INITIAL_LOGIN_INFO_STATE);
+
+  let token = tokenUtil.getAccessToken();
 
   const handleFormSubmit = async ev => {
     ev.preventDefault();
@@ -51,6 +56,8 @@ const LoginPage = () => {
 
   return (
     <div className={classes.loginPage}>
+      <Navigation />
+      {token && <Redirect to="/" />}
       <div className="modal d-flex justify-content-center align-items-center">
         <Form className={classes.modal} onSubmit={handleFormSubmit}>
           <Form.Group className="mb-3" controlId="userName">
@@ -79,9 +86,9 @@ const LoginPage = () => {
           </Button>
           {loginInfo.show && (
             <Button variant={loginInfo.success ? 'success' : 'danger'} disabled>
-              &nbsp; &nbsp;&nbsp;&nbsp;{' '}
-              {loginInfo.success ? 'Success!' : 'Please, try again'} &nbsp;
-              &nbsp;&nbsp;&nbsp;
+              &nbsp; &nbsp;&nbsp;&nbsp;
+              {loginInfo.success ? 'Success!' : 'Please, try again'}
+              &nbsp;&nbsp;&nbsp;&nbsp;
             </Button>
           )}
         </Form>
