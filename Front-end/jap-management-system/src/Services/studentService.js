@@ -16,9 +16,29 @@ const fetchAllStuents = params => {
   });
 };
 
+const fetchStudentById = id => {
+  const token = tokenUtil.getAccessToken();
+  return axios.get(config.API_URL + `/Student/get/id?id=${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
 const addStudent = data => {
   const token = tokenUtil.getAccessToken();
   return axios.post(config.API_URL + '/Student/add', data, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
+const addComment = data => {
+  const token = tokenUtil.getAccessToken();
+  return axios.post(config.API_URL + '/Student/add/comment', data, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -48,7 +68,9 @@ const deleteStudent = data => {
 
 const services = {
   fetchAllStuents,
+  fetchStudentById,
   addStudent,
+  addComment,
   modifyStudent,
   deleteStudent
 };
