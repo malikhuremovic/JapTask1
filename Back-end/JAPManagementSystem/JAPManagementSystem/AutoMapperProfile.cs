@@ -22,7 +22,7 @@ namespace JAPManagementSystem
             CreateMap<ModifyStudentDto, Student>();
             CreateMap<Page<Student>, GetStudentPageDto>();
             CreateMap<Comment, GetCommentDto>();
-            CreateMap<GetCommentDto, Comment>();
+            CreateMap<AddCommentDto, Comment>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using JAPManagementSystem.DTOs.Student;
+﻿using JAPManagementSystem.DTOs.Comment;
+using JAPManagementSystem.DTOs.Student;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
@@ -89,5 +90,18 @@ namespace JAPManagementSystem.Controllers
             }
             return Ok(response);
         }
+
+        [HttpPost("add/comment")]
+        public async Task<ActionResult<ServiceResponse<GetStudentDto>>> AddComment(AddCommentDto newComment)
+        {
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+            response = await _studentService.AddComment(newComment);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
     }
 }

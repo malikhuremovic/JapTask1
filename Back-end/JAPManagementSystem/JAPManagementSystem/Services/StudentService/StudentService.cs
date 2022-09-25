@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
+using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.Student;
 using JAPManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,8 @@ namespace JAPManagementSystem.Services.StudentService
                 var student = _mapper.Map<Student>(newStudent);
                 _context.Students.Add(student);
                 await _context.SaveChangesAsync();
-                response.Data = _mapper.Map<GetStudentDto>(student);
+                var fetchedStudent = await _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).FirstOrDefaultAsync();
+                response.Data = _mapper.Map<GetStudentDto>(fetchedStudent);
                 response.Message = "You have successfully added a new student";
             }
             catch (Exception exc)
@@ -39,7 +41,7 @@ namespace JAPManagementSystem.Services.StudentService
             ServiceResponse<List<GetStudentDto>> response = new ServiceResponse<List<GetStudentDto>>();
             try
             {
-                var students = await _context.Students.Include("Selection").OrderByDescending(s => s.FirstName).ToListAsync();
+                var students = await _context.Students.Include(c => c.Comments).Include(s => s.Selection).ThenInclude(s => s.JapProgram).OrderByDescending(s => s.FirstName).ToListAsync();
                 response.Data = students.Select(s => _mapper.Map<GetStudentDto>(s)).ToList();
                 response.Message = "You have fetched all the students in the database.";
             }catch(Exception exc)
@@ -156,6 +158,24 @@ namespace JAPManagementSystem.Services.StudentService
             {
                 response.Message = exc.Message;
                 response.Success = false;
+            }
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetStudentDto>> AddComment(AddCommentDto newComment)
+        {
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+            try
+            {
+                var comment = _mapper.Map<Comment>(newComment);
+                _context.Comments.Add(comment);
+                await _context.SaveChangesAsync();
+                var student = await _context.Students.Include(s => s.Comments).FirstOrDefaultAsync(s => s.Id == newComment.StudentId);
+                response.Data = _mapper.Map<GetStudentDto>(student);
+            }catch(Exception exc)
+            {
+                response.Success = false;
+                response.Message = exc.Message;
             }
             return response;
         }
