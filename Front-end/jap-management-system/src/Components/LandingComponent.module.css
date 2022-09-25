@@ -1,0 +1,14 @@
+.table__container {
+  background-color: rgba(255, 255, 255, 0.911);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.student_table_actions {
+  padding: 20px 0px;
+  min-width: 150px;
+  max-width: 150px;
+  display: flex;
+  justify-content: space-around;
+}
