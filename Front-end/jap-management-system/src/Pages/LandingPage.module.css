@@ -1,0 +1,25 @@
+.landing__page__header {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 12vh;
+}
+
+.header__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+}
+
+.logo {
+  width: 250px;
+  margin-top: 0.7rem;
+}
+
+nav:hover {
+  cursor: pointer;
+}
+
+.user {
+  margin: 1rem;
+}
