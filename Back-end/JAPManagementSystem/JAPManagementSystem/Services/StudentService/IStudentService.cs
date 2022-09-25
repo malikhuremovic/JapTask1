@@ -7,7 +7,8 @@ namespace JAPManagementSystem.Services.StudentService
     {
         Task<ServiceResponse<GetStudentDto>> AddStudent(AddStudentDto newStudent);
         Task<ServiceResponse<List<GetStudentDto>>> GetAllStudents();
-        ServiceResponse<List<GetStudentDto>> GetStudentsWithParams(int page, int pageSize, string? firstName, string? lastName, string? email, string? selectionName, int sort);
+        Task<ServiceResponse<GetStudentDto>> GetStudentById(int id);
+        ServiceResponse<GetStudentPageDto> GetStudentsWithParams(int page, int pageSize, string? firstName, string? lastName, string? email, string? selectionName, string? japProgramName, StudentStatus? status, string sort, bool descending);
         Task<ServiceResponse<GetStudentDto>> ModifyStudent(ModifyStudentDto modifiedStudent);
         Task<ServiceResponse<string>> DeleteStudent(int studentId);
     }

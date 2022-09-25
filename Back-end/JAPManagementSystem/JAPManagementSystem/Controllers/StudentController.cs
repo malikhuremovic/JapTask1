@@ -42,11 +42,23 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
-        [HttpGet("get")]
-        public ActionResult<ServiceResponse<List<GetStudentDto>>> GetStudentsWithParams(string? firstName, string? lastName, string? email, string? selectionName, int page = 1, int pageSize = 10, int sort = 1)
+        [HttpGet("get/id")]
+        public async Task<ActionResult<ServiceResponse<GetStudentDto>>> GetStudentById(int id)
         {
-            ServiceResponse<List<GetStudentDto>> response = new ServiceResponse<List<GetStudentDto>>();
-            response = _studentService.GetStudentsWithParams(page, pageSize, firstName, lastName, email, selectionName, sort);
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+            response = await _studentService.GetStudentById(id);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("get")]
+        public ActionResult<ServiceResponse<GetStudentPageDto>> GetStudentsWithParams(string? firstName, string? lastName, string? email, string? selectionName, string? japProgramName, StudentStatus? status, int page = 1, int pageSize = 10, string? sort = "firstName", bool descending = true)
+        {
+            ServiceResponse<GetStudentPageDto> response = new ServiceResponse<GetStudentPageDto>();
+            response = _studentService.GetStudentsWithParams(page, pageSize, firstName, lastName, email, selectionName, japProgramName, status, sort, descending);
             if (!response.Success)
             {
                 return StatusCode(500, response);

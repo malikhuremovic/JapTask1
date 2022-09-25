@@ -1,4 +1,5 @@
-﻿using JAPManagementSystem.DTOs.Student;
+﻿using JAPManagementSystem.DTOs.Program;
+using JAPManagementSystem.DTOs.Student;
 using JAPManagementSystem.Models;
 
 namespace JAPManagementSystem.DTOs.Selection
@@ -9,7 +10,7 @@ namespace JAPManagementSystem.DTOs.Selection
         public string Name { get; set; } = string.Empty;
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
-        public JapProgram JapProgram { get; set; }
+        public GetProgramDto JapProgram { get; set; }
         public ICollection<GetStudentDto> Students { get; set; } = new List<GetStudentDto>();
     }
 }

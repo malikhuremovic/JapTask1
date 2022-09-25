@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EntityFrameworkPaginate;
+using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.DTOs.Selection;
 using JAPManagementSystem.DTOs.Student;
@@ -18,6 +20,9 @@ namespace JAPManagementSystem
             CreateMap<Student, GetStudentDto>();
             CreateMap<ModifySelectionDto, Selection>().ForMember(dest => dest.Students, act => act.Ignore());
             CreateMap<ModifyStudentDto, Student>();
+            CreateMap<Page<Student>, GetStudentPageDto>();
+            CreateMap<Comment, GetCommentDto>();
+            CreateMap<GetCommentDto, Comment>();
         }
     }
 }
