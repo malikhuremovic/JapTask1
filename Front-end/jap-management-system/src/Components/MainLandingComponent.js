@@ -27,7 +27,7 @@ const MainLandingComponent = () => {
     firstName: '',
     lastName: '',
     email: '',
-    selectionName: '',
+    sectionName: '',
     japProgramName: '',
     status: ''
   };

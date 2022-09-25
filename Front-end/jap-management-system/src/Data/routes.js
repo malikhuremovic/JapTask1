@@ -1,7 +1,9 @@
 const routes = {
   index: '/',
   login: '/login',
-  studentDetails: '/student'
+  studentDetails: '/student',
+  programDetails: '/program',
+  selections: '/selections'
 };
 
 export default routes;

@@ -1,4 +1,5 @@
-﻿using JAPManagementSystem.DTOs.Program;
+﻿using AutoMapper.Configuration.Conventions;
+using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Services.ProgramService;
 using Microsoft.AspNetCore.Authorization;
@@ -41,5 +42,16 @@ namespace JAPManagementSystem.Controllers
             return StatusCode(201, response);
         }
 
+        [HttpGet("get/id")]
+        public async Task<ActionResult<ServiceResponse<GetProgramDto>>> GetProgramById(int id)
+        {
+            ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
+            response = await _programService.GetProgramById(id);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
     }
 }

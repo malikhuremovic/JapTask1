@@ -44,10 +44,10 @@ namespace JAPManagementSystem.Controllers
         }
 
         [HttpGet("get")]
-        public ActionResult<ServiceResponse<List<GetSelectionDto>>> GetSelectionsWithParams(string? name, int japProgramId, int sort = 1, int page = 1, int pageSize = 10)
+        public ActionResult<ServiceResponse<List<GetSelectionDto>>> GetSelectionsWithParams(string? name, int? japProgramId, SelectionStatus? status, int sort = 1, int page = 1, int pageSize = 10, bool descending = true)
         {
             ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
-            response = _selectionService.GetSelectionsWithParams(page, pageSize, name, japProgramId, sort);
+            response = _selectionService.GetSelectionsWithParams(page, pageSize, name, japProgramId, status, sort, descending);
             if (!response.Success)
             {
                 return StatusCode(500, response);
@@ -79,11 +79,11 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("delete/name")]
-        public async Task<ActionResult<ServiceResponse<List<GetSelectionDto>>>> DeleteSelectionByName(string selectionName)
+        [HttpDelete("delete")]
+        public async Task<ActionResult<ServiceResponse<string>>> DeleteSelectionById(int id)
         {
-            ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
-            response = await _selectionService.DeleteSelectionByName(selectionName);
+            ServiceResponse<string> response = new ServiceResponse<string>();
+            response = await _selectionService.DeleteSelectionById(id);
             if (response.Success == false)
             {
                 return BadRequest(response);

@@ -50,5 +50,24 @@ namespace JAPManagementSystem.Services.ProgramService
             return response;
         }
 
+        public async Task<ServiceResponse<GetProgramDto>> GetProgramById(int id)
+        {
+            ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
+            try
+            {
+                var program = await _context.JapPrograms.FirstOrDefaultAsync(p => p.Id == id);
+                if(program == null)
+                {
+                    throw new Exception("Program not found");
+                }
+                response.Data = _mapper.Map<GetProgramDto>(program);
+                response.Message = "You have successfully fetched a program with ID: " + id + ".";
+            }catch(Exception exc)
+            {
+                response.Success = false;
+                response.Message = exc.Message;
+            }
+            return response;
+        }
     }
 }

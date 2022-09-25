@@ -1,0 +1,33 @@
+.searchIcon {
+  transform: scale(0.8);
+  margin-bottom: 0.3rem;
+}
+
+.sortBlock {
+  display: inline-block;
+}
+
+.column__Title__Sort {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  min-width: 130px;
+}
+
+.pageButtons {
+  text-align: left;
+}
+
+.column__Title__Sort div img {
+  transition: all 0.2s;
+}
+
+.column__Title__Sort div img:hover {
+  cursor: pointer;
+  transform: scale(1.04);
+}
+
+.action__button {
+  margin: 0.5rem;
+  width: 75px;
+}
