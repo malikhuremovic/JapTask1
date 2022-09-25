@@ -22,6 +22,31 @@ namespace JAPManagementSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("JAPManagementSystem.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("JAPManagementSystem.Models.JapProgram", b =>
                 {
                     b.Property<int>("Id")
@@ -129,6 +154,17 @@ namespace JAPManagementSystem.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("JAPManagementSystem.Models.Comment", b =>
+                {
+                    b.HasOne("JAPManagementSystem.Models.Student", "Student")
+                        .WithMany("Comments")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("JAPManagementSystem.Models.Selection", b =>
                 {
                     b.HasOne("JAPManagementSystem.Models.JapProgram", "JapProgram")
@@ -150,6 +186,11 @@ namespace JAPManagementSystem.Migrations
             modelBuilder.Entity("JAPManagementSystem.Models.Selection", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("JAPManagementSystem.Models.Student", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

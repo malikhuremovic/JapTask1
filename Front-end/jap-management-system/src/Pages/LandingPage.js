@@ -3,8 +3,7 @@ import { Redirect } from 'react-router-dom';
 
 import tokenUtil from '../Util/tokenUtil';
 
-import Navigation from '../Components/Navigation';
-import LandingComponent from '../Components/LandingComponent';
+import MainLandingComponent from '../Components/MainLandingComponent';
 
 import classes from './LandingPage.module.css';
 
@@ -13,8 +12,7 @@ const LandingPage = () => {
   return (
     <div className={classes.landingPage}>
       {!token && <Redirect to="/login" />}
-      <Navigation />
-      <LandingComponent />
+      <MainLandingComponent />
     </div>
   );
 };

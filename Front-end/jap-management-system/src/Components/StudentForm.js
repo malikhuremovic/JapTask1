@@ -64,12 +64,14 @@ const StudentForm = ({
           <Form.Select
             name="status"
             className="form-select"
-            defaultValue="Status"
+            defaultValue={
+              studentFormData.status ? studentFormData.status : 'none'
+            }
             aria-label="Default select example"
             required
             onChange={handleStudentFormInput}
           >
-            <option value="Status">Status</option>
+            {!studentFormData.status && <option value="none">Status</option>}
             <option value="InProgram">InProgram</option>
             <option value="Success">Success</option>
             <option value="Failed">Failed</option>
@@ -85,12 +87,18 @@ const StudentForm = ({
           <Form.Select
             name="selection"
             className="form-select"
-            defaultValue="Selection"
+            defaultValue={
+              studentFormData.selection
+                ? studentFormData.selection.name
+                : 'none'
+            }
             aria-label="Default select example"
             required
             onChange={handleStudentFormInput}
           >
-            <option value="Selection">Selection</option>
+            {!studentFormData.selection && (
+              <option value="none">Selections</option>
+            )}
             {availableSelections.map(s => {
               return (
                 <option key={s.id} value={s.id}>
@@ -105,9 +113,13 @@ const StudentForm = ({
 
       <Form.Group as={Row} className="mb-3">
         <Col sm={{ span: 10, offset: 2 }}>
-          {formType === 'add' && <Button type="submit">Add</Button>}
+          {formType === 'add' && (
+            <Button style={{ width: 70 }} type="submit">
+              Add
+            </Button>
+          )}
           {formType === 'edit' && (
-            <Button type="submit" variant="success">
+            <Button style={{ width: 70 }} type="submit" variant="success">
               Edit
             </Button>
           )}

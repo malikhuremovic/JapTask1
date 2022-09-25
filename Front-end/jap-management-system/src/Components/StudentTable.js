@@ -7,6 +7,7 @@ import sortIconDesc from '../Assets/sortIconAsc.png';
 import { Button, Form } from 'react-bootstrap';
 
 import classes from './StudentTable.module.css';
+import { Link } from 'react-router-dom';
 
 const StudentTable = ({
   handlePageState,
@@ -14,9 +15,11 @@ const StudentTable = ({
   handleSearchState,
   handleEditState,
   handleDeleteState,
+  handleResetFilters,
   students,
   paginationInfo,
-  sortState
+  sortState,
+  searchState
 }) => {
   return (
     <div className="table__section table-responsive">
@@ -192,6 +195,7 @@ const StudentTable = ({
                 name="firstName"
                 className="form-control"
                 placeholder="First name:"
+                value={searchState.firstName}
                 onChange={handleSearchState}
               />
             </th>
@@ -201,6 +205,7 @@ const StudentTable = ({
                 className="form-control"
                 type="text"
                 placeholder="Last name:"
+                value={searchState.lastName}
                 onChange={handleSearchState}
               />
             </th>
@@ -210,6 +215,7 @@ const StudentTable = ({
                 className="form-control"
                 type="text"
                 placeholder="Email:"
+                value={searchState.email}
                 onChange={handleSearchState}
               />
             </th>
@@ -219,6 +225,7 @@ const StudentTable = ({
                 className="form-control"
                 type="text"
                 placeholder="Selection:"
+                value={searchState.selectionName}
                 onChange={handleSearchState}
               />
             </th>
@@ -228,6 +235,7 @@ const StudentTable = ({
                 className="form-control"
                 type="text"
                 placeholder="Program:"
+                value={searchState.japProgramName}
                 onChange={handleSearchState}
               />
             </th>
@@ -237,6 +245,7 @@ const StudentTable = ({
                 className="form-select"
                 defaultValue=""
                 aria-label="Default select example"
+                value={searchState.status}
                 onChange={handleSearchState}
               >
                 <option value="">Select Status</option>
@@ -245,6 +254,17 @@ const StudentTable = ({
                 <option value="Failed">Failed</option>
                 <option value="Extended">Extended</option>
               </Form.Select>
+            </th>
+            <th scope="col">
+              <Button
+                style={{ maxWidth: 120 }}
+                name="resetFilters"
+                className="form-control"
+                type="text"
+                onClick={handleResetFilters}
+              >
+                Reset Filters
+              </Button>
             </th>
           </tr>
         </thead>
@@ -260,13 +280,14 @@ const StudentTable = ({
                 <td>{s.selection.japProgram.name}</td>
                 <td>{s.status}</td>
                 <td>
-                  <Button
-                    className={classes.action__button}
-                    variant="primary"
-                    onClick={handleEditState}
-                  >
-                    Details
-                  </Button>
+                  <Link to={`/student?id=${s.id}`}>
+                    <Button
+                      className={classes.action__button}
+                      variant="primary"
+                    >
+                      Details
+                    </Button>
+                  </Link>
                   <Button
                     className={classes.action__button}
                     variant="success"

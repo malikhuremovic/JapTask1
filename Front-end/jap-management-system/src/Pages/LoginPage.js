@@ -4,8 +4,6 @@ import { Redirect, useHistory } from 'react-router-dom';
 import userService from '../Services/userService';
 import tokenUtil from '../Util/tokenUtil';
 
-import Navigation from '../Components/Navigation';
-
 import { Button, Form } from 'react-bootstrap';
 import classes from './LoginPage.module.css';
 
@@ -56,7 +54,6 @@ const LoginPage = () => {
 
   return (
     <div className={classes.loginPage}>
-      <Navigation />
       {token && <Redirect to="/" />}
       <div className="modal d-flex justify-content-center align-items-center">
         <Form className={classes.modal} onSubmit={handleFormSubmit}>

@@ -10,7 +10,7 @@ import { Button } from 'react-bootstrap';
 
 import classes from './LandingComponent.module.css';
 
-const LandingComponent = () => {
+const MainLandingComponent = () => {
   const [availableSelections, setAvailableSelections] = useState([]);
   const INITIAL_STUDENT_FORM_DATA = {
     firstName: '',
@@ -27,7 +27,7 @@ const LandingComponent = () => {
     firstName: '',
     lastName: '',
     email: '',
-    sectionName: '',
+    selectionName: '',
     japProgramName: '',
     status: ''
   };
@@ -187,13 +187,19 @@ const LandingComponent = () => {
     ev.preventDefault();
     studentService
       .addStudent(studentFormData)
-      .then(() => {
+      .then(response => {
         setActionState(() => {
           return {
             action: null,
             show: false
           };
         });
+        let params = {
+          ...sortState,
+          ...pageState,
+          ...searchState
+        };
+        fetchStudents(params);
       })
       .catch(err => {
         console.log(err);
@@ -201,7 +207,6 @@ const LandingComponent = () => {
   };
 
   const handleEditStudent = ev => {
-    console.log(studentFormData);
     ev.preventDefault();
     studentService
       .modifyStudent(studentFormData)
@@ -217,7 +222,6 @@ const LandingComponent = () => {
           prevState[student] = response.data.data;
           return prevState;
         });
-        console.log(response.data.data);
       })
       .catch(err => {
         console.log(err);
@@ -235,9 +239,12 @@ const LandingComponent = () => {
             show: false
           };
         });
-        setStudents(prevState => {
-          return prevState.filter(s => s.id !== studentFormData.id);
-        });
+        let params = {
+          ...sortState,
+          ...pageState,
+          ...searchState
+        };
+        fetchStudents(params);
       })
       .catch(err => {
         console.log(err);
@@ -266,6 +273,10 @@ const LandingComponent = () => {
     });
   };
 
+  const handleResetFilters = () => {
+    setSearchState(INITIAL_SEARCH_STATE);
+  };
+
   return (
     <div className={classes.table__container}>
       <div className={classes.student_table_actions}>
@@ -288,12 +299,14 @@ const LandingComponent = () => {
         handleSearchState={handleSearchState}
         handleEditState={handleEditState}
         handleDeleteState={handleDeleteState}
+        handleResetFilters={handleResetFilters}
         students={students}
         paginationInfo={paginationInfo}
         sortState={sortState}
+        searchState={searchState}
       />
     </div>
   );
 };
 
-export default LandingComponent;
+export default MainLandingComponent;

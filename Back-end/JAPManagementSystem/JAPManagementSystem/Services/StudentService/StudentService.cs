@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
+using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.Student;
 using JAPManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,8 @@ namespace JAPManagementSystem.Services.StudentService
                 var student = _mapper.Map<Student>(newStudent);
                 _context.Students.Add(student);
                 await _context.SaveChangesAsync();
-                response.Data = _mapper.Map<GetStudentDto>(student);
+                var fetchedStudent = await _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).FirstOrDefaultAsync();
+                response.Data = _mapper.Map<GetStudentDto>(fetchedStudent);
                 response.Message = "You have successfully added a new student";
             }
             catch (Exception exc)
@@ -39,7 +41,7 @@ namespace JAPManagementSystem.Services.StudentService
             ServiceResponse<List<GetStudentDto>> response = new ServiceResponse<List<GetStudentDto>>();
             try
             {
-                var students = await _context.Students.Include("Selection").OrderByDescending(s => s.FirstName).ToListAsync();
+                var students = await _context.Students.Include(c => c.Comments).Include(s => s.Selection).ThenInclude(s => s.JapProgram).OrderByDescending(s => s.FirstName).ToListAsync();
                 response.Data = students.Select(s => _mapper.Map<GetStudentDto>(s)).ToList();
                 response.Message = "You have fetched all the students in the database.";
             }catch(Exception exc)
@@ -76,7 +78,8 @@ namespace JAPManagementSystem.Services.StudentService
                     throw new Exception("Student with the ID of: " + modifiedStudent.Id + " does not exist.");
                 }
                 await _context.SaveChangesAsync();
-                response.Data = _mapper.Map<GetStudentDto>(student);
+                var fetchedStudent = await _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).FirstOrDefaultAsync(s => s.Id == modifiedStudent.Id);
+                response.Data = _mapper.Map<GetStudentDto>(fetchedStudent);
                 response.Message = "You have successfully modified a student " + student.FirstName + " " + student.LastName + ".";
             }catch(Exception exc)
             {
@@ -102,31 +105,77 @@ namespace JAPManagementSystem.Services.StudentService
             return response;
         }
 
-        public ServiceResponse<List<GetStudentDto>> GetStudentsWithParams(int pageNumber, int pageSize, string firstName, string lastName, string email, string selectionName, int sort)
+        public ServiceResponse<GetStudentPageDto> GetStudentsWithParams(int pageNumber, int pageSize, string firstName, string lastName, string email, string selectionName, string japProgramName, StudentStatus? status, string sort, bool descending)
         {
-            ServiceResponse<List<GetStudentDto>> response = new ServiceResponse<List<GetStudentDto>>();
+            ServiceResponse<GetStudentPageDto> response = new ServiceResponse<GetStudentPageDto>();
             Filters<Student> filters = new Filters<Student>();
             filters.Add(!string.IsNullOrEmpty(firstName), s => s.FirstName.Contains(firstName));
             filters.Add(!string.IsNullOrEmpty(lastName), s => s.FirstName.Contains(lastName));
             filters.Add(!string.IsNullOrEmpty(email), s => s.Email.Contains(email));
+            filters.Add(status.HasValue, s => s.Status.Equals(status));
             filters.Add(!string.IsNullOrEmpty(selectionName), s => s.Selection.Name.Contains(selectionName));
+            filters.Add(!string.IsNullOrEmpty(japProgramName), s => s.Selection.JapProgram.Name.Contains(japProgramName));
+            
 
             Sorts<Student> sorts = new Sorts<Student>();
-            sorts.Add(sort == 1, s => s.FirstName);
-            sorts.Add(sort == 2, s => s.LastName);
-            sorts.Add(sort == 3, s => s.Email);
-            sorts.Add(sort == 4, s => s.Selection.Name);
+            sorts.Add(sort.Equals("firstName"), s => s.FirstName, descending);
+            sorts.Add(sort.Equals("lastName"), s => s.LastName, descending);
+            sorts.Add(sort.Equals("email"), s => s.Email, descending);
+            sorts.Add(sort.Equals("selection"), s => s.Selection.Name, descending);
+            sorts.Add(sort.Equals("program"), s => s.Selection.JapProgram.Name, descending);
 
             try
             {
-                var students = _context.Students.Include("Selection").Paginate(pageNumber, pageSize, sorts, filters);
-                response.Data = students.Results.Select(s => _mapper.Map<GetStudentDto>(s)).ToList();
-                response.Message = "You have fetched a page no. " + pageNumber + " with " + students.RecordCount + " student(s).";
+                var students = _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).Paginate(pageNumber, pageSize, sorts, filters);
+                response.Data = _mapper.Map<GetStudentPageDto>(students);
+                response.Message = "You have fetched a page no. " + pageNumber + " with " + students.PageSize + " student(s).";
             }
             catch (Exception exc)
             {
                 response.Message = exc.Message;
                 response.Success = false;
+            }
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetStudentDto>> GetStudentById(int id)
+        {
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+            try
+            {
+                var student = await _context.Students
+                    .Include(s => s.Comments)
+                    .Include(s => s.Selection)
+                    .ThenInclude(s => s.JapProgram)
+                    .FirstOrDefaultAsync(s => s.Id == id);
+
+                if(student == null)
+                {
+                    throw new Exception("No student was found.");
+                }
+                response.Data = _mapper.Map<GetStudentDto>(student);
+            }catch(Exception exc)
+            {
+                response.Message = exc.Message;
+                response.Success = false;
+            }
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetStudentDto>> AddComment(AddCommentDto newComment)
+        {
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+            try
+            {
+                var comment = _mapper.Map<Comment>(newComment);
+                _context.Comments.Add(comment);
+                await _context.SaveChangesAsync();
+                var student = await _context.Students.Include(s => s.Comments).FirstOrDefaultAsync(s => s.Id == newComment.StudentId);
+                response.Data = _mapper.Map<GetStudentDto>(student);
+            }catch(Exception exc)
+            {
+                response.Success = false;
+                response.Message = exc.Message;
             }
             return response;
         }
