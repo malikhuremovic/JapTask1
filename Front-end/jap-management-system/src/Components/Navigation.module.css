@@ -3,6 +3,7 @@ header {
   top: 0;
   left: 0;
   height: 12vh;
+  margin: 0.5rem 1.5rem;
 }
 
 .header__top {

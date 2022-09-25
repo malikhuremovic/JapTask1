@@ -12,6 +12,12 @@ const Navigation = () => {
       <div className={classes.header__top}>
         <div className={classes.logo}>
           <img src={logo} alt="jap program" />
+          {hasToken && (
+            <div className={classes.user}>
+              <img src={userIcon} alt="user" />
+              <span>Welcome, John Doe</span>
+            </div>
+          )}
         </div>
         {hasToken && (
           <nav>
@@ -19,12 +25,6 @@ const Navigation = () => {
           </nav>
         )}
       </div>
-      {hasToken && (
-        <div className={classes.user}>
-          <img src={userIcon} alt="user" />
-          <span>Welcome, John Doe</span>
-        </div>
-      )}
     </header>
   );
 };
