@@ -1,22 +1,22 @@
 import React from 'react';
 
-import searchIcon from '../Assets/searchIcon.png';
-import sortIconAsc from '../Assets/sortIconDesc.png';
-import sortIconDesc from '../Assets/sortIconAsc.png';
+import searchIcon from '../../Assets/searchIcon.png';
+import sortIconAsc from '../../Assets/sortIconDesc.png';
+import sortIconDesc from '../../Assets/sortIconAsc.png';
 
 import { Button, Form } from 'react-bootstrap';
 
-import classes from './StudentTable.module.css';
+import classes from '../Students/StudentTable.module.css';
 import { Link } from 'react-router-dom';
 
-const StudentTable = ({
+const SelectionTable = ({
   handlePageState,
   handleSortAction,
   handleSearchState,
   handleEditState,
   handleDeleteState,
   handleResetFilters,
-  students,
+  selections,
   paginationInfo,
   sortState,
   searchState
@@ -24,7 +24,7 @@ const StudentTable = ({
   return (
     <div className="table__section table-responsive">
       <table className="table table-striped">
-        <caption>List of students</caption>
+        <caption>List of selections</caption>
         <caption className={classes.pageButtons}>
           <br />
           {paginationInfo.currentPage > 1 && (
@@ -52,15 +52,36 @@ const StudentTable = ({
             <th scope="col">
               <div className={classes.column__Title__Sort}>
                 <div
-                  name="firstName"
+                  name="name"
                   className={classes.sortBlock}
                   onClick={handleSortAction}
                 >
                   <img
                     src={
-                      sortState.sort === 'firstName' && sortState.descending
+                      sortState.sort === 'name' && sortState.descending
                         ? sortIconDesc
-                        : sortState.sort === 'firstName' &&
+                        : sortState.sort === 'name' && !sortState.descending
+                        ? sortIconAsc
+                        : sortIconDesc
+                    }
+                    alt="sorticon"
+                  />{' '}
+                </div>{' '}
+                &nbsp; <span>Name:</span>
+              </div>
+            </th>
+            <th scope="col">
+              <div className={classes.column__Title__Sort}>
+                <div
+                  name="dateStart"
+                  className={classes.sortBlock}
+                  onClick={handleSortAction}
+                >
+                  <img
+                    src={
+                      sortState.sort === 'dateStart' && sortState.descending
+                        ? sortIconDesc
+                        : sortState.sort === 'dateStart' &&
                           !sortState.descending
                         ? sortIconAsc
                         : sortIconDesc
@@ -68,92 +89,28 @@ const StudentTable = ({
                     alt="sorticon"
                   />{' '}
                 </div>{' '}
-                &nbsp; <span>First Name:</span>
+                &nbsp; <span>Date Start:</span>
               </div>
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
                 <div
-                  name="lastName"
+                  name="dateEnd"
                   className={classes.sortBlock}
                   onClick={handleSortAction}
                 >
                   <img
                     src={
-                      sortState.sort === 'lastName' && sortState.descending
+                      sortState.sort === 'dateEnd' && sortState.descending
                         ? sortIconDesc
-                        : sortState.sort === 'lastName' && !sortState.descending
+                        : sortState.sort === 'dateEnd' && !sortState.descending
                         ? sortIconAsc
                         : sortIconDesc
                     }
                     alt="sorticon"
                   />{' '}
                 </div>{' '}
-                &nbsp; <span>Last Name:</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div className={classes.column__Title__Sort}>
-                <div
-                  name="email"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
-                  <img
-                    src={
-                      sortState.sort === 'email' && sortState.descending
-                        ? sortIconDesc
-                        : sortState.sort === 'email' && !sortState.descending
-                        ? sortIconAsc
-                        : sortIconDesc
-                    }
-                    alt="sorticon"
-                  />{' '}
-                </div>{' '}
-                &nbsp; <span>Email:</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div className={classes.column__Title__Sort}>
-                <div
-                  name="selection"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
-                  <img
-                    src={
-                      sortState.sort === 'selection' && sortState.descending
-                        ? sortIconDesc
-                        : sortState.sort === 'selection' &&
-                          !sortState.descending
-                        ? sortIconAsc
-                        : sortIconDesc
-                    }
-                    alt="sorticon"
-                  />{' '}
-                </div>{' '}
-                &nbsp; <span>Selection:</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div className={classes.column__Title__Sort}>
-                <div
-                  name="program"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
-                  <img
-                    src={
-                      sortState.sort === 'program' && sortState.descending
-                        ? sortIconDesc
-                        : sortState.sort === 'program' && !sortState.descending
-                        ? sortIconAsc
-                        : sortIconDesc
-                    }
-                    alt="sorticon"
-                  />{' '}
-                </div>{' '}
-                &nbsp; <span>Program:</span>
+                &nbsp; <span>Date End:</span>
               </div>
             </th>
             <th scope="col">
@@ -178,6 +135,28 @@ const StudentTable = ({
               </div>
             </th>
             <th scope="col">
+              <div className={classes.column__Title__Sort}>
+                <div
+                  name="program"
+                  className={classes.sortBlock}
+                  onClick={handleSortAction}
+                >
+                  <img
+                    src={
+                      sortState.sort === 'program' && sortState.descending
+                        ? sortIconDesc
+                        : sortState.sort === 'program' && !sortState.descending
+                        ? sortIconAsc
+                        : sortIconDesc
+                    }
+                    alt="sorticon"
+                  />{' '}
+                </div>{' '}
+                &nbsp; <span>Program:</span>
+              </div>
+            </th>
+
+            <th scope="col">
               <div className={classes.column__Title__Sort}>Actions: </div>
             </th>
           </tr>
@@ -192,50 +171,30 @@ const StudentTable = ({
             <th scope="col">
               <input
                 type="text"
-                name="firstName"
+                name="name"
                 className="form-control"
-                placeholder="First name:"
-                value={searchState.firstName}
+                placeholder="Name:"
+                value={searchState.name}
                 onChange={handleSearchState}
               />
             </th>
             <th scope="col">
               <input
-                name="lastName"
+                name="dateStart"
                 className="form-control"
-                type="text"
-                placeholder="Last name:"
-                value={searchState.lastName}
+                type="date"
+                placeholder="Date Start:"
+                value={searchState.dateStart}
                 onChange={handleSearchState}
               />
             </th>
             <th scope="col">
               <input
-                name="email"
+                name="dateEnd"
                 className="form-control"
-                type="text"
-                placeholder="Email:"
-                value={searchState.email}
-                onChange={handleSearchState}
-              />
-            </th>
-            <th scope="col">
-              <input
-                name="selectionName"
-                className="form-control"
-                type="text"
-                placeholder="Selection:"
-                value={searchState.selectionName}
-                onChange={handleSearchState}
-              />
-            </th>
-            <th scope="col">
-              <input
-                name="japProgramName"
-                className="form-control"
-                type="text"
-                placeholder="Program:"
-                value={searchState.japProgramName}
+                type="date"
+                placeholder="Date End:"
+                value={searchState.dateEnd}
                 onChange={handleSearchState}
               />
             </th>
@@ -249,11 +208,19 @@ const StudentTable = ({
                 onChange={handleSearchState}
               >
                 <option value="">Select Status</option>
-                <option value="InProgram">InProgram</option>
-                <option value="Success">Success</option>
-                <option value="Failed">Failed</option>
-                <option value="Extended">Extended</option>
+                <option value="Active">Active</option>
+                <option value="Completed">Completed</option>
               </Form.Select>
+            </th>
+            <th scope="col">
+              <input
+                name="japProgramName"
+                className="form-control"
+                type="text"
+                placeholder="Program:"
+                value={searchState.japProgramName}
+                onChange={handleSearchState}
+              />
             </th>
             <th scope="col">
               <Button
@@ -269,49 +236,49 @@ const StudentTable = ({
           </tr>
         </thead>
         <tbody>
-          {students.map((s, index) => {
-            return (
-              <tr key={s.id}>
-                <th scope="row">{index + 1}</th>
-                <td>{s.firstName}</td>
-                <td>{s.lastName}</td>
-                <td>{s.email}</td>
-                <td>{s.selection.name}</td>
-                <td>{s.selection.japProgram.name}</td>
-                <td>{s.status}</td>
-                <td>
-                  <Link to={`/student?id=${s.id}`}>
+          {selections &&
+            selections.map((s, index) => {
+              return (
+                <tr key={s.id}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{s.name}</td>
+                  <td>{s.dateStart.split('T')[0]}</td>
+                  <td>{s.dateEnd.split('T')[0]}</td>
+                  <td>{s.status}</td>
+                  <td>{s.japProgram.name}</td>
+                  <td>
+                    <Link to={`/?selection=${s.name}`}>
+                      <Button
+                        className={classes.action__button}
+                        variant="primary"
+                      >
+                        Modify Students
+                      </Button>
+                    </Link>
                     <Button
                       className={classes.action__button}
-                      variant="primary"
+                      variant="success"
+                      onClick={handleEditState}
                     >
-                      Details
+                      <input id={s.id} type="hidden" />
+                      Edit
                     </Button>
-                  </Link>
-                  <Button
-                    className={classes.action__button}
-                    variant="success"
-                    onClick={handleEditState}
-                  >
-                    <input id={s.id} type="hidden" />
-                    Edit
-                  </Button>
-                  <Button
-                    className={classes.action__button}
-                    variant="danger"
-                    onClick={handleDeleteState}
-                  >
-                    <input id={s.id} type="hidden" />
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
+                    <Button
+                      className={classes.action__button}
+                      variant="danger"
+                      onClick={handleDeleteState}
+                    >
+                      <input id={s.id} type="hidden" />
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default StudentTable;
+export default SelectionTable;

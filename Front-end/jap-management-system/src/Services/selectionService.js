@@ -12,6 +12,20 @@ const fetchAllSelections = () => {
   });
 };
 
+const fetchSelectionsParams = params => {
+  let query = '';
+  for (let param in params) {
+    query += `${param}=${params[param]}&`;
+  }
+  const token = tokenUtil.getAccessToken();
+  return axios.get(config.API_URL + `/Selection/get?${query}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
 const addSelection = data => {
   const token = tokenUtil.getAccessToken();
   return axios.post(config.API_URL + '/Selection/add', data, {
@@ -24,7 +38,7 @@ const addSelection = data => {
 
 const modifySelection = data => {
   const token = tokenUtil.getAccessToken();
-  return axios.put(config.API_URL + '/Student/modify', data, {
+  return axios.put(config.API_URL + '/Selection/modify', data, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -44,6 +58,7 @@ const deleteSelection = data => {
 
 const services = {
   fetchAllSelections,
+  fetchSelectionsParams,
   addSelection,
   modifySelection,
   deleteSelection

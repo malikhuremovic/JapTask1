@@ -10,6 +10,7 @@ import routes from './Data/routes';
 
 import './App.module.css';
 import PageLayoutWrapper from './Pages/PageLayoutWrapper';
+import MainSelectionComponent from './Components/Selection/MainSelectionComponent';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         {!isAuthenticated() && <Redirect to="/login" />}
         <Switch>
           <Route path={routes.selections}>
-            <h1>Jelooo</h1>
+            <MainSelectionComponent />
           </Route>
           <Route path={routes.programDetails}>
             <ProgramPage />
