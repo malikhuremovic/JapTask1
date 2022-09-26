@@ -1,35 +1,36 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import studentService from '../Services/studentService';
-import selectionService from '../Services/selectionService';
+import selectionService from '../../Services/selectionService';
+import programService from '../../Services/programService';
 
-import ActionForms from './ActionForms';
-import StudentTable from './StudentTable';
+import SelectionTable from './SelectionTable';
 
 import { Button } from 'react-bootstrap';
 
-import classes from './LandingComponent.module.css';
+import classes from '../Students/LandingComponent.module.css';
+import SelectionActionForms from './SelectionActionForms';
 
-const MainLandingComponent = () => {
-  const [availableSelections, setAvailableSelections] = useState([]);
-  const INITIAL_STUDENT_FORM_DATA = {
-    firstName: '',
-    lastName: '',
-    email: '',
+const MainSelectionComponent = () => {
+  const [availablePrograms, setAvailablePrograms] = useState([]);
+
+  const INITIAL_SELECTION_FORM_DATA = {
+    name: '',
+    dateStart: '',
+    dateEnd: '',
     status: '',
-    selectionId: null
+    japProgramId: ''
   };
-  const [studentFormData, setStudentFormData] = useState(
-    INITIAL_STUDENT_FORM_DATA
+  const [selectionFormData, setSelectionFormData] = useState(
+    INITIAL_SELECTION_FORM_DATA
   );
-  const [students, setStudents] = useState([]);
+  const [selections, setSelections] = useState([]);
+
   const INITIAL_SEARCH_STATE = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    selectionName: '',
-    japProgramName: '',
-    status: ''
+    name: '',
+    dateStart: '',
+    dateEnd: '',
+    status: '',
+    japProgramName: ''
   };
   const [searchState, setSearchState] = useState(INITIAL_SEARCH_STATE);
   const INITIAL_ACTION_STATE = {
@@ -38,7 +39,7 @@ const MainLandingComponent = () => {
   };
   const [actionState, setActionState] = useState(INITIAL_ACTION_STATE);
   const INITIAL_SORT_STATE = {
-    sort: 'firstName',
+    sort: 'name',
     descending: true
   };
   const [sortState, setSortState] = useState(INITIAL_SORT_STATE);
@@ -57,9 +58,26 @@ const MainLandingComponent = () => {
     INITIAL_PAGINATION_INFO_STATE
   );
 
-  const fetchStudents = useCallback(params => {
-    studentService.fetchAllStuents(params).then(response => {
-      setStudents(response.data.data.results);
+  const handleFetchAvailablePrograms = useCallback(() => {
+    programService
+      .fetchAllPrograms()
+      .then(response => {
+        setAvailablePrograms(response.data.data);
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    if (
+      (actionState.action === 'add' || actionState.action === 'edit') &&
+      actionState.show
+    )
+      handleFetchAvailablePrograms();
+  }, [actionState, handleFetchAvailablePrograms]);
+
+  const fetchAllSelections = useCallback(params => {
+    selectionService.fetchSelectionsParams(params).then(response => {
+      setSelections(response.data.data.results);
       setPaginationInfoState(() => {
         const UPDATED_PAGINATION_INFO_STATE = {
           currentPage: response.data.data.currentPage,
@@ -78,8 +96,8 @@ const MainLandingComponent = () => {
       ...pageState,
       ...searchState
     };
-    fetchStudents(params);
-  }, [pageState, sortState, searchState, fetchStudents]);
+    fetchAllSelections(params);
+  }, [pageState, sortState, searchState, fetchAllSelections]);
 
   const handleSortAction = ev => {
     const sort = ev.target.parentNode.getAttribute('name');
@@ -117,8 +135,8 @@ const MainLandingComponent = () => {
   };
 
   const handleAddState = () => {
-    setStudentFormData(() => {
-      return INITIAL_STUDENT_FORM_DATA;
+    setSelectionFormData(() => {
+      return INITIAL_SELECTION_FORM_DATA;
     });
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
@@ -138,13 +156,15 @@ const MainLandingComponent = () => {
       return UPDATED_ACTION_STATE;
     });
     const id = +ev.target.childNodes[0].id;
-    const student = students.find(s => s.id === id);
-    setStudentFormData(() => {
+    const selection = selections.find(s => s.id === id);
+    setSelectionFormData(() => {
       return {
-        id: student.id,
-        firstName: student.firstName,
-        lastName: student.lastName,
-        email: student.email
+        id: selection.id,
+        name: selection.name,
+        dateStart: selection.dateStart,
+        dateEnd: selection.dateEnd,
+        status: selection.status,
+        japProgramId: selection.japProgram.id
       };
     });
   };
@@ -158,35 +178,18 @@ const MainLandingComponent = () => {
       return UPDATED_ACTION_STATE;
     });
     const id = +ev.target.childNodes[0].id;
-    const student = students.find(s => s.id === id);
-    setStudentFormData(() => {
+    const selection = selections.find(s => s.id === id);
+    setSelectionFormData(() => {
       return {
-        id: student.id
+        id: selection.id
       };
     });
   };
 
-  const handleFetchAvailableSelections = useCallback(() => {
-    selectionService
-      .fetchAllSelections()
-      .then(response => {
-        setAvailableSelections(() => response.data.data);
-      })
-      .catch(err => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    if (
-      (actionState.action === 'add' || actionState.action === 'edit') &&
-      actionState.show
-    )
-      handleFetchAvailableSelections();
-  }, [actionState, handleFetchAvailableSelections]);
-
-  const handleAddStudent = ev => {
+  const handleAddSelection = ev => {
     ev.preventDefault();
-    studentService
-      .addStudent(studentFormData)
+    selectionService
+      .addSelection(selectionFormData)
       .then(response => {
         setActionState(() => {
           return {
@@ -199,17 +202,17 @@ const MainLandingComponent = () => {
           ...pageState,
           ...searchState
         };
-        fetchStudents(params);
+        fetchAllSelections(params);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  const handleEditStudent = ev => {
+  const handleEditSelection = ev => {
     ev.preventDefault();
-    studentService
-      .modifyStudent(studentFormData)
+    selectionService
+      .modifySelection(selectionFormData)
       .then(response => {
         setActionState(() => {
           return {
@@ -217,9 +220,11 @@ const MainLandingComponent = () => {
             show: false
           };
         });
-        setStudents(prevState => {
-          let student = prevState.findIndex(s => s.id === studentFormData.id);
-          prevState[student] = response.data.data;
+        setSelections(prevState => {
+          let selection = prevState.findIndex(
+            s => s.id === selectionFormData.id
+          );
+          prevState[selection] = response.data.data;
           return prevState;
         });
       })
@@ -228,10 +233,10 @@ const MainLandingComponent = () => {
       });
   };
 
-  const handleDeleteStudent = ev => {
+  const handleDeleteSelection = ev => {
     ev.preventDefault();
-    studentService
-      .deleteStudent(studentFormData)
+    selectionService
+      .deleteSelection(selectionFormData)
       .then(() => {
         setActionState(() => {
           return {
@@ -244,32 +249,32 @@ const MainLandingComponent = () => {
           ...pageState,
           ...searchState
         };
-        fetchStudents(params);
+        fetchAllSelections(params);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  const handleStudentFormInput = ev => {
+  const handleSelectionFormInput = ev => {
     const inputName = ev.target.name;
     const value = ev.target.value;
-    setStudentFormData(prevState => {
-      let student = {
+    setSelectionFormData(prevState => {
+      let selection = {
         ...prevState
       };
-      if (inputName === 'firstName') {
-        student.firstName = value;
-      } else if (inputName === 'lastName') {
-        student.lastName = value;
-      } else if (inputName === 'email') {
-        student.email = value;
+      if (inputName === 'name') {
+        selection.name = value;
+      } else if (inputName === 'dateStart') {
+        selection.dateStart = value;
+      } else if (inputName === 'dateEnd') {
+        selection.dateEnd = value;
       } else if (inputName === 'status') {
-        student.status = value;
-      } else if (inputName === 'selection') {
-        student.selectionId = value;
+        selection.status = value;
+      } else if (inputName === 'program') {
+        selection.japProgramId = value;
       }
-      return student;
+      return selection;
     });
   };
 
@@ -281,26 +286,26 @@ const MainLandingComponent = () => {
     <div className={classes.table__container}>
       <div className={classes.student_table_actions}>
         <Button variant="primary" onClick={handleAddState}>
-          Add new student
+          Add new selection
         </Button>
       </div>
-      <ActionForms
-        handleStudentFormInput={handleStudentFormInput}
-        handleAddStudent={handleAddStudent}
-        handleEditStudent={handleEditStudent}
-        handleDeleteStudent={handleDeleteStudent}
+      <SelectionActionForms
+        handleSelectionFormInput={handleSelectionFormInput}
+        handleAddSelection={handleAddSelection}
+        handleEditSelection={handleEditSelection}
+        handleDeleteSelection={handleDeleteSelection}
         actionState={actionState}
-        studentFormData={studentFormData}
-        availableSelections={availableSelections}
+        selectionFormData={selectionFormData}
+        availablePrograms={availablePrograms}
       />
-      <StudentTable
+      <SelectionTable
         handlePageState={handlePageState}
         handleSortAction={handleSortAction}
         handleSearchState={handleSearchState}
         handleEditState={handleEditState}
         handleDeleteState={handleDeleteState}
         handleResetFilters={handleResetFilters}
-        students={students}
+        selections={selections}
         paginationInfo={paginationInfo}
         sortState={sortState}
         searchState={searchState}
@@ -309,4 +314,4 @@ const MainLandingComponent = () => {
   );
 };
 
-export default MainLandingComponent;
+export default MainSelectionComponent;

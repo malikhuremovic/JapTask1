@@ -21,6 +21,7 @@ namespace JAPManagementSystem
             CreateMap<ModifySelectionDto, Selection>().ForMember(dest => dest.Students, act => act.Ignore());
             CreateMap<ModifyStudentDto, Student>();
             CreateMap<Page<Student>, GetStudentPageDto>();
+            CreateMap<Page<Selection>, GetSelectionPageDto>();
             CreateMap<Comment, GetCommentDto>();
             CreateMap<AddCommentDto, Comment>();
         }

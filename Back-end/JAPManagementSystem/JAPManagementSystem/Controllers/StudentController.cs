@@ -62,7 +62,7 @@ namespace JAPManagementSystem.Controllers
             response = _studentService.GetStudentsWithParams(page, pageSize, firstName, lastName, email, selectionName, japProgramName, status, sort, descending);
             if (!response.Success)
             {
-                return StatusCode(500, response);
+                return BadRequest(response);
             }
             return Ok(response);
         }

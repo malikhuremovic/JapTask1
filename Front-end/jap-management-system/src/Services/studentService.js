@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../Data/axiosConfig';
 import tokenUtil from '../Util/tokenUtil';
 
-const fetchAllStuents = params => {
+const fetchAllStudents = params => {
   let query = '';
   for (let param in params) {
     query += `${param}=${params[param]}&`;
@@ -67,7 +67,7 @@ const deleteStudent = data => {
 };
 
 const services = {
-  fetchAllStuents,
+  fetchAllStudents,
   fetchStudentById,
   addStudent,
   addComment,

@@ -1,5 +1,5 @@
 .container {
-  background-color: rgba(255, 255, 255, 0.884);
+  background-color: rgba(255, 255, 255, 0.877);
   border-radius: 20px;
   padding: 20px;
   margin: 20px;
@@ -29,7 +29,7 @@
 .comment_box {
   margin: 1rem;
   border-bottom: 1px solid #000;
-  background-color: rgb(220, 237, 248);
+  background-color: rgba(206, 235, 253, 0.808);
   padding: 0.3rem 0.5rem;
   border-radius: 10px;
 }

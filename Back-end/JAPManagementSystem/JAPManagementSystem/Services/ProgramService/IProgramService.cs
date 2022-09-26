@@ -7,5 +7,7 @@ namespace JAPManagementSystem.Services.ProgramService
     {
         Task<ServiceResponse<GetProgramDto>> AddProgram(AddProgramDto newProgram);
         Task<ServiceResponse<List<GetProgramDto>>> GetAllPrograms();
+        Task<ServiceResponse<GetProgramDto>> GetProgramById(int id);
+
     }
 }

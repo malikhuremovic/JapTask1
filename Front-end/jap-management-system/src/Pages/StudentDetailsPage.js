@@ -5,7 +5,7 @@ import useQuery from '../Hooks/useQuery';
 import studentService from '../Services/studentService';
 import selectionService from '../Services/selectionService';
 
-import StudentForm from '../Components/StudentForm';
+import StudentForm from '../Components/Students/StudentForm';
 
 import studentIcon from '../Assets/studentIcon.png';
 
