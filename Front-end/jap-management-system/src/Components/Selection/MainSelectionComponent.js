@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 
 import selectionService from '../../Services/selectionService';
 import programService from '../../Services/programService';
 
 import SelectionTable from './SelectionTable';
-
-import { Button } from 'react-bootstrap';
+import SelectionActionForms from './SelectionActionForms';
 
 import classes from '../Students/LandingComponent.module.css';
-import SelectionActionForms from './SelectionActionForms';
 
 const MainSelectionComponent = () => {
   const [availablePrograms, setAvailablePrograms] = useState([]);
@@ -285,7 +284,11 @@ const MainSelectionComponent = () => {
   return (
     <div className={classes.table__container}>
       <div className={classes.student_table_actions}>
-        <Button variant="primary" onClick={handleAddState}>
+        <Button
+          style={{ minWidth: 170 }}
+          variant="primary"
+          onClick={handleAddState}
+        >
           Add new selection
         </Button>
       </div>

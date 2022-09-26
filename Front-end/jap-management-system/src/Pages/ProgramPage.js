@@ -4,8 +4,9 @@ import programService from '../Services/programService';
 
 import ProgramTable from '../Components/ProgramTable';
 
-import classes from './ProgramPage.module.css';
 import programIcon from '../Assets/programIcon.png';
+
+import classes from './ProgramPage.module.css';
 
 const ProgramPage = () => {
   const [programs, setPrograms] = useState([]);

@@ -1,13 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Form } from 'react-bootstrap';
 
 import searchIcon from '../../Assets/searchIcon.png';
 import sortIconAsc from '../../Assets/sortIconDesc.png';
 import sortIconDesc from '../../Assets/sortIconAsc.png';
 
-import { Button, Form } from 'react-bootstrap';
-
 import classes from '../Students/StudentTable.module.css';
-import { Link } from 'react-router-dom';
 
 const SelectionTable = ({
   handlePageState,
@@ -249,6 +248,7 @@ const SelectionTable = ({
                   <td>
                     <Link to={`/?selection=${s.name}`}>
                       <Button
+                        style={{ minWidth: 170 }}
                         className={classes.action__button}
                         variant="primary"
                       >

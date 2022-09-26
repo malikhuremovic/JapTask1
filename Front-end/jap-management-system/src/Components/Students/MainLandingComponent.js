@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 
 import studentService from '../../Services/studentService';
 import selectionService from '../../Services/selectionService';
 
 import ActionForms from './ActionForms';
 import StudentTable from './StudentTable';
-
-import { Button } from 'react-bootstrap';
 
 import classes from './LandingComponent.module.css';
 import useQuery from '../../Hooks/useQuery';
