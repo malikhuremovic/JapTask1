@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
+import { Button, Form } from 'react-bootstrap';
 
 import userService from '../Services/userService';
 import tokenUtil from '../Util/tokenUtil';
 
-import { Button, Form } from 'react-bootstrap';
 import classes from './LoginPage.module.css';
 
 const LoginPage = () => {
@@ -33,7 +33,7 @@ const LoginPage = () => {
           let state = { show: true, success: true };
           return state;
         });
-        setTimeout(() => history.push('/'), 800);
+        setTimeout(() => history.push('/'), 1000);
       })
       .catch(err => {
         setLoginInfo(() => {

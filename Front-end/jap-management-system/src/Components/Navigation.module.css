@@ -18,11 +18,6 @@ header {
   transition: all 0.2s;
 }
 
-nav:hover {
-  transform: scale(1.05);
-  cursor: pointer;
-}
-
 .user {
   margin: 1rem;
 }
@@ -30,4 +25,73 @@ nav:hover {
 .user span {
   margin-left: 1rem;
   font-weight: 500;
+}
+
+.sm_wrapper {
+  margin-top: 100px;
+}
+
+.sidemenu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(104, 158, 209);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidemenu a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 40px;
+  font-family: 'Lato', sans-serif;
+  color: #ffffff;
+  display: block;
+  letter-spacing: 5px;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.sidemenu .close {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 65px;
+  margin-left: 50px;
+}
+
+.sm_wrapper a:after {
+  z-index: -1;
+  position: absolute;
+  left: 0%;
+  width: 0;
+  height: 50px;
+  background: rgb(210, 210, 230);
+  content: '';
+  transition: width 0.35s ease-in-out;
+}
+
+.sm_wrapper a:hover:after {
+  width: 10%;
+}
+
+.sm_wrapper a:hover {
+  padding-left: 64px;
+  transition: 0.35s ease-in-out;
+}
+
+#pg-content {
+  transition: margin-left 0.5s;
+  padding: 16px;
+}
+
+.sidemenu a:last-child {
+  font-size: 25px;
+  float: right;
+  margin-top: 10rem;
+  margin-right: 4rem;
 }
