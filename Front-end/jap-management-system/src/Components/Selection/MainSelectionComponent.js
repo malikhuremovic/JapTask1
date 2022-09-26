@@ -285,7 +285,7 @@ const MainSelectionComponent = () => {
     <div className={classes.table__container}>
       <div className={classes.student_table_actions}>
         <Button
-          style={{ minWidth: 170 }}
+          style={{ marginLeft: 20, minWidth: 170 }}
           variant="primary"
           onClick={handleAddState}
         >
