@@ -127,16 +127,7 @@ namespace JAPManagementSystem.Services.SelectionService
                 selection.DateStart = modifiedSelection.DateStart;
                 selection.DateEnd = modifiedSelection.DateEnd;
                 selection.Status = modifiedSelection.Status;
-                var studentsToRemove = await _context.Students.Where(s => modifiedSelection.StudentsToRemove.Contains(s.Id)).ToListAsync();
-                var studentsToAdd = await _context.Students.Where(s => modifiedSelection.StudentsToAdd.Contains(s.Id)).ToListAsync();
-                foreach (var student in studentsToRemove)
-                {
-                    selection.Students.Remove(student);
-                }
-                foreach(var student in studentsToAdd)
-                {
-                    selection.Students.Add(student);
-                }
+              
                 if (selection.JapProgramId != modifiedSelection.JapProgramId)
                 {
                     var japProgram = await _context.JapPrograms.FirstOrDefaultAsync(jp => jp.Id == modifiedSelection.JapProgramId);
@@ -153,12 +144,14 @@ namespace JAPManagementSystem.Services.SelectionService
             }
             return response;
         }
-        public ServiceResponse<List<GetSelectionDto>> GetSelectionsWithParams(int pageNumber, int pageSize, string? name, int? japProgramId, SelectionStatus? status, int sort, bool descending)
+        public ServiceResponse<GetSelectionPageDto> GetSelectionsWithParams(int pageNumber, int pageSize, string? name, string? japProgramName, DateTime? dateStart, DateTime? dateEnd, SelectionStatus? status, string sort, bool descending)
         {
-            ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
+            ServiceResponse<GetSelectionPageDto> response = new ServiceResponse<GetSelectionPageDto>();
             Filters<Selection> filters = new Filters<Selection>();
             filters.Add(!string.IsNullOrEmpty(name), s => s.Name.Contains(name));
-            filters.Add(japProgramId > 0, s => s.JapProgramId == japProgramId);
+            filters.Add(!string.IsNullOrEmpty(japProgramName), s => s.JapProgram.Name.Contains(japProgramName));
+            filters.Add(dateStart != null, s => s.DateStart == dateStart);
+            filters.Add(dateEnd != null, s => s.DateEnd == dateEnd);
             filters.Add(status.HasValue, s => s.Status == status);
 
             Sorts<Selection> sorts = new Sorts<Selection>();
@@ -166,12 +159,12 @@ namespace JAPManagementSystem.Services.SelectionService
             sorts.Add(sort.Equals("dateStart"), s => s.DateStart, descending);
             sorts.Add(sort.Equals("dateEnd"), s => s.DateEnd, descending);
             sorts.Add(sort.Equals("status"), s => s.Status, descending);
-            sorts.Add(sort.Equals("jaProgram"), s => s.JapProgramId, descending);
+            sorts.Add(sort.Equals("japProgramName"), s => s.JapProgram.Name, descending);
 
             try
             {
                 var selections = _context.Selections.Include("JapProgram").Paginate(pageNumber, pageSize, sorts, filters);
-                response.Data = selections.Results.Select(s => _mapper.Map<GetSelectionDto>(s)).ToList();
+                response.Data = _mapper.Map<GetSelectionPageDto>(selections);
                 response.Message = "You have fetched a page no. " + pageNumber + " with " + selections.RecordCount + " selection(s).";
             }
             catch (Exception exc)

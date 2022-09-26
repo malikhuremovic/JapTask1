@@ -44,10 +44,10 @@ namespace JAPManagementSystem.Controllers
         }
 
         [HttpGet("get")]
-        public ActionResult<ServiceResponse<List<GetSelectionDto>>> GetSelectionsWithParams(string? name, int? japProgramId, SelectionStatus? status, int sort = 1, int page = 1, int pageSize = 10, bool descending = true)
+        public ActionResult<ServiceResponse<GetSelectionPageDto>> GetSelectionsWithParams(string? name, string? japProgramName, DateTime? dateStart, DateTime? dateEnd, SelectionStatus? status, string? sort = "name", int page = 1, int pageSize = 10, bool descending = true)
         {
-            ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
-            response = _selectionService.GetSelectionsWithParams(page, pageSize, name, japProgramId, status, sort, descending);
+            ServiceResponse<GetSelectionPageDto> response = new ServiceResponse<GetSelectionPageDto>();
+            response = _selectionService.GetSelectionsWithParams(page, pageSize, name, japProgramName, dateStart, dateEnd, status, sort, descending);
             if (!response.Success)
             {
                 return StatusCode(500, response);

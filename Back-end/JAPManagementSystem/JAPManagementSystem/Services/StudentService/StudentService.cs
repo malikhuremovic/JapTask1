@@ -121,6 +121,7 @@ namespace JAPManagementSystem.Services.StudentService
             sorts.Add(sort.Equals("firstName"), s => s.FirstName, descending);
             sorts.Add(sort.Equals("lastName"), s => s.LastName, descending);
             sorts.Add(sort.Equals("email"), s => s.Email, descending);
+            sorts.Add(status.HasValue, s => s.Status, descending);
             sorts.Add(sort.Equals("selection"), s => s.Selection.Name, descending);
             sorts.Add(sort.Equals("program"), s => s.Selection.JapProgram.Name, descending);
 
