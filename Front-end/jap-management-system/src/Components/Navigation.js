@@ -25,6 +25,7 @@ const Navigation = () => {
                   &times;
                 </a>
                 <div className={classes.sm_wrapper}>
+                  <a href="/">Student Management</a>
                   <a href="/selections">Selection Management</a>
                   <a href="/program">Program Management</a>
                   <a href="/logout" className={classes.logout}>
