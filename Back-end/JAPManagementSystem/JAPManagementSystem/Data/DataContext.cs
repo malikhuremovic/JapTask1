@@ -14,6 +14,15 @@ namespace JAPManagementSystem.Data
 
         protected override void OnModelCreating(ModelBuilder _modelBuilder)
         {
+            _modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    UserName = "dummy",
+                    Email = "dummy@user.com",
+                    Password = "test"
+                });
+
             _modelBuilder.Entity<JapProgram>().HasData(
             new JapProgram
             {

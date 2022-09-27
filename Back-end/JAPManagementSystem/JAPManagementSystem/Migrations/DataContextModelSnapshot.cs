@@ -269,6 +269,15 @@ namespace JAPManagementSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "dummy@user.com",
+                            Password = "test",
+                            UserName = "dummy"
+                        });
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.Comment", b =>
