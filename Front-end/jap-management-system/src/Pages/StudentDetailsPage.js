@@ -10,8 +10,11 @@ import StudentForm from '../Components/Students/StudentForm';
 import studentIcon from '../Assets/studentIcon.png';
 
 import classes from './StudentDetailsPage.module.css';
+import { useHistory } from 'react-router-dom';
 
 const StudentDetailsPage = () => {
+  const history = useHistory();
+
   const [student, setStudent] = useState({});
   const [studentEdit, setStudentEdit] = useState({});
   const INITIAL_COMMENT_STATE = {
@@ -47,6 +50,7 @@ const StudentDetailsPage = () => {
       .modifyStudent(studentEdit)
       .then(response => {
         setStudent(response.data.data);
+        history.push('/');
       })
       .catch(err => {
         console.log(err);

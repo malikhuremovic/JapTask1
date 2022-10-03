@@ -110,7 +110,7 @@ namespace JAPManagementSystem.Services.StudentService
             ServiceResponse<GetStudentPageDto> response = new ServiceResponse<GetStudentPageDto>();
             Filters<Student> filters = new Filters<Student>();
             filters.Add(!string.IsNullOrEmpty(firstName), s => s.FirstName.Contains(firstName));
-            filters.Add(!string.IsNullOrEmpty(lastName), s => s.FirstName.Contains(lastName));
+            filters.Add(!string.IsNullOrEmpty(lastName), s => s.LastName.Contains(lastName));
             filters.Add(!string.IsNullOrEmpty(email), s => s.Email.Contains(email));
             filters.Add(status.HasValue, s => s.Status.Equals(status));
             filters.Add(!string.IsNullOrEmpty(selectionName), s => s.Selection.Name.Contains(selectionName));
