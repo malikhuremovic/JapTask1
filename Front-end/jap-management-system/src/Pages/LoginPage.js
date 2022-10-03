@@ -28,12 +28,12 @@ const LoginPage = () => {
     await userService
       .login(userData)
       .then(response => {
-        tokenUtil.setAccessToken(response.data.data);
         setLoginInfo(() => {
+          tokenUtil.setAccessToken(response.data.data);
+          history.push('/');
           let state = { show: true, success: true };
           return state;
         });
-        setTimeout(() => history.push('/'), 1000);
       })
       .catch(err => {
         setLoginInfo(() => {
