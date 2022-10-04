@@ -3,7 +3,7 @@ using EntityFrameworkPaginate;
 using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.DTOs.Selection;
-using JAPManagementSystem.DTOs.Student;
+using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.Models;
 
 namespace JAPManagementSystem

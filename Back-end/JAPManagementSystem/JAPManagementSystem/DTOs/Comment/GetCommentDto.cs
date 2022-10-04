@@ -1,4 +1,4 @@
-﻿using JAPManagementSystem.DTOs.Student;
+﻿using JAPManagementSystem.DTOs.StudentDto;
 
 namespace JAPManagementSystem.DTOs.Comment
 {

@@ -1,5 +1,5 @@
 ﻿using JAPManagementSystem.DTOs.Comment;
-using JAPManagementSystem.DTOs.Student;
+using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
