@@ -2,7 +2,7 @@
 using JAPManagementSystem.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace JAPManagementSystem.DTOs.StudentDTOs
+namespace JAPManagementSystem.Data
 {
     public class StudentFetchConfig
     {

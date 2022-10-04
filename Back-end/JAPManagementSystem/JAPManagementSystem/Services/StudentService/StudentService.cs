@@ -3,7 +3,6 @@ using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.StudentDto;
-using JAPManagementSystem.DTOs.StudentDTOs;
 using JAPManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
