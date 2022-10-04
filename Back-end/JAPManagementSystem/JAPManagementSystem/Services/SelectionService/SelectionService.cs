@@ -147,23 +147,10 @@ namespace JAPManagementSystem.Services.SelectionService
         public ServiceResponse<GetSelectionPageDto> GetSelectionsWithParams(int pageNumber, int pageSize, string? name, string? japProgramName, DateTime? dateStart, DateTime? dateEnd, SelectionStatus? status, string sort, bool descending)
         {
             ServiceResponse<GetSelectionPageDto> response = new ServiceResponse<GetSelectionPageDto>();
-            Filters<Selection> filters = new Filters<Selection>();
-            filters.Add(!string.IsNullOrEmpty(name), s => s.Name.Contains(name));
-            filters.Add(!string.IsNullOrEmpty(japProgramName), s => s.JapProgram.Name.Contains(japProgramName));
-            filters.Add(dateStart != null, s => s.DateStart == dateStart);
-            filters.Add(dateEnd != null, s => s.DateEnd == dateEnd);
-            filters.Add(status.HasValue, s => s.Status == status);
-
-            Sorts<Selection> sorts = new Sorts<Selection>();
-            sorts.Add(sort.Equals("name"), s => s.Name, descending);
-            sorts.Add(sort.Equals("dateStart"), s => s.DateStart, descending);
-            sorts.Add(sort.Equals("dateEnd"), s => s.DateEnd, descending);
-            sorts.Add(sort.Equals("status"), s => s.Status, descending);
-            sorts.Add(sort.Equals("japProgramName"), s => s.JapProgram.Name, descending);
-
+            SelectionFetchConfig.Initialize(name, status, japProgramName, dateStart, dateEnd, sort, descending);
             try
             {
-                var selections = _context.Selections.Include("JapProgram").Paginate(pageNumber, pageSize, sorts, filters);
+                var selections = _context.Selections.Include("JapProgram").Paginate(pageNumber, pageSize, SelectionFetchConfig.sorts, SelectionFetchConfig.filters);
                 response.Data = _mapper.Map<GetSelectionPageDto>(selections);
                 response.Message = "You have fetched a page no. " + pageNumber + " with " + selections.RecordCount + " selection(s).";
             }
