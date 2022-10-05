@@ -147,16 +147,16 @@ namespace JAPManagementSystem.Services.StudentService
             return response;
         }
 
-        public async Task<ServiceResponse<GetStudentDto>> AddComment(AddCommentDto newComment)
+        public async Task<ServiceResponse<List<GetCommentDto>>> AddComment(AddCommentDto newComment)
         {
-            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+            ServiceResponse<List<GetCommentDto>> response = new ServiceResponse<List<GetCommentDto>>();
             try
             {
                 var comment = _mapper.Map<Comment>(newComment);
                 _context.Comments.Add(comment);
                 await _context.SaveChangesAsync();
-                var fetch = await _context.Students.Include(s => s.Comments).FirstOrDefaultAsync(s => s.Id == newComment.StudentId);
-                response.Data = _mapper.Map<GetStudentDto>(fetch);
+                var fetchedComments = await _context.Comments.Where(c => c.StudentId == newComment.StudentId).OrderBy(c => c.CreatedAt).ToListAsync();
+                response.Data = fetchedComments.Select(c => _mapper.Map<GetCommentDto>(c)).ToList();
             }
             catch(Exception exc)
             {

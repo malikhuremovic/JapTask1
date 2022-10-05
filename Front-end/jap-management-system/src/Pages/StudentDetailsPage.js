@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import useQuery from '../Hooks/useQuery';
 
@@ -26,7 +26,7 @@ const StudentDetailsPage = () => {
 
   const query = useQuery();
 
-  useEffect(() => {
+  const fetchStudents = useCallback(query => {
     const id = +query.get('id');
     studentService
       .fetchStudentById(id)
@@ -42,7 +42,11 @@ const StudentDetailsPage = () => {
         setAvailableSelections(() => response.data.data);
       })
       .catch(err => console.log(err));
-  }, [query]);
+  }, []);
+
+  useEffect(() => {
+    fetchStudents(query);
+  }, [fetchStudents, student, query]);
 
   const handleEditStudent = ev => {
     ev.preventDefault();
@@ -83,15 +87,10 @@ const StudentDetailsPage = () => {
     ev.preventDefault();
     studentService
       .addComment(comment)
-      .then(response => {
-        console.log(response.data.data);
-        setStudent(prevState => {
-          prevState.comments = [...response.data.data.comments];
-          return prevState;
-        });
+      .then(() => {
+        setComment(INITIAL_COMMENT_STATE);
       })
       .catch(err => console.log(err));
-    setComment(INITIAL_COMMENT_STATE);
   };
 
   const handleCommentInput = ev => {

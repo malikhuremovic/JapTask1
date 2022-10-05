@@ -92,9 +92,9 @@ namespace JAPManagementSystem.Controllers
         }
 
         [HttpPost("add/comment")]
-        public async Task<ActionResult<ServiceResponse<GetStudentDto>>> AddComment(AddCommentDto newComment)
+        public async Task<ActionResult<ServiceResponse<List<GetStudentDto>>>> AddComment(AddCommentDto newComment)
         {
-            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+            ServiceResponse<List<GetCommentDto>> response = new ServiceResponse<List<GetCommentDto>>();
             response = await _studentService.AddComment(newComment);
             if (!response.Success)
             {
