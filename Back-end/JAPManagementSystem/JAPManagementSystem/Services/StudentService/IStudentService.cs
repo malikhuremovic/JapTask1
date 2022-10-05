@@ -7,7 +7,7 @@ namespace JAPManagementSystem.Services.StudentService
     public interface IStudentService
     {
         Task<ServiceResponse<GetStudentDto>> AddStudent(AddStudentDto newStudent);
-        Task<ServiceResponse<GetStudentDto>> AddComment(AddCommentDto newComment);
+        Task<ServiceResponse<List<GetCommentDto>>> AddComment(AddCommentDto newComment);
         Task<ServiceResponse<List<GetStudentDto>>> GetAllStudents();
         Task<ServiceResponse<GetStudentDto>> GetStudentById(int id);
         ServiceResponse<GetStudentPageDto> GetStudentsWithParams(int page, int pageSize, string? firstName, string? lastName, string? email, string? selectionName, string? japProgramName, StudentStatus? status, string sort, bool descending);
