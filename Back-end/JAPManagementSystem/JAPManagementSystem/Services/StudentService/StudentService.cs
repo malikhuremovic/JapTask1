@@ -155,9 +155,10 @@ namespace JAPManagementSystem.Services.StudentService
                 var comment = _mapper.Map<Comment>(newComment);
                 _context.Comments.Add(comment);
                 await _context.SaveChangesAsync();
-                var student = await _context.Students.Include(s => s.Comments).FirstOrDefaultAsync(s => s.Id == newComment.StudentId);
-                response.Data = _mapper.Map<GetStudentDto>(student);
-            }catch(Exception exc)
+                var fetch = await _context.Students.Include(s => s.Comments).FirstOrDefaultAsync(s => s.Id == newComment.StudentId);
+                response.Data = _mapper.Map<GetStudentDto>(fetch);
+            }
+            catch(Exception exc)
             {
                 response.Success = false;
                 response.Message = exc.Message;

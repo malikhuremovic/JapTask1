@@ -84,7 +84,11 @@ const StudentDetailsPage = () => {
     studentService
       .addComment(comment)
       .then(response => {
-        setStudent(response.data.data);
+        console.log(response.data.data);
+        setStudent(prevState => {
+          prevState.comments = [...response.data.data.comments];
+          return prevState;
+        });
       })
       .catch(err => console.log(err));
     setComment(INITIAL_COMMENT_STATE);

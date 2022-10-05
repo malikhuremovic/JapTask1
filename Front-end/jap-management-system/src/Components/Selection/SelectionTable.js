@@ -244,7 +244,9 @@ const SelectionTable = ({
                   <td>{s.dateStart.split('T')[0]}</td>
                   <td>{s.dateEnd.split('T')[0]}</td>
                   <td>{s.status}</td>
-                  <td>{s.japProgram.name}</td>
+                  <td>
+                    {!s.japProgram ? <b>Not allocated</b> : s.japProgram.name}
+                  </td>
                   <td>
                     <Link to={`/?selection=${s.name}`}>
                       <Button

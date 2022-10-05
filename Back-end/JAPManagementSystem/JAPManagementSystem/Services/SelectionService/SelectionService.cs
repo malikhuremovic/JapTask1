@@ -166,7 +166,11 @@ namespace JAPManagementSystem.Services.SelectionService
             ServiceResponse<string> response = new ServiceResponse<string>();
             try
             {
-                var selection = await _context.Selections.FirstOrDefaultAsync(s => s.Id == id);
+                var selection = await _context.Selections.Include(s => s.Students).Include(s => s.JapProgram).FirstOrDefaultAsync(s => s.Id == id);
+                if(selection == null)
+                {
+                    throw new Exception("Selection not found");
+                }
                 _context.Selections.Remove(selection);
                 await _context.SaveChangesAsync();
                 response.Message = "You have deleted a selection: " + selection.Name +".";

@@ -1,0 +1,18 @@
+﻿using AutoMapper;
+using EntityFrameworkPaginate;
+using JAPManagementSystem.DTOs.Selection;
+using JAPManagementSystem.Models;
+
+namespace JAPManagementSystem.AutoMapperMaps
+{
+    public class SelectionMap : Profile
+    {
+        public SelectionMap()
+        {
+            CreateMap<AddSelectionDto, Selection>();
+            CreateMap<Selection, GetSelectionDto>();
+            CreateMap<Page<Selection>, GetSelectionPageDto>();
+            CreateMap<ModifySelectionDto, Selection>().ForMember(dest => dest.Students, act => act.Ignore());
+        }
+    }
+}
