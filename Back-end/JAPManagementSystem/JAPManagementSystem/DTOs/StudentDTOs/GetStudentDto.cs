@@ -2,7 +2,7 @@
 using JAPManagementSystem.DTOs.Selection;
 using JAPManagementSystem.Models;
 
-namespace JAPManagementSystem.DTOs.Student
+namespace JAPManagementSystem.DTOs.StudentDto
 {
     public class GetStudentDto
     {

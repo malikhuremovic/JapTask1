@@ -276,8 +276,16 @@ const StudentTable = ({
                 <td>{s.firstName}</td>
                 <td>{s.lastName}</td>
                 <td>{s.email}</td>
-                <td>{s.selection.name}</td>
-                <td>{s.selection.japProgram.name}</td>
+                <td>
+                  {!s.selection ? <b>Not allocated</b> : s.selection.name}
+                </td>
+                <td>
+                  {!s.selection ? (
+                    <b>Not allocated</b>
+                  ) : (
+                    s.selection.japProgram.name
+                  )}
+                </td>
                 <td>{s.status}</td>
                 <td>
                   <Link to={`/student?id=${s.id}`}>
