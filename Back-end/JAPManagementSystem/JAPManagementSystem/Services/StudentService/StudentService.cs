@@ -4,6 +4,8 @@ using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.Models;
+using JAPManagementSystem.Services.EmailService;
+using MailKit;
 using Microsoft.EntityFrameworkCore;
 
 namespace JAPManagementSystem.Services.StudentService
@@ -12,10 +14,12 @@ namespace JAPManagementSystem.Services.StudentService
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public StudentService(DataContext context, IMapper mapper)
+        private readonly IEmailService _mailService;
+        public StudentService(DataContext context, IMapper mapper, IEmailService mailService)
         {
             _context = context;
             _mapper = mapper;
+            _mailService = mailService;
         }
         public async Task<ServiceResponse<GetStudentDto>> AddStudent(AddStudentDto newStudent)
         {
@@ -24,8 +28,19 @@ namespace JAPManagementSystem.Services.StudentService
             {
                 var student = _mapper.Map<Student>(newStudent);
                 _context.Students.Add(student);
+                //
+                try
+                {
+                    _mailService.SendConfirmationEmail(newStudent);
+                }
+                catch (Exception exc)
+                {
+                    throw new Exception(exc.Message);
+                }
+                //
                 await _context.SaveChangesAsync();
                 var fetchedStudent = await _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).FirstOrDefaultAsync();
+               
                 response.Data = _mapper.Map<GetStudentDto>(fetchedStudent);
                 response.Message = "You have successfully added a new student";
             }
