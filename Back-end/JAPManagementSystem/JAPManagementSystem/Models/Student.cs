@@ -1,4 +1,6 @@
-﻿namespace JAPManagementSystem.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace JAPManagementSystem.Models
 {
     public class Student
     {
