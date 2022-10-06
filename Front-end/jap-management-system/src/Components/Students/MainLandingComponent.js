@@ -61,7 +61,19 @@ const MainLandingComponent = () => {
   const fetchStudents = useCallback(params => {
     studentService.fetchAllStudents(params).then(response => {
       setStudents(response.data.data.results);
-      setPaginationInfoState(() => {
+      setPaginationInfoState(prevState => {
+        if (
+          prevState.recordCount > response.data.data.recordCount &&
+          response.data.data.recordCount % 2 === 0
+        ) {
+          setPageState(prevState => {
+            const UPDATED_PAGE_STATE = {
+              ...prevState
+            };
+            UPDATED_PAGE_STATE.page -= 1;
+            return UPDATED_PAGE_STATE;
+          });
+        }
         const UPDATED_PAGINATION_INFO_STATE = {
           currentPage: response.data.data.currentPage,
           pageCount: response.data.data.pageCount,
