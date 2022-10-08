@@ -15,6 +15,7 @@ namespace JAPManagementSystem.Extensions
             service.AddScoped<IStudentService, StudentService>();
             service.AddScoped<IAuthService, AuthService>();
             service.AddSingleton<IEmailService, EmailService>();
+            service.AddScoped<IAuthService, AuthService>();
         }
     }
 }
