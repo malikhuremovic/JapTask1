@@ -3,10 +3,13 @@ using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.StudentDto;
+using JAPManagementSystem.DTOs.User;
 using JAPManagementSystem.Models;
+using JAPManagementSystem.Services.AuthService;
 using JAPManagementSystem.Services.EmailService;
 using MailKit;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace JAPManagementSystem.Services.StudentService
 {
@@ -14,24 +17,29 @@ namespace JAPManagementSystem.Services.StudentService
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly IAuthService _authService;
         private readonly IEmailService _mailService;
-        public StudentService(DataContext context, IMapper mapper, IEmailService mailService)
+
+        public StudentService(IAuthService authService, DataContext context, IMapper mapper, IEmailService mailService)
         {
+            _authService = authService;
             _context = context;
             _mapper = mapper;
             _mailService = mailService;
         }
+
         public async Task<ServiceResponse<GetStudentDto>> AddStudent(AddStudentDto newStudent)
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             try
             {
-                var student = _mapper.Map<Student>(newStudent);
-                _context.Students.Add(student);
-                //
+                StudentUserCreatedDto studentUser = _authService.CreateUser(newStudent);
+                Student student = _mapper.Map<Student>(newStudent);
+                student = _mapper.Map<Student>(studentUser);
                 try
                 {
-                    _mailService.SendConfirmationEmail(newStudent);
+                    _mailService.SendConfirmationEmail(studentUser);
+                    _context.Students.Add(student);
                 }
                 catch (Exception exc)
                 {
@@ -39,7 +47,7 @@ namespace JAPManagementSystem.Services.StudentService
                 }
                 //
                 await _context.SaveChangesAsync();
-                var fetchedStudent = await _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).FirstOrDefaultAsync();
+                var fetchedStudent = await _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).FirstOrDefaultAsync(s => s.Email.Equals(newStudent.Email));
                
                 response.Data = _mapper.Map<GetStudentDto>(fetchedStudent);
                 response.Message = "You have successfully added a new student";
@@ -51,6 +59,7 @@ namespace JAPManagementSystem.Services.StudentService
             }
             return response;
         }
+
         public async Task<ServiceResponse<List<GetStudentDto>>> GetAllStudents()
         {
             ServiceResponse<List<GetStudentDto>> response = new ServiceResponse<List<GetStudentDto>>();
@@ -66,6 +75,7 @@ namespace JAPManagementSystem.Services.StudentService
             }
             return response;
         }
+
         public async Task<ServiceResponse<GetStudentDto>> ModifyStudent(ModifyStudentDto modifiedStudent)
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();

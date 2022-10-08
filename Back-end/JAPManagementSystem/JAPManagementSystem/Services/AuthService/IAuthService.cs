@@ -1,9 +1,12 @@
-﻿using JAPManagementSystem.Models;
+﻿using JAPManagementSystem.DTOs.StudentDto;
+using JAPManagementSystem.DTOs.User;
+using JAPManagementSystem.Models;
 
 namespace JAPManagementSystem.Services.AuthService
 {
     public interface IAuthService
     {
-        Task<ServiceResponse<string>> Login(string username, string password);
+        StudentUserCreatedDto CreateUser(AddStudentDto newStudent);
+        Task<ServiceResponse<GetUserDto>> Login(UserLoginDto user);
     }
 }
