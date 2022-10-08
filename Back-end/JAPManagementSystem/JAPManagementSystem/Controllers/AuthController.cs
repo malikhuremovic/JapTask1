@@ -16,9 +16,9 @@ namespace JAPManagementSystem.Controllers
             _authService = authService;
         }
         [HttpPost("login")]
-        public async Task<ActionResult<ServiceResponse<String>>> Login(AddUserDto user)
+        public async Task<ActionResult<ServiceResponse<String>>> Login(UserLoginDto user)
         {
-            var response = await _authService.Login(user.UserName, user.Password);
+            var response = await _authService.Login(user);
             if (!response.Success)
             {
                 return BadRequest(response);
