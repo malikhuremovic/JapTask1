@@ -139,7 +139,7 @@ namespace JAPManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.Student", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,108 +159,16 @@ namespace JAPManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SelectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SelectionId");
-
-                    b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "johndoe@mail.com",
-                            FirstName = "John",
-                            LastName = "Doe",
-                            SelectionId = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "janendoe@mail.com",
-                            FirstName = "Jane",
-                            LastName = "Doe",
-                            SelectionId = 1,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "johndoe@mail.com",
-                            FirstName = "John",
-                            LastName = "Doe",
-                            SelectionId = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Email = "malikhuremovic01@mail.com",
-                            FirstName = "Malik",
-                            LastName = "Huremović",
-                            SelectionId = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Email = "isakIsabegovic@mail.com",
-                            FirstName = "Ishak",
-                            LastName = "Isabegović",
-                            SelectionId = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Email = "emirbajric@mail.com",
-                            FirstName = "Emir",
-                            LastName = "Bajrić",
-                            SelectionId = 2,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Email = "zlatansprečo@mail.com",
-                            FirstName = "Zlatan",
-                            LastName = "Sprečo",
-                            SelectionId = 2,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Email = "sanelh@mail.com",
-                            FirstName = "Sanel",
-                            LastName = "Hodžić",
-                            SelectionId = 2,
-                            Status = 2
-                        });
-                });
-
-            modelBuilder.Entity("JAPManagementSystem.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Email")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -269,15 +177,28 @@ namespace JAPManagementSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "dummy@user.com",
-                            Password = "test",
-                            UserName = "dummy"
-                        });
+            modelBuilder.Entity("JAPManagementSystem.Models.Admin", b =>
+                {
+                    b.HasBaseType("JAPManagementSystem.Models.User");
+
+                    b.ToTable("Admin", (string)null);
+                });
+
+            modelBuilder.Entity("JAPManagementSystem.Models.Student", b =>
+                {
+                    b.HasBaseType("JAPManagementSystem.Models.User");
+
+                    b.Property<int?>("SelectionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasIndex("SelectionId");
+
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.Comment", b =>
@@ -300,8 +221,23 @@ namespace JAPManagementSystem.Migrations
                     b.Navigation("JapProgram");
                 });
 
+            modelBuilder.Entity("JAPManagementSystem.Models.Admin", b =>
+                {
+                    b.HasOne("JAPManagementSystem.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("JAPManagementSystem.Models.Admin", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("JAPManagementSystem.Models.Student", b =>
                 {
+                    b.HasOne("JAPManagementSystem.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("JAPManagementSystem.Models.Student", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
                     b.HasOne("JAPManagementSystem.Models.Selection", "Selection")
                         .WithMany("Students")
                         .HasForeignKey("SelectionId");
