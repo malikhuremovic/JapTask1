@@ -1,10 +1,13 @@
 import logo from '../Assets/logo.svg';
 import userIcon from '../Assets/userIcon.png';
+import { useContext } from 'react';
 import classes from './Navigation.module.css';
+import { Link } from 'react-router-dom';
 
-import { isAuthenticated } from '../Util/checkAuthenticated';
 import React from 'react';
+import UserContext from '../Store/userContext';
 const Navigation = () => {
+  const { userDataState } = useContext(UserContext);
   const openNav = () => {
     document.getElementById('mySidemenu').style.width = '450px';
   };
@@ -12,25 +15,44 @@ const Navigation = () => {
   const closeNav = () => {
     document.getElementById('mySidemenu').style.width = '0';
   };
-
-  let hasToken = isAuthenticated();
   return (
     <React.Fragment>
       <header>
         <div className={classes.header__top}>
-          {hasToken && (
+          {userDataState && (
             <React.Fragment>
               <div id="mySidemenu" className={classes.sidemenu}>
-                <a href="#" className={classes.close} onClick={closeNav}>
+                <Link to="#" className={classes.close} onClick={closeNav}>
                   &times;
-                </a>
+                </Link>
                 <div className={classes.sm_wrapper}>
-                  <a href="/">Student Management</a>
-                  <a href="/selections">Selection Management</a>
-                  <a href="/program">Program Management</a>
-                  <a href="/logout" className={classes.logout}>
+                  {userDataState.role === 'Admin' && (
+                    <Link onClick={closeNav} to="/">
+                      Student Management
+                    </Link>
+                  )}
+                  {userDataState.role === 'Admin' && (
+                    <Link onClick={closeNav} to="/selections">
+                      Selection Management
+                    </Link>
+                  )}
+                  {userDataState.role === 'Admin' && (
+                    <Link onClick={closeNav} to="/program">
+                      Program Management
+                    </Link>
+                  )}
+                  {userDataState.role === 'Student' && (
+                    <Link onClick={closeNav} to="/">
+                      My Profile
+                    </Link>
+                  )}
+                  <Link
+                    onClick={closeNav}
+                    to="/logout"
+                    className={classes.logout}
+                  >
                     Log out
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div id="pg-content">
@@ -45,10 +67,13 @@ const Navigation = () => {
           )}
           <div className={classes.logo}>
             <img src={logo} alt="jap program" />
-            {hasToken && (
+            {userDataState && (
               <div className={classes.user}>
                 <img src={userIcon} alt="user" />
-                <span>Welcome, John Doe</span>
+                <span>
+                  Welcome,{' '}
+                  {userDataState.firstName + ' ' + userDataState.lastName}
+                </span>
               </div>
             )}
           </div>
