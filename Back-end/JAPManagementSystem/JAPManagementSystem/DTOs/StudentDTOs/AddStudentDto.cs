@@ -1,4 +1,4 @@
-﻿using JAPManagementSystem.Models;
+﻿using JAPManagementSystem.Models.StudentModel;
 
 namespace JAPManagementSystem.DTOs.StudentDto
 {

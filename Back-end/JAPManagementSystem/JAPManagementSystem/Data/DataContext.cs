@@ -1,12 +1,17 @@
 ﻿using JAPManagementSystem.Data;
 using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.SelectionModel;
+using JAPManagementSystem.Models.StudentModel;
+using JAPManagementSystem.Models.UserModel;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Text;
 
 namespace JAPManagementSystem.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -15,6 +20,9 @@ namespace JAPManagementSystem.Data
 
         protected override void OnModelCreating(ModelBuilder _modelBuilder)
         {
+            base.OnModelCreating(_modelBuilder);
+            _modelBuilder.Entity<IdentityUser>().ToTable("UserBase");
+            _modelBuilder.Entity<User>().ToTable("UserData");
             _modelBuilder.Entity<Admin>().ToTable("Admin");
             _modelBuilder.Entity<Student>().ToTable("Student");
             _modelBuilder.Entity<JapProgram>().HasData(

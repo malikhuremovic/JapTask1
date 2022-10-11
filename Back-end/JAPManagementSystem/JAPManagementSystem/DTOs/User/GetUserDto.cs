@@ -1,10 +1,10 @@
-﻿using JAPManagementSystem.Models;
+﻿using JAPManagementSystem.Models.UserModel;
 
 namespace JAPManagementSystem.DTOs.User
 {
     public class GetUserDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public UserRole Role { get; set; }

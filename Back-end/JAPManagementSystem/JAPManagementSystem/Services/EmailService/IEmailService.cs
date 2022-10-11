@@ -7,5 +7,7 @@ namespace JAPManagementSystem.Services.EmailService
     public interface IEmailService
     {
         void SendConfirmationEmail(StudentUserCreatedDto student);
+        void SendConfirmationEmail(AdminUserCreatedDto admin);
+
     }
 }

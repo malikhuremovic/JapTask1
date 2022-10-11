@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EntityFrameworkPaginate;
 using JAPManagementSystem.DTOs.StudentDto;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.StudentModel;
 
 namespace JAPManagementSystem.AutoMapperMaps
 {

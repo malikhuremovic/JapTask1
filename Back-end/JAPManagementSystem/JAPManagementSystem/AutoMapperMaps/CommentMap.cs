@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JAPManagementSystem.DTOs.Comment;
+using JAPManagementSystem.DTOs.User;
 using JAPManagementSystem.Models;
 
 namespace JAPManagementSystem.AutoMapperMaps

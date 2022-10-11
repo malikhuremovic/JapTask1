@@ -1,10 +1,10 @@
 ﻿using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace JAPManagementSystem.Controllers
 {
@@ -19,6 +19,7 @@ namespace JAPManagementSystem.Controllers
             _studentService = studentService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("add")]
         public async Task<ActionResult<ServiceResponse<GetStudentDto>>> AddStudent(AddStudentDto newStudent)
         {
@@ -57,9 +58,9 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
-        [Authorize(Roles ="Admin, Student")]
+        [Authorize(Roles = "Admin, Student")]
         [HttpGet("get/id")]
-        public async Task<ActionResult<ServiceResponse<GetStudentDto>>> GetStudentById(int id)
+        public async Task<ActionResult<ServiceResponse<GetStudentDto>>> GetStudentById(string id)
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             response = await _studentService.GetStudentById(id);
@@ -98,7 +99,7 @@ namespace JAPManagementSystem.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("delete")]
-        public async Task<ActionResult<ServiceResponse<string>>> DeleteStudentById(int id)
+        public async Task<ActionResult<ServiceResponse<string>>> DeleteStudentById(string id)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
             response = await _studentService.DeleteStudent(id);

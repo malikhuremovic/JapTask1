@@ -1,8 +1,9 @@
-﻿using JAPManagementSystem.Models.SelectionModel;
+﻿using JAPManagementSystem.DTOs;
+using JAPManagementSystem.Models.StudentModel;
 
-namespace JAPManagementSystem.DTOs.Selection
+namespace JAPManagementSystem.Models.SelectionModel
 {
-    public class ModifySelectionDto
+    public class Selection
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -10,6 +11,7 @@ namespace JAPManagementSystem.DTOs.Selection
         public DateTime DateEnd { get; set; }
         public SelectionStatus Status { get; set; }
         public int? JapProgramId { get; set; }
-
+        public JapProgram? JapProgram { get; set; }
+        public ICollection<Student>? Students { get; set; } = new List<Student>();
     }
 }

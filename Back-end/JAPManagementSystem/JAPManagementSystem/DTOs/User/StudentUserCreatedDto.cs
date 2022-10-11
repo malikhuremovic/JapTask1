@@ -1,4 +1,4 @@
-﻿using JAPManagementSystem.Models;
+﻿using JAPManagementSystem.Models.UserModel;
 
 namespace JAPManagementSystem.DTOs.User
 {

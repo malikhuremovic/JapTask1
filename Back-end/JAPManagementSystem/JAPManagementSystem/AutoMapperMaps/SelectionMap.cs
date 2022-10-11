@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EntityFrameworkPaginate;
 using JAPManagementSystem.DTOs.Selection;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.SelectionModel;
 
 namespace JAPManagementSystem.AutoMapperMaps
 {

@@ -5,9 +5,11 @@ using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.DTOs.User;
 using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Services.AuthService;
 using JAPManagementSystem.Services.EmailService;
 using MailKit;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 
@@ -33,21 +35,25 @@ namespace JAPManagementSystem.Services.StudentService
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             try
             {
-                StudentUserCreatedDto studentUser = _authService.CreateUser(newStudent);
+                StudentUserCreatedDto studentUser = _authService.CreateStudentUser(newStudent);
                 Student student = _mapper.Map<Student>(newStudent);
                 student = _mapper.Map<Student>(studentUser);
+                student.SelectionId = newStudent.SelectionId;
                 try
                 {
+                    await _authService.RegisterStudentUser(student, studentUser.Password);
                     _mailService.SendConfirmationEmail(studentUser);
-                    _context.Students.Add(student);
                 }
                 catch (Exception exc)
                 {
                     throw new Exception(exc.Message);
                 }
-                //
                 await _context.SaveChangesAsync();
-                var fetchedStudent = await _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).FirstOrDefaultAsync(s => s.Email.Equals(newStudent.Email));
+                var fetchedStudent = await _context.Students
+                    .Include(s => s.Selection)
+                    .ThenInclude(s => s.JapProgram)
+                    .FirstOrDefaultAsync(s => s.Email
+                    .Equals(newStudent.Email));
                
                 response.Data = _mapper.Map<GetStudentDto>(fetchedStudent);
                 response.Message = "You have successfully added a new student";
@@ -65,7 +71,12 @@ namespace JAPManagementSystem.Services.StudentService
             ServiceResponse<List<GetStudentDto>> response = new ServiceResponse<List<GetStudentDto>>();
             try
             {
-                var students = await _context.Students.Include(c => c.Comments).Include(s => s.Selection).ThenInclude(s => s.JapProgram).OrderByDescending(s => s.FirstName).ToListAsync();
+                var students = await _context.Students
+                    .Include(c => c.Comments)
+                    .Include(s => s.Selection)
+                    .ThenInclude(s => s.JapProgram)
+                    .OrderByDescending(s => s.FirstName)
+                    .ToListAsync();
                 response.Data = students.Select(s => _mapper.Map<GetStudentDto>(s)).ToList();
                 response.Message = "You have fetched all the students in the database.";
             }catch(Exception exc)
@@ -81,8 +92,8 @@ namespace JAPManagementSystem.Services.StudentService
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             try
             {
-                var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == modifiedStudent.Id);
-                if (student != null)
+                var student = await _context.Students.FirstOrDefaultAsync(s => s.Id.Equals(modifiedStudent.Id));
+                if (student != null && modifiedStudent != null)
                 {
                     student.FirstName = modifiedStudent.FirstName;
                     student.LastName = modifiedStudent.LastName;
@@ -90,7 +101,8 @@ namespace JAPManagementSystem.Services.StudentService
                     student.Status = modifiedStudent.Status;
                     if (student.SelectionId != modifiedStudent.SelectionId)
                     {
-                        var selection = await _context.Selections.FirstOrDefaultAsync(s => s.Id == modifiedStudent.SelectionId);
+                        var selection = await _context.Selections
+                            .FirstOrDefaultAsync(s => s.Id == modifiedStudent.SelectionId);
                         if (selection != null)
                         {
                             student.Selection = selection;
@@ -103,7 +115,10 @@ namespace JAPManagementSystem.Services.StudentService
                     throw new Exception("Student with the ID of: " + modifiedStudent.Id + " does not exist.");
                 }
                 await _context.SaveChangesAsync();
-                var fetchedStudent = await _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).FirstOrDefaultAsync(s => s.Id == modifiedStudent.Id);
+                var fetchedStudent = await _context.Students
+                    .Include(s => s.Selection).ThenInclude(s => s.JapProgram)
+                    .FirstOrDefaultAsync(s => s.Id
+                    .Equals(modifiedStudent.Id));
                 response.Data = _mapper.Map<GetStudentDto>(fetchedStudent);
                 response.Message = "You have successfully modified a student " + student.FirstName + " " + student.LastName + ".";
             }catch(Exception exc)
@@ -113,12 +128,15 @@ namespace JAPManagementSystem.Services.StudentService
             }
             return response;
         }
-        public async Task<ServiceResponse<string>> DeleteStudent(int studentId)
+
+        public async Task<ServiceResponse<string>> DeleteStudent(string studentId)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
             try
             {
-                var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == studentId);
+                var student = await _context.Students
+                    .FirstOrDefaultAsync(s => s.Id
+                    .Equals(studentId));
                 _context.Students.Remove(student);
                 await _context.SaveChangesAsync();
                 response.Message = "You have deleted a student: " + student.FirstName + " " + student.LastName + ".";
@@ -133,10 +151,25 @@ namespace JAPManagementSystem.Services.StudentService
         public ServiceResponse<GetStudentPageDto> GetStudentsWithParams(int pageNumber, int pageSize, string firstName, string lastName, string email, string selectionName, string japProgramName, StudentStatus? status, string sort, bool descending)
         {
             ServiceResponse<GetStudentPageDto> response = new ServiceResponse<GetStudentPageDto>();
-            StudentFetchConfig.Initialize(firstName, lastName, email, status, selectionName, japProgramName, sort, descending);
+            StudentFetchConfig.Initialize(
+                firstName,
+                lastName,
+                email,
+                status,
+                selectionName,
+                japProgramName,
+                sort,
+                descending);
             try
             {
-                var students = _context.Students.Include(s => s.Selection).ThenInclude(s => s.JapProgram).Paginate(pageNumber, pageSize, StudentFetchConfig.sorts, StudentFetchConfig.filters);
+                var students = _context.Students
+                    .Include(s => s.Selection)
+                    .ThenInclude(s => s.JapProgram)
+                    .Paginate(
+                    pageNumber,
+                    pageSize,
+                    StudentFetchConfig.sorts,
+                    StudentFetchConfig.filters);
                 response.Data = _mapper.Map<GetStudentPageDto>(students);
                 response.Message = "You have fetched a page no. " + pageNumber + " with " + students.PageSize + " student(s).";
             }
@@ -148,7 +181,7 @@ namespace JAPManagementSystem.Services.StudentService
             return response;
         }
 
-        public async Task<ServiceResponse<GetStudentDto>> GetStudentById(int id)
+        public async Task<ServiceResponse<GetStudentDto>> GetStudentById(string id)
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             try
@@ -157,7 +190,8 @@ namespace JAPManagementSystem.Services.StudentService
                     .Include(s => s.Comments)
                     .Include(s => s.Selection)
                     .ThenInclude(s => s.JapProgram)
-                    .FirstOrDefaultAsync(s => s.Id == id);
+                    .FirstOrDefaultAsync(s => s.Id
+                    .Equals(id));
 
                 if(student == null)
                 {
@@ -171,7 +205,6 @@ namespace JAPManagementSystem.Services.StudentService
             }
             return response;
         }
-
         public async Task<ServiceResponse<List<GetCommentDto>>> AddComment(AddCommentDto newComment)
         {
             ServiceResponse<List<GetCommentDto>> response = new ServiceResponse<List<GetCommentDto>>();
@@ -180,7 +213,11 @@ namespace JAPManagementSystem.Services.StudentService
                 var comment = _mapper.Map<Comment>(newComment);
                 _context.Comments.Add(comment);
                 await _context.SaveChangesAsync();
-                var fetchedComments = await _context.Comments.Where(c => c.StudentId == newComment.StudentId).OrderBy(c => c.CreatedAt).ToListAsync();
+                var fetchedComments = await _context.Comments
+                    .Where(c => c.SId
+                    .Equals(newComment.StudentId))
+                    .OrderBy(c => c.CreatedAt)
+                    .ToListAsync();
                 response.Data = fetchedComments.Select(c => _mapper.Map<GetCommentDto>(c)).ToList();
             }
             catch(Exception exc)

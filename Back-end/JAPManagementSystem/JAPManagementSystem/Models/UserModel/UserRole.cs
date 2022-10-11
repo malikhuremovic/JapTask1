@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace JAPManagementSystem.Models
+namespace JAPManagementSystem.Models.UserModel
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum UserRole
