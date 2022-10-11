@@ -28,7 +28,7 @@ const MainLandingComponent = () => {
     firstName: '',
     lastName: '',
     email: '',
-    sectionName: '',
+    selectionName: '',
     japProgramName: '',
     status: ''
   };
@@ -71,6 +71,9 @@ const MainLandingComponent = () => {
               ...prevState
             };
             UPDATED_PAGE_STATE.page -= 1;
+            if (UPDATED_PAGE_STATE.page < 1) {
+              UPDATED_PAGE_STATE.page = 1;
+            }
             return UPDATED_PAGE_STATE;
           });
         }
@@ -158,7 +161,7 @@ const MainLandingComponent = () => {
       };
       return UPDATED_ACTION_STATE;
     });
-    const id = +ev.target.childNodes[0].id;
+    const id = ev.target.childNodes[0].id;
     const student = students.find(s => s.id === id);
     setStudentFormData(() => {
       return {
