@@ -1,6 +1,5 @@
 ﻿using EntityFrameworkPaginate;
-using JAPManagementSystem.Models;
-using System.ComponentModel.DataAnnotations;
+using JAPManagementSystem.Models.StudentModel;
 
 namespace JAPManagementSystem.Data
 {

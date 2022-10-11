@@ -1,4 +1,4 @@
-using JAPManagementSystem.Extensions;
+﻿using JAPManagementSystem.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

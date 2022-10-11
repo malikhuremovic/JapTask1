@@ -1,6 +1,6 @@
 ﻿using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.DTOs.StudentDto;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.SelectionModel;
 
 namespace JAPManagementSystem.DTOs.Selection
 {

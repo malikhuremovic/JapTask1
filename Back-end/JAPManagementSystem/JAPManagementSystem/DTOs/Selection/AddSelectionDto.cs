@@ -1,4 +1,4 @@
-﻿using JAPManagementSystem.Models;
+﻿using JAPManagementSystem.Models.SelectionModel;
 
 namespace JAPManagementSystem.DTOs.Selection
 {
@@ -10,6 +10,6 @@ namespace JAPManagementSystem.DTOs.Selection
         public SelectionStatus Status { get; set; } = SelectionStatus.Active;
 
         public int? JapProgramId { get; set; }
-        public List<int>? StudentIds { get; set; } = new List<int>();
+        public List<string>? StudentIds { get; set; } = new List<string>();
     }
 }

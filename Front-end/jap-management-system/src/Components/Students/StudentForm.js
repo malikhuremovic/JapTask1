@@ -5,7 +5,8 @@ const StudentForm = ({
   handleFormSubmission,
   handleStudentFormInput,
   studentFormData,
-  availableSelections
+  availableSelections,
+  disabled
 }) => {
   return (
     <Form onSubmit={handleFormSubmission}>
@@ -20,6 +21,7 @@ const StudentForm = ({
             placeholder="Enter first name"
             onChange={handleStudentFormInput}
             value={studentFormData.firstName}
+            disabled={disabled ? true : false}
           />
         </Col>
       </Form.Group>
@@ -34,6 +36,7 @@ const StudentForm = ({
             placeholder="Enter last name"
             onChange={handleStudentFormInput}
             value={studentFormData.lastName}
+            disabled={disabled ? true : false}
           />
         </Col>
       </Form.Group>
@@ -48,6 +51,7 @@ const StudentForm = ({
             placeholder="Enter email"
             onChange={handleStudentFormInput}
             value={studentFormData.email}
+            disabled={disabled ? true : false}
           />
         </Col>
       </Form.Group>
@@ -70,6 +74,7 @@ const StudentForm = ({
             aria-label="Default select example"
             required
             onChange={handleStudentFormInput}
+            disabled={disabled ? true : false}
           >
             {!studentFormData.status && <option value="none">Status</option>}
             <option value="InProgram">InProgram</option>
@@ -95,6 +100,7 @@ const StudentForm = ({
             aria-label="Default select example"
             required
             onChange={handleStudentFormInput}
+            disabled={disabled ? true : false}
           >
             {!studentFormData.selection && (
               <option value="none">Selections</option>

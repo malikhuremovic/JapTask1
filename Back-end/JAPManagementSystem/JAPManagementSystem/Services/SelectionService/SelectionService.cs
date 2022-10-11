@@ -4,6 +4,7 @@ using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Selection;
 using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.SelectionModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace JAPManagementSystem.Services.SelectionService
@@ -23,7 +24,10 @@ namespace JAPManagementSystem.Services.SelectionService
             try
             {
                 var selection = _mapper.Map<Selection>(newSelection);
-                var students = await _context.Students.Where(u => newSelection.StudentIds.Contains(u.Id)).ToListAsync();
+                var students = await _context.Students
+                    .Where(u => newSelection.StudentIds
+                    .Contains(u.Id))
+                    .ToListAsync();
                 foreach (var student in students)
                 {
                     selection.Students.Add(student);
@@ -57,7 +61,10 @@ namespace JAPManagementSystem.Services.SelectionService
             ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
             try
             {
-                var selections = await _context.Selections.Include(s => s.JapProgram).Include(s => s.Students).ToListAsync();
+                var selections = await _context.Selections
+                    .Include(s => s.JapProgram)
+                    .Include(s => s.Students)
+                    .ToListAsync();
                 response.Data = selections.Select(s => _mapper.Map<GetSelectionDto>(s)).ToList();
             }
             catch(Exception exc)
@@ -95,7 +102,9 @@ namespace JAPManagementSystem.Services.SelectionService
             ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
             try
             {
-                var selection = await _context.Selections.FirstOrDefaultAsync(s => s.Name.Equals(selectionName));
+                var selection = await _context.Selections
+                    .FirstOrDefaultAsync(s => s.Name
+                    .Equals(selectionName));
                 if(selection == null)
                 {
                     response.Message = "There is no selection with name: " + selectionName;
@@ -103,7 +112,10 @@ namespace JAPManagementSystem.Services.SelectionService
                 }
                 _context.Selections.Remove(selection);
                 await _context.SaveChangesAsync();
-                var selections = await _context.Selections.Include(s => s.JapProgram).Include(s => s.Students).ToListAsync();
+                var selections = await _context.Selections
+                    .Include(s => s.JapProgram)
+                    .Include(s => s.Students)
+                    .ToListAsync();
                 response.Data = selections.Select(s => _mapper.Map<GetSelectionDto>(s)).ToList();
             }
             catch(Exception exc)
@@ -118,7 +130,10 @@ namespace JAPManagementSystem.Services.SelectionService
             ServiceResponse<GetSelectionDto> response = new ServiceResponse<GetSelectionDto>();
             try
             {
-                var selection = await _context.Selections.Include(s => s.JapProgram).Include(s => s.Students).FirstOrDefaultAsync(s => s.Id == modifiedSelection.Id);
+                var selection = await _context.Selections
+                    .Include(s => s.JapProgram)
+                    .Include(s => s.Students)
+                    .FirstOrDefaultAsync(s => s.Id == modifiedSelection.Id);
                 if(selection == null)
                 {
                     throw new Exception("There is no selection " + modifiedSelection.Name + " with the id of: " + modifiedSelection.Id + ".");
@@ -130,7 +145,8 @@ namespace JAPManagementSystem.Services.SelectionService
               
                 if (selection.JapProgramId != modifiedSelection.JapProgramId)
                 {
-                    var japProgram = await _context.JapPrograms.FirstOrDefaultAsync(jp => jp.Id == modifiedSelection.JapProgramId);
+                    var japProgram = await _context.JapPrograms
+                        .FirstOrDefaultAsync(jp => jp.Id == modifiedSelection.JapProgramId);
                     selection.JapProgramId = modifiedSelection.JapProgramId;
                     selection.JapProgram = japProgram; 
                 }
@@ -150,7 +166,13 @@ namespace JAPManagementSystem.Services.SelectionService
             SelectionFetchConfig.Initialize(name, status, japProgramName, dateStart, dateEnd, sort, descending);
             try
             {
-                var selections = _context.Selections.Include("JapProgram").Paginate(pageNumber, pageSize, SelectionFetchConfig.sorts, SelectionFetchConfig.filters);
+                var selections = _context.Selections
+                    .Include("JapProgram")
+                    .Paginate(
+                    pageNumber,
+                    pageSize,
+                    SelectionFetchConfig.sorts,
+                    SelectionFetchConfig.filters);
                 response.Data = _mapper.Map<GetSelectionPageDto>(selections);
                 response.Message = "You have fetched a page no. " + pageNumber + " with " + selections.RecordCount + " selection(s).";
             }
@@ -166,7 +188,10 @@ namespace JAPManagementSystem.Services.SelectionService
             ServiceResponse<string> response = new ServiceResponse<string>();
             try
             {
-                var selection = await _context.Selections.Include(s => s.Students).Include(s => s.JapProgram).FirstOrDefaultAsync(s => s.Id == id);
+                var selection = await _context.Selections
+                    .Include(s => s.Students)
+                    .Include(s => s.JapProgram)
+                    .FirstOrDefaultAsync(s => s.Id == id);
                 if(selection == null)
                 {
                     throw new Exception("Selection not found");

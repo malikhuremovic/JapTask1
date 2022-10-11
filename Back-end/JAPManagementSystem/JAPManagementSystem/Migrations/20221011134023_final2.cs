@@ -4,7 +4,7 @@
 
 namespace JAPManagementSystem.Migrations
 {
-    public partial class Seededdata : Migration
+    public partial class final2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

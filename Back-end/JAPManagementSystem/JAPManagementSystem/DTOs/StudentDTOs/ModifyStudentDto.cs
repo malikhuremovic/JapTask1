@@ -1,10 +1,10 @@
-﻿using JAPManagementSystem.Models;
+﻿using JAPManagementSystem.Models.StudentModel;
 
 namespace JAPManagementSystem.DTOs.StudentDto
 {
     public class ModifyStudentDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string? FirstName { get; set; } = string.Empty;
         public string? LastName { get; set; } = string.Empty;
         public string? Email { get; set; } = string.Empty;

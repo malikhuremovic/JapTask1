@@ -1,11 +1,17 @@
 ﻿using JAPManagementSystem.Data;
 using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.SelectionModel;
+using JAPManagementSystem.Models.StudentModel;
+using JAPManagementSystem.Models.UserModel;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using System.Text;
 
 namespace JAPManagementSystem.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -14,15 +20,11 @@ namespace JAPManagementSystem.Data
 
         protected override void OnModelCreating(ModelBuilder _modelBuilder)
         {
-            _modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    Id = 1,
-                    UserName = "dummy",
-                    Email = "dummy@user.com",
-                    Password = "test"
-                });
-
+            base.OnModelCreating(_modelBuilder);
+            _modelBuilder.Entity<IdentityUser>().ToTable("UserBase");
+            _modelBuilder.Entity<User>().ToTable("UserData");
+            _modelBuilder.Entity<Admin>().ToTable("Admin");
+            _modelBuilder.Entity<Student>().ToTable("Student");
             _modelBuilder.Entity<JapProgram>().HasData(
             new JapProgram
             {
@@ -55,93 +57,18 @@ namespace JAPManagementSystem.Data
                 },
                 new Selection
                 {
-                    Id = 2,                   
+                    Id = 2,
                     Name = "Dev QA June",
                     DateStart = new DateTime(2022, 6, 5),
                     DateEnd = new DateTime(2022, 8, 5),
                     JapProgramId = 2,
                     Status = SelectionStatus.Completed
                 }
-             ) ;
-
-
-            _modelBuilder.Entity<Student>().HasData(
-                new Student
-                {
-                    Id = 1,
-                    FirstName = "John",
-                    LastName = "Doe",
-                    Email = "johndoe@mail.com",
-                    Status = StudentStatus.InProgram,
-                    SelectionId = 1,
-                },
-                new Student
-                {
-                    Id = 2,
-                    FirstName = "Jane",
-                    LastName = "Doe",
-                    Email = "janendoe@mail.com",
-                    Status = StudentStatus.Success,
-                    SelectionId = 1
-
-                }, new Student
-                {
-                    Id = 3,
-                    FirstName = "John",
-                    LastName = "Doe",
-                    Email = "johndoe@mail.com",
-                    Status = StudentStatus.InProgram,
-                    SelectionId = 1,
-                }, new Student
-                {
-                    Id = 4,
-                    FirstName = "Malik",
-                    LastName = "Huremović",
-                    Email = "malikhuremovic01@mail.com",
-                    Status = StudentStatus.InProgram,
-                    SelectionId = 1,
-                }, 
-                new Student
-                {
-                    Id = 5,
-                    FirstName = "Ishak",
-                    LastName = "Isabegović",
-                    Email = "isakIsabegovic@mail.com",
-                    Status = StudentStatus.InProgram,
-                    SelectionId = 1,
-                },
-                new Student
-                {
-                    Id = 6,
-                    FirstName = "Emir",
-                    LastName = "Bajrić",
-                    Email = "emirbajric@mail.com",
-                    Status = StudentStatus.Success,
-                    SelectionId = 2,
-                },
-                new Student
-                {
-                    Id = 7,
-                    FirstName = "Zlatan",
-                    LastName = "Sprečo",
-                    Email = "zlatansprečo@mail.com",
-                    Status = StudentStatus.Success,
-                    SelectionId = 2,
-                },
-                new Student
-                {
-                    Id = 8,
-                    FirstName = "Sanel",
-                    LastName = "Hodžić",
-                    Email = "sanelh@mail.com",
-                    Status = StudentStatus.Success,
-                    SelectionId = 2,
-                }
-            );
-
+             );
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<JapProgram> JapPrograms { get; set; }
         public DbSet<Selection> Selections { get; set; }

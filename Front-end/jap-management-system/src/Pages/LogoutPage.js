@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
+import { logoutUser } from '../Util/userUtil';
+import routes from '../Data/routes';
 
 const LogoutPage = () => {
   useEffect(() => {
-    localStorage.removeItem('access_token');
-    window.location.replace('/');
+    logoutUser();
+    window.location.replace(routes.login);
   }, []);
 };
 

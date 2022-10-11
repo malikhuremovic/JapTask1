@@ -15,8 +15,6 @@ const LoginPage = () => {
   let INITIAL_LOGIN_INFO_STATE = { show: false, success: false };
   const [loginInfo, setLoginInfo] = useState(INITIAL_LOGIN_INFO_STATE);
 
-  let token = tokenUtil.getAccessToken();
-
   const handleFormSubmit = async ev => {
     ev.preventDefault();
 
@@ -29,8 +27,8 @@ const LoginPage = () => {
       .login(userData)
       .then(response => {
         setLoginInfo(() => {
-          tokenUtil.setAccessToken(response.data.data);
-          history.push('/');
+          tokenUtil.setAccessToken(response.data.data.token);
+          window.location.replace('/');
           let state = { show: true, success: true };
           return state;
         });
@@ -52,9 +50,12 @@ const LoginPage = () => {
     setPassword(ev.target.value);
   };
 
+  if (tokenUtil.getAccessToken()) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className={classes.loginPage}>
-      {token && <Redirect to="/" />}
       <div className="modal d-flex justify-content-center align-items-center">
         <Form className={classes.modal} onSubmit={handleFormSubmit}>
           <Form.Group className="mb-3" controlId="userName">

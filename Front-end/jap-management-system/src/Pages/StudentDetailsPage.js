@@ -1,109 +1,31 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import useQuery from '../Hooks/useQuery';
+import { Form, Row, Col } from 'react-bootstrap';
 
 import studentService from '../Services/studentService';
-import selectionService from '../Services/selectionService';
-
-import StudentForm from '../Components/Students/StudentForm';
 
 import studentIcon from '../Assets/studentIcon.png';
 
 import classes from './StudentDetailsPage.module.css';
-import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import UserContext from '../Store/userContext';
 
 const StudentDetailsPage = () => {
-  const history = useHistory();
-
   const [student, setStudent] = useState({});
-  const [studentEdit, setStudentEdit] = useState({});
-  const INITIAL_COMMENT_STATE = {
-    text: '',
-    studentId: null
-  };
-  const [comment, setComment] = useState(INITIAL_COMMENT_STATE);
-  const [availableSelections, setAvailableSelections] = useState([]);
 
-  const query = useQuery();
+  const ctx = useContext(UserContext);
 
-  const fetchStudents = useCallback(query => {
-    const id = +query.get('id');
+  const fetchStudents = useCallback(() => {
     studentService
-      .fetchStudentById(id)
+      .fetchStudentById(ctx.userDataState.id)
       .then(response => {
         setStudent(response.data.data);
-        setStudentEdit(response.data.data);
       })
       .catch(err => console.log(err));
-
-    selectionService
-      .fetchAllSelections()
-      .then(response => {
-        setAvailableSelections(() => response.data.data);
-      })
-      .catch(err => console.log(err));
-  }, []);
+  }, [ctx]);
 
   useEffect(() => {
-    fetchStudents(query);
-  }, [fetchStudents, student, query]);
-
-  const handleEditStudent = ev => {
-    ev.preventDefault();
-    studentService
-      .modifyStudent(studentEdit)
-      .then(response => {
-        setStudent(response.data.data);
-        history.push('/');
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  const handleStudentFormInput = ev => {
-    const inputName = ev.target.name;
-    const value = ev.target.value;
-    setStudentEdit(prevState => {
-      let student = {
-        ...prevState
-      };
-      if (inputName === 'firstName') {
-        student.firstName = value;
-      } else if (inputName === 'lastName') {
-        student.lastName = value;
-      } else if (inputName === 'email') {
-        student.email = value;
-      } else if (inputName === 'status') {
-        student.status = value;
-      } else if (inputName === 'selection') {
-        student.selectionId = value;
-      }
-      return student;
-    });
-  };
-
-  const handleAddComment = ev => {
-    ev.preventDefault();
-    studentService
-      .addComment(comment)
-      .then(() => {
-        setComment(INITIAL_COMMENT_STATE);
-      })
-      .catch(err => console.log(err));
-  };
-
-  const handleCommentInput = ev => {
-    const value = ev.target.value;
-    const id = +query.get('id');
-    setComment(() => {
-      return {
-        studentId: id,
-        text: value,
-        createdAt: new Date().toISOString().slice(0, 19)
-      };
-    });
-  };
+    fetchStudents();
+  }, [fetchStudents]);
 
   return (
     <div className={classes.container}>
@@ -113,13 +35,144 @@ const StudentDetailsPage = () => {
       </div>
       <div className={classes.student__data}>
         <h5 style={{ marginTop: 20, marginBottom: 35 }}>Personal data</h5>
-        <StudentForm
-          formType={'edit'}
-          availableSelections={availableSelections}
-          handleFormSubmission={handleEditStudent}
-          handleStudentFormInput={handleStudentFormInput}
-          studentFormData={studentEdit}
-        />
+        <Form>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formHorizontalFirstName"
+          >
+            <Form.Label column sm={2}>
+              First name
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                name="firstName"
+                type="text"
+                placeholder="Enter first name"
+                value={student.firstName}
+                disabled={true}
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formHorizontalLastName"
+          >
+            <Form.Label column sm={2}>
+              Last name
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                name="lastName"
+                type="text"
+                placeholder="Enter last name"
+                value={student.lastName}
+                disabled={true}
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Label column sm={2}>
+              Email
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                name="email"
+                type="email"
+                placeholder="Enter email"
+                value={student.email}
+                disabled={true}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formHorizontalStudentStatus"
+          >
+            <Form.Label column sm={2}>
+              Student status
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Select
+                name="status"
+                className="form-select"
+                defaultValue={student.status ? student.status : 'none'}
+                aria-label="Default select example"
+                required
+                disabled={true}
+              >
+                {!student.status && <option value="none">Not Allocated</option>}
+                <option value="InProgram">InProgram</option>
+                <option value="Success">Success</option>
+                <option value="Failed">Failed</option>
+                <option value="Extended">Extended</option>
+              </Form.Select>
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formHorizontalSelection"
+          >
+            <Form.Label column sm={2}>
+              Selection
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Select
+                name="selection"
+                className="form-select"
+                defaultValue={
+                  student.selection ? student.selection.name : 'none'
+                }
+                aria-label="Default select example"
+                required
+                disabled={true}
+              >
+                {!student.selection && (
+                  <option value="none">Not Allocated</option>
+                )}
+                {student.selection && (
+                  <option value={student.selection.name}>
+                    {student.selection.name}
+                  </option>
+                )}
+              </Form.Select>
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formHorizontalSelection"
+          >
+            <Form.Label column sm={2}>
+              Program
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Select
+                name="selection"
+                className="form-select"
+                defaultValue={
+                  student.selection ? student.selection.japProgram.name : 'none'
+                }
+                aria-label="Default select example"
+                required
+                disabled={true}
+              >
+                {!student.selection && (
+                  <option value="none">Not Allocated</option>
+                )}
+                {student.selection && (
+                  <option value={student.selection.japProgram.name}>
+                    {student.selection.japProgram.name}
+                  </option>
+                )}
+              </Form.Select>
+            </Col>
+          </Form.Group>
+        </Form>
       </div>
       <div className={classes.student__comments}>
         <h5 style={{ marginTop: 20, marginBottom: 35 }}>Comments</h5>
@@ -134,28 +187,6 @@ const StudentDetailsPage = () => {
               </div>
             );
           })}
-
-        <div className={classes.add__comment}>
-          <Form onSubmit={handleAddComment}>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Write a comment:</Form.Label>
-              <Form.Control
-                value={comment.text}
-                onChange={handleCommentInput}
-                as="textarea"
-                rows={3}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Button type="submit" variant="primary">
-                Add comment
-              </Button>
-            </Form.Group>
-          </Form>
-        </div>
       </div>
       <div className={classes.comments_form}></div>
     </div>
