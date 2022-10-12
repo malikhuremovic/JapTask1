@@ -43,10 +43,16 @@ namespace JAPManagementSystem.Services.AuthService
             try
             {
                 var result = await _userManager.CreateAsync(student, password);
+                StringBuilder stringBuilder = new StringBuilder();
                 if (!result.Succeeded)
-                    foreach (IdentityError error in result.Errors) {
+                {
+                    foreach (IdentityError error in result.Errors)
+                    {
+                        stringBuilder.Append(error.Description);
                         Console.WriteLine(error.Description);
                     }
+                    throw new Exception(stringBuilder.ToString());
+                }
                 response.Data = _mapper.Map<GetUserDto>(student);
                 response.Message = "User successfully created";
             }
@@ -73,11 +79,16 @@ namespace JAPManagementSystem.Services.AuthService
                 _mailService.SendConfirmationEmail(adminCreated);
                 response.Message = "Admin successfully added.";
                 response.Data = _mapper.Map<GetUserDto>(adminUser);
+                StringBuilder stringBuilder = new StringBuilder();
                 if (!result.Succeeded)
+                {
                     foreach (IdentityError error in result.Errors)
                     {
+                        stringBuilder.Append(error.Description);
                         Console.WriteLine(error.Description);
                     }
+                    throw new Exception(stringBuilder.ToString());
+                }
             }
             catch (Exception exc)
             {
