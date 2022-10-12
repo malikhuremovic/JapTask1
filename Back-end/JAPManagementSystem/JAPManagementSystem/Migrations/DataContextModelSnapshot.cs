@@ -35,9 +35,6 @@ namespace JAPManagementSystem.Migrations
 
                     b.Property<string>("SId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Text")
@@ -46,7 +43,7 @@ namespace JAPManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("SId");
 
                     b.ToTable("Comments");
                 });
@@ -385,7 +382,9 @@ namespace JAPManagementSystem.Migrations
                 {
                     b.HasOne("JAPManagementSystem.Models.StudentModel.Student", "Student")
                         .WithMany("Comments")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("SId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Student");
                 });

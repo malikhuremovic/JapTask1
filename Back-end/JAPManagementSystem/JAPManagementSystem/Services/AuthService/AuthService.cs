@@ -70,7 +70,7 @@ namespace JAPManagementSystem.Services.AuthService
                 var result = await _userManager.CreateAsync(adminUser, password);
                 var adminCreated = _mapper.Map<AdminUserCreatedDto>(adminUser);
                 adminCreated.Password = password;
-                // _mailService.SendConfirmationEmail(adminCreated);
+                _mailService.SendConfirmationEmail(adminCreated);
                 response.Message = "Admin successfully added.";
                 response.Data = _mapper.Map<GetUserDto>(adminUser);
                 if (!result.Succeeded)

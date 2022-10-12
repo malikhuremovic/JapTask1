@@ -19,7 +19,7 @@ const StudentDetailsPageAdmin = () => {
   const [studentEdit, setStudentEdit] = useState({});
   const INITIAL_COMMENT_STATE = {
     text: '',
-    studentId: null
+    SId: null
   };
   const [comment, setComment] = useState(INITIAL_COMMENT_STATE);
   const [availableSelections, setAvailableSelections] = useState([]);
@@ -87,7 +87,14 @@ const StudentDetailsPageAdmin = () => {
     ev.preventDefault();
     studentService
       .addComment(comment)
-      .then(() => {
+      .then(comments => {
+        setStudent(prevState => {
+          const UPDATED_STATE = {
+            ...prevState
+          };
+          UPDATED_STATE.comments = comments.data.data;
+          return UPDATED_STATE;
+        });
         setComment(INITIAL_COMMENT_STATE);
       })
       .catch(err => console.log(err));
@@ -95,10 +102,10 @@ const StudentDetailsPageAdmin = () => {
 
   const handleCommentInput = ev => {
     const value = ev.target.value;
-    const id = +query.get('id');
+    const id = query.get('id');
     setComment(() => {
       return {
-        studentId: id,
+        SId: id,
         text: value,
         createdAt: new Date().toISOString().slice(0, 19)
       };
