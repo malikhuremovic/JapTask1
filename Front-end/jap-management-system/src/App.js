@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import routes from './Data/routes';
 
@@ -23,6 +23,7 @@ function App() {
         <Route exact path={routes.login}>
           <LoginPage />
         </Route>
+        {!userDataState && <Redirect to={routes.login} />}
         <ProtectedRoute exact path={routes.logout} roles={['Admin', 'Student']}>
           <LogoutPage />
         </ProtectedRoute>

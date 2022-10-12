@@ -181,7 +181,7 @@ const MainLandingComponent = () => {
       };
       return UPDATED_ACTION_STATE;
     });
-    const id = +ev.target.childNodes[0].id;
+    const id = ev.target.childNodes[0].id;
     const student = students.find(s => s.id === id);
     setStudentFormData(() => {
       return {

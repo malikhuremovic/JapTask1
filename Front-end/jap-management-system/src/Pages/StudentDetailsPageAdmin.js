@@ -27,7 +27,7 @@ const StudentDetailsPageAdmin = () => {
   const query = useQuery();
 
   const fetchStudents = useCallback(query => {
-    const id = +query.get('id');
+    const id = query.get('id');
     studentService
       .fetchStudentById(id)
       .then(response => {
@@ -46,7 +46,7 @@ const StudentDetailsPageAdmin = () => {
 
   useEffect(() => {
     fetchStudents(query);
-  }, [fetchStudents, student, query]);
+  }, [fetchStudents, query]);
 
   const handleEditStudent = ev => {
     ev.preventDefault();
