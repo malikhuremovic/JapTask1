@@ -1,6 +1,7 @@
-import classes from './ProgramTable.module.css';
 import searchIcon from '../Assets/searchIcon.png';
 import sortIconDesc from '../Assets/sortIconAsc.png';
+
+import classes from './ProgramTable.module.css';
 
 const ProgramTable = ({ programs }) => {
   return (

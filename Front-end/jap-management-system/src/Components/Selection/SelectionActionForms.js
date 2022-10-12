@@ -1,6 +1,7 @@
-import classes from '../Students/ActionForms.module.css';
 import SelectionDeleteForm from './SelectionDeleteForm';
 import SelectionForm from './SelectionForm';
+
+import classes from '../Students/ActionForms.module.css';
 
 const SelectionActionForms = ({
   handleSelectionFormInput,

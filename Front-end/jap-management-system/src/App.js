@@ -1,6 +1,10 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+import React, { useContext } from 'react';
+
 import routes from './Data/routes';
+
+import UserContext from './Store/userContext';
 
 import LoginPage from './Pages/LoginPage';
 import LandingPage from './Pages/LandingPage';
@@ -9,11 +13,9 @@ import ProgramPage from './Pages/ProgramPage';
 import LogoutPage from './Pages/LogoutPage';
 import PageLayoutWrapper from './Pages/PageLayoutWrapper';
 import MainSelectionComponent from './Components/Selection/MainSelectionComponent';
-import './App.module.css';
-import UserContext from './Store/userContext';
-import { useContext } from 'react';
 import ProtectedRoute from './Pages/ProtectedRoute';
-import React from 'react';
+
+import './App.module.css';
 
 function App() {
   const { userDataState } = useContext(UserContext);

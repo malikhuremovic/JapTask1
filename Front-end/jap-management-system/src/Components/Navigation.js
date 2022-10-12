@@ -1,11 +1,13 @@
+import React, { useContext } from 'react';
+import UserContext from '../Store/userContext';
+
 import logo from '../Assets/logo.svg';
 import userIcon from '../Assets/userIcon.png';
-import { useContext } from 'react';
-import classes from './Navigation.module.css';
+
 import { Link } from 'react-router-dom';
 
-import React from 'react';
-import UserContext from '../Store/userContext';
+import classes from './Navigation.module.css';
+
 const Navigation = () => {
   const { userDataState } = useContext(UserContext);
   const openNav = () => {
