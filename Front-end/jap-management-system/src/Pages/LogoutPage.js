@@ -5,8 +5,8 @@ import routes from '../Data/routes';
 const LogoutPage = () => {
   useEffect(() => {
     logoutUser();
-    window.location.replace(routes.login);
   }, []);
+  return window.location.replace(routes.login);
 };
 
 export default LogoutPage;
