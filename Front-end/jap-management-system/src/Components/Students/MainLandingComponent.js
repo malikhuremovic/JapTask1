@@ -168,7 +168,9 @@ const MainLandingComponent = () => {
         id: student.id,
         firstName: student.firstName,
         lastName: student.lastName,
-        email: student.email
+        email: student.email,
+        status: student.status,
+        selection: student.selection
       };
     });
   };
