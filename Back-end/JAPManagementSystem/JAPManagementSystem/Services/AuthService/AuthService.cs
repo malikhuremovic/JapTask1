@@ -72,13 +72,8 @@ namespace JAPManagementSystem.Services.AuthService
                 var adminUser = _mapper.Map<Admin>(admin);
                 adminUser.Role = UserRole.Admin;
                 adminUser.UserName = admin.FirstName.ToLower() + admin.LastName.ToLower();
-                var password = "mojasifra01";
+                var password = RandomCreatePassword(10);
                 var result = await _userManager.CreateAsync(adminUser, password);
-                var adminCreated = _mapper.Map<AdminUserCreatedDto>(adminUser);
-                adminCreated.Password = password;
-                _mailService.SendConfirmationEmail(adminCreated);
-                response.Message = "Admin successfully added.";
-                response.Data = _mapper.Map<GetUserDto>(adminUser);
                 StringBuilder stringBuilder = new StringBuilder();
                 if (!result.Succeeded)
                 {
@@ -89,6 +84,11 @@ namespace JAPManagementSystem.Services.AuthService
                     }
                     throw new Exception(stringBuilder.ToString());
                 }
+                var adminCreated = _mapper.Map<AdminUserCreatedDto>(adminUser);
+                adminCreated.Password = password;
+                _mailService.SendConfirmationEmail(adminCreated);
+                response.Message = "Admin successfully added.";
+                response.Data = _mapper.Map<GetUserDto>(adminUser);
             }
             catch (Exception exc)
             {
@@ -130,7 +130,7 @@ namespace JAPManagementSystem.Services.AuthService
 
         public StudentUserCreatedDto CreateStudentUser(AddStudentDto newStudent)
         {
-            string password = RandomCreatePassword(30);
+            string password = RandomCreatePassword(10);
             return new StudentUserCreatedDto
             {
                 FirstName = newStudent.FirstName,
