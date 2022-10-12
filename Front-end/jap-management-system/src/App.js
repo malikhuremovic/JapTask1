@@ -41,9 +41,6 @@ function App() {
         <ProtectedRoute exact path={routes.index} roles={['Admin', 'Student']}>
           <LandingPage role={userDataState ? userDataState.role : ''} />
         </ProtectedRoute>
-        <Route path="*">
-          <h1>404 Not found</h1>
-        </Route>
       </Switch>
     </PageLayoutWrapper>
   );
