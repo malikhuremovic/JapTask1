@@ -215,7 +215,7 @@ namespace JAPManagementSystem.Services.StudentService
                 await _context.SaveChangesAsync();
                 var fetchedComments = await _context.Comments
                     .Where(c => c.SId
-                    .Equals(newComment.StudentId))
+                    .Equals(newComment.SId))
                     .OrderBy(c => c.CreatedAt)
                     .ToListAsync();
                 response.Data = fetchedComments.Select(c => _mapper.Map<GetCommentDto>(c)).ToList();

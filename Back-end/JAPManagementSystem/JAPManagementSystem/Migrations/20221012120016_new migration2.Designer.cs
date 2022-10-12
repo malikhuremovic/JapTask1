@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JAPManagementSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221010081537_New3")]
-    partial class New3
+    [Migration("20221012120016_new migration2")]
+    partial class newmigration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,10 +35,8 @@ namespace JAPManagementSystem.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StudentId")
+                    b.Property<string>("SId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Text")
@@ -47,7 +45,7 @@ namespace JAPManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("SId");
 
                     b.ToTable("Comments");
                 });
@@ -93,7 +91,7 @@ namespace JAPManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.Selection", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -208,10 +206,6 @@ namespace JAPManagementSystem.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -262,9 +256,7 @@ namespace JAPManagementSystem.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                    b.ToTable("UserBase", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -348,7 +340,7 @@ namespace JAPManagementSystem.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.User", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.UserModel.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -360,30 +352,22 @@ namespace JAPManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
-
-                    b.HasDiscriminator().HasValue("User");
+                    b.ToTable("UserData", (string)null);
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.Admin", b =>
                 {
-                    b.HasBaseType("JAPManagementSystem.Models.User");
+                    b.HasBaseType("JAPManagementSystem.Models.UserModel.User");
 
-                    b.HasDiscriminator().HasValue("Admin");
+                    b.ToTable("Admin", (string)null);
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.Student", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.StudentModel.Student", b =>
                 {
-                    b.HasBaseType("JAPManagementSystem.Models.User");
+                    b.HasBaseType("JAPManagementSystem.Models.UserModel.User");
 
                     b.Property<int?>("SelectionId")
                         .HasColumnType("int");
@@ -393,19 +377,21 @@ namespace JAPManagementSystem.Migrations
 
                     b.HasIndex("SelectionId");
 
-                    b.HasDiscriminator().HasValue("Student");
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.Comment", b =>
                 {
-                    b.HasOne("JAPManagementSystem.Models.Student", "Student")
+                    b.HasOne("JAPManagementSystem.Models.StudentModel.Student", "Student")
                         .WithMany("Comments")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("SId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.Selection", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>
                 {
                     b.HasOne("JAPManagementSystem.Models.JapProgram", "JapProgram")
                         .WithMany()
@@ -465,21 +451,45 @@ namespace JAPManagementSystem.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.Student", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.UserModel.User", b =>
                 {
-                    b.HasOne("JAPManagementSystem.Models.Selection", "Selection")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("JAPManagementSystem.Models.UserModel.User", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("JAPManagementSystem.Models.Admin", b =>
+                {
+                    b.HasOne("JAPManagementSystem.Models.UserModel.User", null)
+                        .WithOne()
+                        .HasForeignKey("JAPManagementSystem.Models.Admin", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("JAPManagementSystem.Models.StudentModel.Student", b =>
+                {
+                    b.HasOne("JAPManagementSystem.Models.UserModel.User", null)
+                        .WithOne()
+                        .HasForeignKey("JAPManagementSystem.Models.StudentModel.Student", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("JAPManagementSystem.Models.SelectionModel.Selection", "Selection")
                         .WithMany("Students")
                         .HasForeignKey("SelectionId");
 
                     b.Navigation("Selection");
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.Selection", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.Student", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.StudentModel.Student", b =>
                 {
                     b.Navigation("Comments");
                 });
