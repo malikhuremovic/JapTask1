@@ -9,7 +9,7 @@ builder.Services.RegisterDBContext(builder.Configuration);
 builder.Services.RegisterServices();
 builder.Services.RegisterAutoMapper();
 builder.Services.RegisterAuthentication(builder.Configuration);
-builder.Services.RegisterCors();
+builder.Services.RegisterCors(builder.Configuration);
 
 var app = builder.Build();
 

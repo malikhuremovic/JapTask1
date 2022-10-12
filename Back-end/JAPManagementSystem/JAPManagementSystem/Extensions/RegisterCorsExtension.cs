@@ -1,18 +1,16 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace JAPManagementSystem.Extensions
+﻿namespace JAPManagementSystem.Extensions
 {
     public static class RegisterCorsExtension
     {
         public static string origin = "Front-End-React-App";
-        public static void RegisterCors(this IServiceCollection service)
+        public static void RegisterCors(this IServiceCollection service, ConfigurationManager config)
         {
             service.AddCors(options =>
             {
                 options.AddPolicy(name: origin,
                                   policy =>
                                   {
-                                      policy.WithOrigins("http://localhost:3000")
+                                      policy.WithOrigins(config.GetSection("ApplicationData:ClientUrl").Value)
                                       .AllowAnyHeader()
                                       .AllowAnyMethod();
                                   });

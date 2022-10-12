@@ -8,10 +8,7 @@ using JAPManagementSystem.Models;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Services.AuthService;
 using JAPManagementSystem.Services.EmailService;
-using MailKit;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
 
 namespace JAPManagementSystem.Services.StudentService
 {
