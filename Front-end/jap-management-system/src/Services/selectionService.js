@@ -12,6 +12,16 @@ const fetchAllSelections = () => {
   });
 };
 
+const fetchSelectionsReport = () => {
+  const token = tokenUtil.getAccessToken();
+  return axios.get(config.API_URL + `/Selection/get/report`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
 const fetchSelectionsParams = params => {
   let query = '';
   for (let param in params) {
@@ -59,6 +69,7 @@ const deleteSelection = data => {
 const services = {
   fetchAllSelections,
   fetchSelectionsParams,
+  fetchSelectionsReport,
   addSelection,
   modifySelection,
   deleteSelection

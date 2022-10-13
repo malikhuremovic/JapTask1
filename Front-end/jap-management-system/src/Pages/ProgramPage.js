@@ -25,6 +25,7 @@ const ProgramPage = () => {
     <div className={classes.container}>
       <div className={classes.top}>
         <img src={programIcon} alt="student" />
+        <span className={classes.pageCaption}>Program(s)</span>
       </div>
       <ProgramTable programs={programs} />
     </div>

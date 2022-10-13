@@ -13,6 +13,7 @@ namespace JAPManagementSystem.AutoMapperMaps
             CreateMap<Selection, GetSelectionDto>();
             CreateMap<Page<Selection>, GetSelectionPageDto>();
             CreateMap<ModifySelectionDto, Selection>().ForMember(dest => dest.Students, act => act.Ignore());
+            CreateMap<Selection, SelectionReportDto>().ForMember(dest => dest.JapProgramName, opt => opt.MapFrom(src => src.JapProgram.Name));
         }
     }
 }

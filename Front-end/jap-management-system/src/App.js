@@ -16,6 +16,7 @@ import MainSelectionComponent from './Components/Selection/MainSelectionComponen
 import ProtectedRoute from './Pages/ProtectedRoute';
 
 import './App.module.css';
+import ReportPage from './Pages/ReportPage';
 
 function App() {
   const { userDataState } = useContext(UserContext);
@@ -34,6 +35,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.programDetails} roles={['Admin']}>
           <ProgramPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path={routes.report} roles={['Admin']}>
+          <ReportPage />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.studentDetails} roles={['Admin']}>
           <StudentDetailsPageAdmin />

@@ -12,6 +12,7 @@ namespace JAPManagementSystem.DTOs.Selection
         public SelectionStatus Status { get; set; }
         public DateTime DateEnd { get; set; }
         public GetProgramDto JapProgram { get; set; }
+        public int SuccessRate { get; set; }
         public ICollection<GetStudentDto> Students { get; set; } = new List<GetStudentDto>();
     }
 }

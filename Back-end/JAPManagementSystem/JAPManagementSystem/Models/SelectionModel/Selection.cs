@@ -12,6 +12,7 @@ namespace JAPManagementSystem.Models.SelectionModel
         public SelectionStatus Status { get; set; }
         public int? JapProgramId { get; set; }
         public JapProgram? JapProgram { get; set; }
+        public int? SuccessRate { get; set; }
         public ICollection<Student>? Students { get; set; } = new List<Student>();
     }
 }

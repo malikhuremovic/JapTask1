@@ -43,6 +43,11 @@ const Navigation = () => {
                       Program Management
                     </Link>
                   )}
+                  {userDataState.role === 'Admin' && (
+                    <Link onClick={closeNav} to="/report">
+                      Report
+                    </Link>
+                  )}
                   {userDataState.role === 'Student' && (
                     <Link onClick={closeNav} to="/">
                       My Profile
@@ -72,10 +77,7 @@ const Navigation = () => {
             {userDataState && (
               <div className={classes.user}>
                 <img src={userIcon} alt="user" />
-                <span>
-                  Welcome,{' '}
-                  {userDataState.firstName + ' ' + userDataState.lastName}
-                </span>
+                <span>{userDataState.userName}</span>
               </div>
             )}
           </div>

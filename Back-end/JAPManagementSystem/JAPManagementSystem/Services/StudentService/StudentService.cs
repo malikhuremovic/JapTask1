@@ -39,7 +39,7 @@ namespace JAPManagementSystem.Services.StudentService
                 try
                 {
                     await _authService.RegisterStudentUser(student, studentUser.Password);
-                    _mailService.SendConfirmationEmail(studentUser);
+                    //_mailService.SendConfirmationEmail(studentUser);
                 }
                 catch (Exception exc)
                 {
