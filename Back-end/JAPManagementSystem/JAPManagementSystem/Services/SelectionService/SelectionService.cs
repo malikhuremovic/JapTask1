@@ -2,7 +2,6 @@
 using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Selection;
-using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Models.SelectionModel;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +52,23 @@ namespace JAPManagementSystem.Services.SelectionService
                 response.Message = exc.Message;
             }
 
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<GetSelectionDto>>> GetSelectionsReport()
+        {
+            ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
+            try
+            {
+                var result = await _context.Selections.FromSqlRaw("GetSelectionSuccessRate").ToListAsync();
+                response.Data = result.Select(s => _mapper.Map<GetSelectionDto>(s)).ToList();
+                response.Message = "You have successfully fetched the selection report";
+            }
+            catch (Exception exc)
+            {
+                response.Success = false;
+                response.Message = exc.Message;
+            }
             return response;
         }
 

@@ -6,9 +6,7 @@ using JAPManagementSystem.Models;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Models.UserModel;
 using JAPManagementSystem.Services.EmailService;
-using MailKit;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -43,10 +41,16 @@ namespace JAPManagementSystem.Services.AuthService
             try
             {
                 var result = await _userManager.CreateAsync(student, password);
+                StringBuilder stringBuilder = new StringBuilder();
                 if (!result.Succeeded)
-                    foreach (IdentityError error in result.Errors) {
+                {
+                    foreach (IdentityError error in result.Errors)
+                    {
+                        stringBuilder.Append(error.Description);
                         Console.WriteLine(error.Description);
                     }
+                    throw new Exception(stringBuilder.ToString());
+                }
                 response.Data = _mapper.Map<GetUserDto>(student);
                 response.Message = "User successfully created";
             }
@@ -66,18 +70,23 @@ namespace JAPManagementSystem.Services.AuthService
                 var adminUser = _mapper.Map<Admin>(admin);
                 adminUser.Role = UserRole.Admin;
                 adminUser.UserName = admin.FirstName.ToLower() + admin.LastName.ToLower();
-                var password = "mojasifra01";
+                var password = RandomCreatePassword(10);
                 var result = await _userManager.CreateAsync(adminUser, password);
+                StringBuilder stringBuilder = new StringBuilder();
+                if (!result.Succeeded)
+                {
+                    foreach (IdentityError error in result.Errors)
+                    {
+                        stringBuilder.Append(error.Description);
+                        Console.WriteLine(error.Description);
+                    }
+                    throw new Exception(stringBuilder.ToString());
+                }
                 var adminCreated = _mapper.Map<AdminUserCreatedDto>(adminUser);
                 adminCreated.Password = password;
                 _mailService.SendConfirmationEmail(adminCreated);
                 response.Message = "Admin successfully added.";
                 response.Data = _mapper.Map<GetUserDto>(adminUser);
-                if (!result.Succeeded)
-                    foreach (IdentityError error in result.Errors)
-                    {
-                        Console.WriteLine(error.Description);
-                    }
             }
             catch (Exception exc)
             {
@@ -119,7 +128,7 @@ namespace JAPManagementSystem.Services.AuthService
 
         public StudentUserCreatedDto CreateStudentUser(AddStudentDto newStudent)
         {
-            string password = RandomCreatePassword(30);
+            string password = RandomCreatePassword(10);
             return new StudentUserCreatedDto
             {
                 FirstName = newStudent.FirstName,

@@ -9,6 +9,7 @@ namespace JAPManagementSystem.Services.SelectionService
     {
         Task<ServiceResponse<GetSelectionDto>> AddSelection(AddSelectionDto newSelection);
         Task<ServiceResponse<List<GetSelectionDto>>> GetAllSelections();
+        Task<ServiceResponse<List<GetSelectionDto>>> GetSelectionsReport();
         ServiceResponse<GetSelectionPageDto> GetSelectionsWithParams(int pageNumber, int pageSize, string? name, string? japProgramName, DateTime? dateStart, DateTime? dateEnd, SelectionStatus? status, string sort, bool descending);
         Task<ServiceResponse<GetSelectionDto>> GetSelectionById(int selectionId);
         Task<ServiceResponse<GetSelectionDto>> ModifySelection(ModifySelectionDto modifiedSelection);

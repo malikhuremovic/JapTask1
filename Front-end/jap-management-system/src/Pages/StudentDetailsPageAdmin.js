@@ -1,16 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import useQuery from '../Hooks/useQuery';
+import { useHistory } from 'react-router-dom';
 
-import studentService from '../Services/studentService';
-import selectionService from '../Services/selectionService';
+import useQuery from '../Hooks/useQuery';
 
 import StudentForm from '../Components/Students/StudentForm';
 
 import studentIcon from '../Assets/studentIcon.png';
 
+import studentService from '../Services/studentService';
+import selectionService from '../Services/selectionService';
+
 import classes from './StudentDetailsPage.module.css';
-import { useHistory } from 'react-router-dom';
 
 const StudentDetailsPageAdmin = () => {
   const history = useHistory();

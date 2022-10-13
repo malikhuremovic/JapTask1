@@ -32,7 +32,18 @@ namespace JAPManagementSystem.Controllers
             return StatusCode(201, response);
         }
 
-        [HttpGet("get/all")]
+        [HttpGet("get/report")]
+        public async Task<ActionResult<ServiceResponse<List<GetSelectionDto>>>> GetSelectionsReport()
+        {
+            var response = await _selectionService.GetSelectionsReport();
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+[HttpGet("get/all")]
         public async Task<ActionResult<ServiceResponse<List<GetSelectionDto>>>> GetAllSelections()
         {
             ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();

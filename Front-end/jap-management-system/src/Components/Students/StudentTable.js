@@ -5,9 +5,9 @@ import sortIconAsc from '../../Assets/sortIconDesc.png';
 import sortIconDesc from '../../Assets/sortIconAsc.png';
 
 import { Button, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import classes from './StudentTable.module.css';
-import { Link } from 'react-router-dom';
 
 const StudentTable = ({
   handlePageState,

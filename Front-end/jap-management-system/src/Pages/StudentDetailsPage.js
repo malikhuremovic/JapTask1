@@ -1,13 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 
 import studentService from '../Services/studentService';
+import UserContext from '../Store/userContext';
 
 import studentIcon from '../Assets/studentIcon.png';
 
 import classes from './StudentDetailsPage.module.css';
-import { useContext } from 'react';
-import UserContext from '../Store/userContext';
 
 const StudentDetailsPage = () => {
   const [student, setStudent] = useState({});

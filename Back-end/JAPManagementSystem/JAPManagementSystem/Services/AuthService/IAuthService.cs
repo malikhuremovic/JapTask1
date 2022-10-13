@@ -13,6 +13,5 @@ namespace JAPManagementSystem.Services.AuthService
         Task<ServiceResponse<GetUserDto>> RegisterStudentUser(Student student, string password);
         Task<ServiceResponse<GetUserDto>> Login(UserLoginDto user);
         Task<ServiceResponse<GetUserDto>> RegisterAdminUser(AddAdminDto admin);
-
     }
 }

@@ -8,10 +8,7 @@ using JAPManagementSystem.Models;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Services.AuthService;
 using JAPManagementSystem.Services.EmailService;
-using MailKit;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
 
 namespace JAPManagementSystem.Services.StudentService
 {
@@ -42,7 +39,7 @@ namespace JAPManagementSystem.Services.StudentService
                 try
                 {
                     await _authService.RegisterStudentUser(student, studentUser.Password);
-                    _mailService.SendConfirmationEmail(studentUser);
+                    //_mailService.SendConfirmationEmail(studentUser);
                 }
                 catch (Exception exc)
                 {

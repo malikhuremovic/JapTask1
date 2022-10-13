@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { logoutUser } from '../Util/userUtil';
+
 import routes from '../Data/routes';
 
 const LogoutPage = () => {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JAPManagementSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221012120016_new migration2")]
-    partial class newmigration2
+    [Migration("20221013052821_help5")]
+    partial class help5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,6 +115,9 @@ namespace JAPManagementSystem.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SuccessRate")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("JapProgramId");
@@ -206,6 +209,10 @@ namespace JAPManagementSystem.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -256,7 +263,9 @@ namespace JAPManagementSystem.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("UserBase", (string)null);
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -355,14 +364,14 @@ namespace JAPManagementSystem.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.ToTable("UserData", (string)null);
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.Admin", b =>
                 {
                     b.HasBaseType("JAPManagementSystem.Models.UserModel.User");
 
-                    b.ToTable("Admin", (string)null);
+                    b.HasDiscriminator().HasValue("Admin");
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.StudentModel.Student", b =>
@@ -377,7 +386,7 @@ namespace JAPManagementSystem.Migrations
 
                     b.HasIndex("SelectionId");
 
-                    b.ToTable("Student", (string)null);
+                    b.HasDiscriminator().HasValue("Student");
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.Comment", b =>
@@ -451,32 +460,8 @@ namespace JAPManagementSystem.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.UserModel.User", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithOne()
-                        .HasForeignKey("JAPManagementSystem.Models.UserModel.User", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("JAPManagementSystem.Models.Admin", b =>
-                {
-                    b.HasOne("JAPManagementSystem.Models.UserModel.User", null)
-                        .WithOne()
-                        .HasForeignKey("JAPManagementSystem.Models.Admin", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("JAPManagementSystem.Models.StudentModel.Student", b =>
                 {
-                    b.HasOne("JAPManagementSystem.Models.UserModel.User", null)
-                        .WithOne()
-                        .HasForeignKey("JAPManagementSystem.Models.StudentModel.Student", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
                     b.HasOne("JAPManagementSystem.Models.SelectionModel.Selection", "Selection")
                         .WithMany("Students")
                         .HasForeignKey("SelectionId");

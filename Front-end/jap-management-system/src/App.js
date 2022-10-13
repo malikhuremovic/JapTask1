@@ -1,6 +1,10 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+import React, { useContext } from 'react';
+
 import routes from './Data/routes';
+
+import UserContext from './Store/userContext';
 
 import LoginPage from './Pages/LoginPage';
 import LandingPage from './Pages/LandingPage';
@@ -9,11 +13,10 @@ import ProgramPage from './Pages/ProgramPage';
 import LogoutPage from './Pages/LogoutPage';
 import PageLayoutWrapper from './Pages/PageLayoutWrapper';
 import MainSelectionComponent from './Components/Selection/MainSelectionComponent';
-import './App.module.css';
-import UserContext from './Store/userContext';
-import { useContext } from 'react';
 import ProtectedRoute from './Pages/ProtectedRoute';
-import React from 'react';
+
+import './App.module.css';
+import ReportPage from './Pages/ReportPage';
 
 function App() {
   const { userDataState } = useContext(UserContext);
@@ -33,15 +36,15 @@ function App() {
         <ProtectedRoute exact path={routes.programDetails} roles={['Admin']}>
           <ProgramPage />
         </ProtectedRoute>
+        <ProtectedRoute exact path={routes.report} roles={['Admin']}>
+          <ReportPage />
+        </ProtectedRoute>
         <ProtectedRoute exact path={routes.studentDetails} roles={['Admin']}>
           <StudentDetailsPageAdmin />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.index} roles={['Admin', 'Student']}>
           <LandingPage role={userDataState ? userDataState.role : ''} />
         </ProtectedRoute>
-        <Route path="*">
-          <h1>404 Not found</h1>
-        </Route>
       </Switch>
     </PageLayoutWrapper>
   );

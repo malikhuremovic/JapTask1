@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import App from './App';
 import utils from './Util/tokenUtil';
+
 import { UserContextProvider } from './Store/userContext';
 import { logoutUser } from './Util/userUtil';
-import services from './Services/userService';
 import { BrowserRouter } from 'react-router-dom';
+
+import services from './Services/userService';
 
 const initialize = async () => {
   const token = utils.getAccessToken();

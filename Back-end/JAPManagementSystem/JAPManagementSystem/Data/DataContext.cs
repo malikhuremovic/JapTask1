@@ -21,10 +21,6 @@ namespace JAPManagementSystem.Data
         protected override void OnModelCreating(ModelBuilder _modelBuilder)
         {
             base.OnModelCreating(_modelBuilder);
-            _modelBuilder.Entity<IdentityUser>().ToTable("UserBase");
-            _modelBuilder.Entity<User>().ToTable("UserData");
-            _modelBuilder.Entity<Admin>().ToTable("Admin");
-            _modelBuilder.Entity<Student>().ToTable("Student");
             _modelBuilder.Entity<JapProgram>().HasData(
             new JapProgram
             {

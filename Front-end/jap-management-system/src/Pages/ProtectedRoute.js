@@ -1,7 +1,9 @@
 import { useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import routes from '../Data/routes';
+
 import UserContext from '../Store/userContext';
+
+import routes from '../Data/routes';
 
 const ProtectedRoute = ({ children, path, roles }) => {
   const { userDataState } = useContext(UserContext);

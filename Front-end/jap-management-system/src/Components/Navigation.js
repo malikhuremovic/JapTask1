@@ -1,11 +1,13 @@
+import React, { useContext } from 'react';
+import UserContext from '../Store/userContext';
+
 import logo from '../Assets/logo.svg';
 import userIcon from '../Assets/userIcon.png';
-import { useContext } from 'react';
-import classes from './Navigation.module.css';
+
 import { Link } from 'react-router-dom';
 
-import React from 'react';
-import UserContext from '../Store/userContext';
+import classes from './Navigation.module.css';
+
 const Navigation = () => {
   const { userDataState } = useContext(UserContext);
   const openNav = () => {
@@ -41,6 +43,11 @@ const Navigation = () => {
                       Program Management
                     </Link>
                   )}
+                  {userDataState.role === 'Admin' && (
+                    <Link onClick={closeNav} to="/report">
+                      Report
+                    </Link>
+                  )}
                   {userDataState.role === 'Student' && (
                     <Link onClick={closeNav} to="/">
                       My Profile
@@ -70,10 +77,7 @@ const Navigation = () => {
             {userDataState && (
               <div className={classes.user}>
                 <img src={userIcon} alt="user" />
-                <span>
-                  Welcome,{' '}
-                  {userDataState.firstName + ' ' + userDataState.lastName}
-                </span>
+                <span>{userDataState.userName}</span>
               </div>
             )}
           </div>

@@ -7,8 +7,9 @@ import selectionService from '../../Services/selectionService';
 import ActionForms from './ActionForms';
 import StudentTable from './StudentTable';
 
-import classes from './LandingComponent.module.css';
 import useQuery from '../../Hooks/useQuery';
+
+import classes from './LandingComponent.module.css';
 
 const MainLandingComponent = () => {
   const query = useQuery();
@@ -168,7 +169,9 @@ const MainLandingComponent = () => {
         id: student.id,
         firstName: student.firstName,
         lastName: student.lastName,
-        email: student.email
+        email: student.email,
+        status: student.status,
+        selection: student.selection
       };
     });
   };

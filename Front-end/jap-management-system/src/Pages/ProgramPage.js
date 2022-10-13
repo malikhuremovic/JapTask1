@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
-import programService from '../Services/programService';
-
 import ProgramTable from '../Components/ProgramTable';
 
 import programIcon from '../Assets/programIcon.png';
+
+import programService from '../Services/programService';
 
 import classes from './ProgramPage.module.css';
 
@@ -25,6 +25,7 @@ const ProgramPage = () => {
     <div className={classes.container}>
       <div className={classes.top}>
         <img src={programIcon} alt="student" />
+        <span className={classes.pageCaption}>Program(s)</span>
       </div>
       <ProgramTable programs={programs} />
     </div>
