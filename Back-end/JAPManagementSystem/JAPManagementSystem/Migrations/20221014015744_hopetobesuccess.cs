@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JAPManagementSystem.Migrations
 {
-    public partial class Helper : Migration
+    public partial class hopetobesuccess : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,8 @@ namespace JAPManagementSystem.Migrations
                     DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    JapProgramId = table.Column<int>(type: "int", nullable: true)
+                    JapProgramId = table.Column<int>(type: "int", nullable: true),
+                    SuccessRate = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -239,13 +240,13 @@ namespace JAPManagementSystem.Migrations
 
             migrationBuilder.InsertData(
                 table: "Selections",
-                columns: new[] { "Id", "DateEnd", "DateStart", "JapProgramId", "Name", "Status" },
-                values: new object[] { 1, new DateTime(2022, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Dev Jap September", 1 });
+                columns: new[] { "Id", "DateEnd", "DateStart", "JapProgramId", "Name", "Status", "SuccessRate" },
+                values: new object[] { 1, new DateTime(2022, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Dev Jap September", 1, null });
 
             migrationBuilder.InsertData(
                 table: "Selections",
-                columns: new[] { "Id", "DateEnd", "DateStart", "JapProgramId", "Name", "Status" },
-                values: new object[] { 2, new DateTime(2022, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Dev QA June", 2 });
+                columns: new[] { "Id", "DateEnd", "DateStart", "JapProgramId", "Name", "Status", "SuccessRate" },
+                values: new object[] { 2, new DateTime(2022, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Dev QA June", 2, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

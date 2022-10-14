@@ -33,7 +33,7 @@ namespace JAPManagementSystem.Controllers
         }
 
         [HttpGet("get/report")]
-        public async Task<ActionResult<ServiceResponse<List<GetSelectionDto>>>> GetSelectionsReport()
+        public async Task<ActionResult<ServiceResponse<List<AdminReport>>>> GetSelectionsReport()
         {
             var response = await _selectionService.GetSelectionsReport();
             if (!response.Success)

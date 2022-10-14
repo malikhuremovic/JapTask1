@@ -38,8 +38,12 @@ namespace JAPManagementSystem.Services.StudentService
                 student.SelectionId = newStudent.SelectionId;
                 try
                 {
-                    await _authService.RegisterStudentUser(student, studentUser.Password);
-                    //_mailService.SendConfirmationEmail(studentUser);
+                    var result = await _authService.RegisterStudentUser(student, studentUser.Password);
+                    if (!result.Success)
+                    {
+                        throw new Exception(result.Message);
+                    }
+                    _mailService.SendConfirmationEmail(studentUser);
                 }
                 catch (Exception exc)
                 {

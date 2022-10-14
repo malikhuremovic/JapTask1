@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace JAPManagementSystem.Data
@@ -69,5 +70,6 @@ namespace JAPManagementSystem.Data
         public DbSet<JapProgram> JapPrograms { get; set; }
         public DbSet<Selection> Selections { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<AdminReport> AdminReport { get; set; }
     }
 }

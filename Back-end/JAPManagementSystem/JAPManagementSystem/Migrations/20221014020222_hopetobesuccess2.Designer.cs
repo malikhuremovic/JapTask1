@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JAPManagementSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221013022327_Helper2")]
-    partial class Helper2
+    [Migration("20221014020222_hopetobesuccess2")]
+    partial class hopetobesuccess2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,25 @@ namespace JAPManagementSystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("JAPManagementSystem.Models.AdminReport", b =>
+                {
+                    b.Property<int>("OverallSuccessRate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProgramName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SelectionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SelectionSuccessRate")
+                        .HasColumnType("int");
+
+                    b.ToTable("AdminReport");
+                });
 
             modelBuilder.Entity("JAPManagementSystem.Models.Comment", b =>
                 {
@@ -99,19 +118,23 @@ namespace JAPManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("DateEnd")
+                    b.Property<DateTime>("DateEnd")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateStart")
+                    b.Property<DateTime>("DateStart")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("JapProgramId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Status")
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SuccessRate")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
