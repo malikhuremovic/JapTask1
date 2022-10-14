@@ -22,6 +22,25 @@ namespace JAPManagementSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("JAPManagementSystem.Models.AdminReport", b =>
+                {
+                    b.Property<int>("OverallSuccessRate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProgramName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SelectionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SelectionSuccessRate")
+                        .HasColumnType("int");
+
+                    b.ToTable("AdminReport");
+                });
+
             modelBuilder.Entity("JAPManagementSystem.Models.Comment", b =>
                 {
                     b.Property<int>("Id")

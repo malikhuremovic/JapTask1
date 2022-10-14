@@ -55,13 +55,13 @@ namespace JAPManagementSystem.Services.SelectionService
             return response;
         }
 
-        public async Task<ServiceResponse<List<GetSelectionDto>>> GetSelectionsReport()
+        public async Task<ServiceResponse<List<AdminReport>>> GetSelectionsReport()
         {
-            ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
+            ServiceResponse<List<AdminReport>> response = new ServiceResponse<List<AdminReport>>();
             try
             {
-                var result = await _context.Selections.FromSqlRaw("GetSelectionSuccessRate").ToListAsync();
-                response.Data = result.Select(s => _mapper.Map<GetSelectionDto>(s)).ToList();
+                var result = await _context.AdminReport.FromSqlRaw("GetSelectionSuccessRate").ToListAsync();
+                response.Data = result;
                 response.Message = "You have successfully fetched the selection report";
             }
             catch (Exception exc)

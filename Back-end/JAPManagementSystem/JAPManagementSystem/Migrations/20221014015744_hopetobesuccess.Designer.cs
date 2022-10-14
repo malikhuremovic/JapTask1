@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JAPManagementSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221013052821_help5")]
-    partial class help5
+    [Migration("20221014015744_hopetobesuccess")]
+    partial class hopetobesuccess
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
