@@ -9,6 +9,15 @@ const ReportTable = ({ selections }) => {
   return (
     <div className="table__section table-responsive">
       <table className="table table-striped">
+        {selections.length && (
+          <caption>
+            <span className={classes.overall}>
+              <strong>
+                Overall success rate: {selections[0]?.overallSuccessRate}%
+              </strong>
+            </span>
+          </caption>
+        )}
         <caption>Selection(s) report</caption>
         <thead>
           <tr>
@@ -32,14 +41,6 @@ const ReportTable = ({ selections }) => {
             <th scope="col">
               <div className={classes.column__Title__Sort}>
                 <div name="successRate" className={classes.sortBlock}>
-                  <img src={sortIconDesc} alt="sortIcon" />{' '}
-                </div>{' '}
-                &nbsp; <span>Success Rate:</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div className={classes.column__Title__Sort}>
-                <div name="overallSuccessRate" className={classes.sortBlock}>
                   <img src={sortIconDesc} alt="sortIcon" />{' '}
                 </div>{' '}
                 &nbsp; <span>Success Rate:</span>
@@ -78,30 +79,17 @@ const ReportTable = ({ selections }) => {
                 placeholder="Selection Success Rate:"
               />
             </th>
-            <th scope="col">
-              <input
-                name="overallSuccessRate"
-                className="form-control"
-                type="number"
-                placeholder="Overall Success Rate:"
-              />
-            </th>
           </tr>
         </thead>
         <tbody>
           {selections &&
             selections.map((s, index) => {
               return (
-                <tr key={s.name}>
+                <tr key={s.selectionName}>
                   <th scope="row">{index + 1}</th>
-                  <td>{s.name}</td>
-                  <td>
-                    <strong>NOT FETCHED</strong>
-                  </td>
-                  <td>{s.successRate}%</td>
-                  <td>
-                    <strong>NOT FETCHED</strong>
-                  </td>
+                  <td>{s.selectionName}</td>
+                  <td>{s.programName}</td>
+                  <td>{s.selectionSuccessRate}%</td>
                 </tr>
               );
             })}

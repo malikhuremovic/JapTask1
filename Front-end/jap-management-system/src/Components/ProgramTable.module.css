@@ -18,6 +18,13 @@
   text-align: left;
 }
 
+.overall {
+  font-size: 18px;
+  color: #000;
+  float: right;
+  margin-right: 2%;
+}
+
 .column__Title__Sort div img {
   transition: all 0.2s;
 }
