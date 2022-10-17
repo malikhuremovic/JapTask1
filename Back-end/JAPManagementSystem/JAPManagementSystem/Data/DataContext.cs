@@ -1,14 +1,9 @@
-﻿using JAPManagementSystem.Data;
-using JAPManagementSystem.Models;
+﻿using JAPManagementSystem.Models;
 using JAPManagementSystem.Models.SelectionModel;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Models.UserModel;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using System.Reflection.Emit;
-using System.Text;
 
 namespace JAPManagementSystem.Data
 {
@@ -22,6 +17,8 @@ namespace JAPManagementSystem.Data
         protected override void OnModelCreating(ModelBuilder _modelBuilder)
         {
             base.OnModelCreating(_modelBuilder);
+            _modelBuilder.Entity<AdminReport>().ToTable("AdminReports", x => x.ExcludeFromMigrations())
+        .HasNoKey();
             _modelBuilder.Entity<JapProgram>().HasData(
             new JapProgram
             {
@@ -62,6 +59,23 @@ namespace JAPManagementSystem.Data
                     Status = SelectionStatus.Completed
                 }
              );
+
+            _modelBuilder.Entity<Admin>().HasData(
+                new Admin
+                {
+                    Id = "0b5260a0-94c9-4681-8468-945a4aa4373f",
+                    FirstName = "Malik",
+                    LastName = "Huremovic",
+                    Email = "malikhuremovic2001@hotmail.com",
+                    NormalizedEmail = "MALIKHUREMOVIC2001@HOTMAIL.COM",
+                    NormalizedUserName = "MALIKHUREM",
+                    EmailConfirmed = false,
+                    UserName = "malikhurem",
+                    PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
+                    SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
+                    ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
+                    Role = UserRole.Admin
+                }) ;
         }
 
         public DbSet<User> Users { get; set; }
