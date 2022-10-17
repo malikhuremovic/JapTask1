@@ -9,6 +9,8 @@ using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Services.AuthService;
 using JAPManagementSystem.Services.EmailService;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace JAPManagementSystem.Services.StudentService
 {
@@ -36,6 +38,7 @@ namespace JAPManagementSystem.Services.StudentService
                 Student student = _mapper.Map<Student>(newStudent);
                 student = _mapper.Map<Student>(studentUser);
                 student.SelectionId = newStudent.SelectionId;
+                student.Status = newStudent.Status;
                 try
                 {
                     var result = await _authService.RegisterStudentUser(student, studentUser.Password);
@@ -182,11 +185,17 @@ namespace JAPManagementSystem.Services.StudentService
             return response;
         }
 
-        public async Task<ServiceResponse<GetStudentDto>> GetStudentById(string id)
+        public async Task<ServiceResponse<GetStudentDto>> GetStudentByToken(string token)
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             try
             {
+                var decodedToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+                var id = decodedToken.Claims
+                    .Where(claim => claim.Type
+                    .Equals("nameid"))
+                    .Select(claim => claim.Value)
+                    .SingleOrDefault();
                 var student = await _context.Students
                     .Include(s => s.Comments)
                     .Include(s => s.Selection)

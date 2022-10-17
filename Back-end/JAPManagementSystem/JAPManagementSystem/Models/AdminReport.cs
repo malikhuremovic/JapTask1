@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JAPManagementSystem.Models
 {
-    [Keyless]
     public class AdminReport
     {
         public string SelectionName { get; set; } 
