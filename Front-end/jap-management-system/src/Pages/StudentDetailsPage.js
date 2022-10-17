@@ -1,8 +1,7 @@
-import { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 
 import studentService from '../Services/studentService';
-import UserContext from '../Store/userContext';
 
 import studentIcon from '../Assets/studentIcon.png';
 
@@ -11,16 +10,14 @@ import classes from './StudentDetailsPage.module.css';
 const StudentDetailsPage = () => {
   const [student, setStudent] = useState({});
 
-  const ctx = useContext(UserContext);
-
   const fetchStudents = useCallback(() => {
     studentService
-      .fetchStudentById(ctx.userDataState.id)
+      .fetchStudentByToken()
       .then(response => {
         setStudent(response.data.data);
       })
       .catch(err => console.log(err));
-  }, [ctx]);
+  }, []);
 
   useEffect(() => {
     fetchStudents();

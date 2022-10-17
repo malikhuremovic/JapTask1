@@ -1,3 +1,4 @@
+import { Button } from 'react-bootstrap';
 import React from 'react';
 
 import searchIcon from '../Assets/searchIcon.png';
@@ -9,16 +10,33 @@ const ReportTable = ({ selections }) => {
   return (
     <div className="table__section table-responsive">
       <table className="table table-striped">
-        {selections.length && (
+        {selections.length ? (
           <caption>
             <span className={classes.overall}>
-              <strong>
+              <Button variant="primary" disabled>
                 Overall success rate: {selections[0]?.overallSuccessRate}%
-              </strong>
+              </Button>
+            </span>
+          </caption>
+        ) : (
+          <caption>
+            <span className={classes.overall}>
+              <Button variant="danger" disabled>
+                No statistics could be found
+              </Button>
             </span>
           </caption>
         )}
-        <caption>Selection(s) report</caption>
+        <caption>
+          {selections.length > 1
+            ? 'Selection(s)'
+            : !selections.length
+            ? 'No'
+            : selections.length === 1
+            ? 'Selection'
+            : ''}{' '}
+          report
+        </caption>
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -89,7 +107,16 @@ const ReportTable = ({ selections }) => {
                   <th scope="row">{index + 1}</th>
                   <td>{s.selectionName}</td>
                   <td>{s.programName}</td>
-                  <td>{s.selectionSuccessRate}%</td>
+                  <td>
+                    <Button
+                      variant={
+                        s.selectionSuccessRate >= 50 ? 'success' : 'danger'
+                      }
+                      disabled
+                    >
+                      {s.selectionSuccessRate}%
+                    </Button>
+                  </td>
                 </tr>
               );
             })}

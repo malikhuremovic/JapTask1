@@ -292,6 +292,7 @@ const MainLandingComponent = () => {
       } else if (inputName === 'email') {
         student.email = value;
       } else if (inputName === 'status') {
+        console.log(value);
         student.status = value;
       } else if (inputName === 'selection') {
         student.selectionId = value;

@@ -16,9 +16,9 @@ const fetchAllStudents = params => {
   });
 };
 
-const fetchStudentById = id => {
+const fetchStudentByToken = () => {
   const token = tokenUtil.getAccessToken();
-  return axios.get(config.API_URL + `/Student/get/id?id=${id}`, {
+  return axios.get(config.API_URL + '/Student/get/id', {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -68,7 +68,7 @@ const deleteStudent = data => {
 
 const services = {
   fetchAllStudents,
-  fetchStudentById,
+  fetchStudentByToken,
   addStudent,
   addComment,
   modifyStudent,
