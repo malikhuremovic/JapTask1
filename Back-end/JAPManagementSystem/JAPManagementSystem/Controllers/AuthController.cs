@@ -29,6 +29,7 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("add/admin")]
         public async Task<ActionResult<GetUserDto>> CreateAdmin(AddAdminDto admin)
         { 

@@ -60,10 +60,15 @@ namespace JAPManagementSystem.Controllers
 
         [Authorize(Roles = "Admin, Student")]
         [HttpGet("get/id")]
-        public async Task<ActionResult<ServiceResponse<GetStudentDto>>> GetStudentById(string id)
+        public async Task<ActionResult<ServiceResponse<GetStudentDto>>> GetStudentByToken()
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
-            response = await _studentService.GetStudentById(id);
+            Request.Headers.TryGetValue("Authorization", out var token);
+            string tokenValue = token
+                .ToString()
+                .Split(" ")
+                .ElementAt(1);
+            response = await _studentService.GetStudentByToken(tokenValue);
             if (!response.Success)
             {
                 return BadRequest(response);
