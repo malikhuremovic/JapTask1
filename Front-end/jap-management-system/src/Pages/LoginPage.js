@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 
 import userService from '../Services/userService';
@@ -10,7 +10,6 @@ import classes from './LoginPage.module.css';
 const LoginPage = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
 
   let INITIAL_LOGIN_INFO_STATE = { show: false, success: false };
   const [loginInfo, setLoginInfo] = useState(INITIAL_LOGIN_INFO_STATE);
@@ -19,8 +18,8 @@ const LoginPage = () => {
     ev.preventDefault();
 
     const userData = {
-      userName,
-      password
+      userName: userName.trim(),
+      password: password.trim()
     };
 
     await userService
