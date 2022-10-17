@@ -38,7 +38,7 @@ namespace JAPManagementSystem.Migrations
                     b.Property<int>("SelectionSuccessRate")
                         .HasColumnType("int");
 
-                    b.ToTable("AdminReport");
+                    b.ToTable("AdminReports", null, t => t.ExcludeFromMigrations());
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.Comment", b =>
@@ -389,6 +389,27 @@ namespace JAPManagementSystem.Migrations
                     b.HasBaseType("JAPManagementSystem.Models.UserModel.User");
 
                     b.HasDiscriminator().HasValue("Admin");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "0b5260a0-94c9-4681-8468-945a4aa4373f",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
+                            Email = "malikhuremovic2001@hotmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MALIKHUREMOVIC2001@HOTMAIL.COM",
+                            NormalizedUserName = "MALIKHUREM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
+                            TwoFactorEnabled = false,
+                            UserName = "malikhurem",
+                            FirstName = "Malik",
+                            LastName = "Huremovic",
+                            Role = 0
+                        });
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.StudentModel.Student", b =>
