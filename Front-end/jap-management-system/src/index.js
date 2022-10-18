@@ -16,13 +16,12 @@ const initialize = async () => {
   if (!token) {
     return null;
   }
-  let response;
   try {
-    response = await services.getUser(token);
+    const response = await services.getUser(token);
     user = response.data.data;
-  } catch {
-    if (response.request.status === 401 || response.request.status === 403) {
-      alert('Token has expired, please log in again');
+  } catch (err) {
+    if (err.request.status === 401 || err.request.status === 403) {
+      alert('Authentication has failed. Invalid token. Please log in again.');
       logoutUser();
     }
   }

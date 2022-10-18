@@ -56,39 +56,52 @@ const LoginPage = () => {
   return (
     <div className={classes.loginPage}>
       <div className="modal d-flex justify-content-center align-items-center">
-        <Form className={classes.modal} onSubmit={handleFormSubmit}>
-          <Form.Group className="mb-3" controlId="userName">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Username"
-              onInput={handleUsernameInput}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              onInput={handlePasswordInput}
-            />
-          </Form.Group>
-          <Button
-            className={loginInfo.show ? 'mb-3' : ''}
-            variant="primary"
-            type="submit"
+        <div className={classes.floatingModal}>
+          <h3>Login</h3>
+          <Form
+            className={classes.floatingModalForm}
+            onSubmit={handleFormSubmit}
           >
-            Submit
-          </Button>
-          {loginInfo.show && (
-            <Button variant={loginInfo.success ? 'success' : 'danger'} disabled>
-              &nbsp; &nbsp;&nbsp;&nbsp;
-              {loginInfo.success ? 'Success!' : 'Please, try again'}
-              &nbsp;&nbsp;&nbsp;&nbsp;
+            <Form.Group className="mb-3" controlId="userName">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Username"
+                onInput={handleUsernameInput}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                className="w-100"
+                type="password"
+                placeholder="Password"
+                onInput={handlePasswordInput}
+              />
+            </Form.Group>
+            <Button
+              className={
+                (loginInfo.show ? 'mb-3' : '') + ' ' + classes.loginBtn
+              }
+              variant="primary"
+              type="submit"
+            >
+              Submit
             </Button>
-          )}
-        </Form>
+            {loginInfo.show && (
+              <Button
+                className={classes.errorMessageBtn}
+                variant={loginInfo.success ? 'success' : 'danger'}
+                disabled
+              >
+                &nbsp; &nbsp;&nbsp;&nbsp;
+                {loginInfo.success ? 'Success!' : 'Please, try again'}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+              </Button>
+            )}
+          </Form>
+        </div>
       </div>
     </div>
   );

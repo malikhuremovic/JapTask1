@@ -41,9 +41,8 @@ namespace JAPManagementSystem.Extensions
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings.GetSection("ValidIssuer").Value,
-                    ValidAudience = jwtSettings.GetSection("ValidAudience").Value,
                     IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8
                 .GetBytes(jwtSettings.GetSection("SecurityKey").Value))
                 };
