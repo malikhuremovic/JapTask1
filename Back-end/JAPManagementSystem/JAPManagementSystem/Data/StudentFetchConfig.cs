@@ -26,6 +26,5 @@ namespace JAPManagementSystem.Data
             sorts.Add(sort.Equals("selection"), s => s.Selection.Name, descending);
             sorts.Add(sort.Equals("program"), s => s.Selection.JapProgram.Name, descending);
         }
-
     }
 }

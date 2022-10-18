@@ -78,7 +78,8 @@ const ReportTable = ({ selections }) => {
                 type="text"
                 name="selectionName"
                 className="form-control"
-                placeholder="Selection Name:"
+                placeholder="Selection name: "
+                disabled
               />
             </th>
             <th scope="col">
@@ -86,7 +87,8 @@ const ReportTable = ({ selections }) => {
                 name="programName"
                 className="form-control"
                 type="text"
-                placeholder="Program Name:"
+                placeholder="Program name: "
+                disabled
               />
             </th>
             <th scope="col">
@@ -94,7 +96,8 @@ const ReportTable = ({ selections }) => {
                 name="successRate"
                 className="form-control"
                 type="number"
-                placeholder="Selection Success Rate:"
+                placeholder="Success rate: "
+                disabled
               />
             </th>
           </tr>
