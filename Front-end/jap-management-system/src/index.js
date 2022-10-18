@@ -12,17 +12,19 @@ import services from './Services/userService';
 
 const initialize = async () => {
   const token = utils.getAccessToken();
-  let user;
+  let user = null;
   if (!token) {
     return null;
   }
+  let response;
   try {
-    const response = await services.getUser(token);
+    response = await services.getUser(token);
     user = response.data.data;
-  } catch (err) {
-    alert('Token has expired, please log in again');
-    logoutUser();
-    user = null;
+  } catch {
+    if (response.request.status === 401 || response.request.status === 403) {
+      alert('Token has expired, please log in again');
+      logoutUser();
+    }
   }
   return user;
 };
