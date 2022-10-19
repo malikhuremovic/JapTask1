@@ -39,17 +39,19 @@ const ProgramTable = ({ programs }) => {
             <th scope="col">
               <input
                 type="text"
-                name="firstName"
+                name="name"
                 className="form-control"
-                placeholder="Name:"
+                placeholder="Name: "
+                disabled
               />
             </th>
             <th scope="col">
               <input
-                name="lastName"
+                name="content"
                 className="form-control"
                 type="text"
-                placeholder="Content:"
+                placeholder="Content: "
+                disabled
               />
             </th>
           </tr>

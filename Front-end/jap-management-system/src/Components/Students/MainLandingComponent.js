@@ -111,8 +111,7 @@ const MainLandingComponent = () => {
     setSortState(previousSort => {
       const UPDATED_SORT = {
         sort,
-        descending:
-          sort === previousSort.sort ? !previousSort.descending : false
+        descending: sort === previousSort.sort ? !previousSort.descending : true
       };
       return UPDATED_SORT;
     });

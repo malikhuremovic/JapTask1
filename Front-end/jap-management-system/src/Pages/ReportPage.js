@@ -21,7 +21,7 @@ const ReportPage = () => {
     <div className={classes.container}>
       <div className={classes.top}>
         <img src={reportIcon} alt="student" />
-        <span class={classes.pageCaption}>Report</span>
+        <span className={classes.pageCaption}>Report</span>
       </div>
       <ReportTable selections={selections} />
     </div>

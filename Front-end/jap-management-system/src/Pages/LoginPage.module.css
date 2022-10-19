@@ -1,14 +1,50 @@
-.modal {
-  background-color: rgba(255, 255, 255, 0.699);
-  padding: 35px;
+.floatingModal {
+  background-color: rgba(255, 255, 255, 0.836);
   border-radius: 10px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  min-width: 340px;
+  width: 23%;
+  min-height: 40vh;
 }
 
-.errorMessage {
+.floatingModal h3 {
+  color: rgb(83, 83, 83);
+  align-self: baseline;
+  margin-bottom: 25px;
+  border-bottom: 2px solid rgb(180, 178, 178);
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.floatingModalForm {
+  width: 80%;
+}
+
+.floatingModalForm label {
+  font-size: 16.5px;
+}
+
+.floatingModalForm input {
+  padding: 10px;
+  margin: 5px;
+}
+
+.loginBtn {
+  width: 45%;
+  margin-left: 5px;
+}
+
+.errorMessageBtn {
   color: red;
   font-size: 15px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 2px;
+  width: 100%;
+  padding: 10px;
+  margin: 5px;
+  margin-top: 1px;
 }
