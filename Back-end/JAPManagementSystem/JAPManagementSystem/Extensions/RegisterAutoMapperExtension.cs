@@ -10,7 +10,8 @@ namespace JAPManagementSystem.Extensions
             service.AddAutoMapper(typeof(JapProgramMap));
             service.AddAutoMapper(typeof(SelectionMap));
             service.AddAutoMapper(typeof(StudentMap));
-
+            service.AddAutoMapper(typeof(UserMap));
+            service.AddAutoMapper(typeof(ItemMap));
         }
     }
 }

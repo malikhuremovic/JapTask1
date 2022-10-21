@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Configuration.Conventions;
+using JAPManagementSystem.DTOs.LectureDTOs;
 using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.Models;
 using JAPManagementSystem.Services.ProgramService;
@@ -29,6 +30,17 @@ namespace JAPManagementSystem.Controllers
             }
             return StatusCode(201, response);
         }
+        [HttpPost("add/items")]
+        public async Task<ActionResult<ServiceResponse<GetProgramDto>>> AddProgramLecture(AddProgramItemsDto newProgramLectures)
+        {
+            ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
+            response = await _programService.AddProgramItem(newProgramLectures);
+            if (response.Success == false)
+            {
+                return BadRequest(response);
+            }
+            return StatusCode(201, response);
+        }
 
         [HttpGet("get/all")]
         public async Task<ActionResult<ServiceResponse<List<GetProgramDto>>>> GetAllProgram()
@@ -52,6 +64,18 @@ namespace JAPManagementSystem.Controllers
                 return BadRequest(response);
             }
             return Ok(response);
+        }
+
+        [HttpDelete("remove/items")]
+        public async Task<ActionResult<ServiceResponse<GetProgramDto>>> RemoveProgramLectures(DeleteProgramItemsDto programLectures)
+        {
+            ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
+            response = await _programService.RemoveProgramItem(programLectures);
+            if (response.Success == false)
+            {
+                return BadRequest(response);
+            }
+            return StatusCode(201, response);
         }
     }
 }

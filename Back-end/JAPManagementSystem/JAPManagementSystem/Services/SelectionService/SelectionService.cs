@@ -123,8 +123,7 @@ namespace JAPManagementSystem.Services.SelectionService
                     .Equals(selectionName));
                 if(selection == null)
                 {
-                    response.Message = "There is no selection with name: " + selectionName;
-                    response.Success = false;
+                    throw new Exception("There is no selection with name: " + selectionName);
                 }
                 _context.Selections.Remove(selection);
                 await _context.SaveChangesAsync();
@@ -190,7 +189,7 @@ namespace JAPManagementSystem.Services.SelectionService
                     SelectionFetchConfig.sorts,
                     SelectionFetchConfig.filters);
                 response.Data = _mapper.Map<GetSelectionPageDto>(selections);
-                response.Message = "You have fetched a page no. " + pageNumber + " with " + selections.RecordCount + " selection(s).";
+                response.Message = "You have fetched a page no. " + pageNumber + " with " + selections.Results.Count() + " selection(s).";
             }
             catch (Exception exc)
             {

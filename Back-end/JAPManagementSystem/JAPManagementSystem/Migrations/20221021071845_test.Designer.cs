@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JAPManagementSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221017075630_Migration With Added Admin2")]
-    partial class MigrationWithAddedAdmin2
+    [Migration("20221021071845_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -110,6 +110,37 @@ namespace JAPManagementSystem.Migrations
                         });
                 });
 
+            modelBuilder.Entity("JAPManagementSystem.Models.Lecture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExpectedHours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isEvent")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Lectures");
+                });
+
             modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>
                 {
                     b.Property<int>("Id")
@@ -162,6 +193,21 @@ namespace JAPManagementSystem.Migrations
                             Name = "Dev QA June",
                             Status = 2
                         });
+                });
+
+            modelBuilder.Entity("JapProgramLecture", b =>
+                {
+                    b.Property<int>("LectureId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProgramId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LectureId", "ProgramId");
+
+                    b.HasIndex("ProgramId");
+
+                    b.ToTable("JapProgramLecture");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -447,6 +493,21 @@ namespace JAPManagementSystem.Migrations
                         .HasForeignKey("JapProgramId");
 
                     b.Navigation("JapProgram");
+                });
+
+            modelBuilder.Entity("JapProgramLecture", b =>
+                {
+                    b.HasOne("JAPManagementSystem.Models.Lecture", null)
+                        .WithMany()
+                        .HasForeignKey("LectureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JAPManagementSystem.Models.JapProgram", null)
+                        .WithMany()
+                        .HasForeignKey("ProgramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

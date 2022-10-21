@@ -4,7 +4,6 @@ using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Models.UserModel;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
 namespace JAPManagementSystem.Data
 {
     public class DataContext : IdentityDbContext
@@ -17,6 +16,28 @@ namespace JAPManagementSystem.Data
         protected override void OnModelCreating(ModelBuilder _modelBuilder)
         {
             base.OnModelCreating(_modelBuilder);
+
+            _modelBuilder.Entity<JapProgram>().HasKey(j => j.Id);
+            _modelBuilder.Entity<Item>().HasKey(l => l.Id);
+
+            _modelBuilder.Entity<Item>()
+            .HasMany(p => p.Programs)
+            .WithMany(p => p.Items)
+            .UsingEntity<ProgramItem>(
+                j => j
+                    .HasOne(pt => pt.Program)
+                    .WithMany(t => t.ProgramItem)
+                    .HasForeignKey(pt => pt.ProgramId),
+                j => j
+                    .HasOne(pt => pt.Item)
+                    .WithMany(p => p.ProgramItem)
+                    .HasForeignKey(pt => pt.ItemId),
+                j =>
+                {
+                    j.HasKey(t => new { t.ItemId, t.ProgramId });
+                });
+
+
             _modelBuilder.Entity<AdminReport>().ToTable("AdminReports", x => x.ExcludeFromMigrations())
         .HasNoKey();
             _modelBuilder.Entity<JapProgram>().HasData(
@@ -75,7 +96,7 @@ namespace JAPManagementSystem.Data
                     SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
                     ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
                     Role = UserRole.Admin
-                }) ;
+                });
         }
 
         public DbSet<User> Users { get; set; }
@@ -85,5 +106,7 @@ namespace JAPManagementSystem.Data
         public DbSet<Selection> Selections { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<AdminReport> AdminReport { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ProgramItem> ProgramItems { get; set; }
     }
 }

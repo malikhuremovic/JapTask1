@@ -257,22 +257,24 @@ const SelectionTable = ({
                         Modify Students
                       </Button>
                     </Link>
-                    <Button
-                      className={classes.action__button}
-                      variant="success"
-                      onClick={handleEditState}
-                    >
-                      <input id={s.id} type="hidden" />
-                      Edit
-                    </Button>
-                    <Button
-                      className={classes.action__button}
-                      variant="danger"
-                      onClick={handleDeleteState}
-                    >
-                      <input id={s.id} type="hidden" />
-                      Delete
-                    </Button>
+                    <div>
+                      <Button
+                        className={classes.action__button}
+                        variant="success"
+                        onClick={handleEditState}
+                      >
+                        <input id={s.id} type="hidden" />
+                        Edit
+                      </Button>
+                      <Button
+                        className={classes.action__button}
+                        variant="danger"
+                        onClick={handleDeleteState}
+                      >
+                        <input id={s.id} type="hidden" />
+                        Delete
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               );

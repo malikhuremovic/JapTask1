@@ -4,20 +4,16 @@
 
 namespace JAPManagementSystem.Migrations
 {
-    public partial class migrationnew : Migration
+    public partial class ABCD3ž22 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameTable(
-                name: "AdminReport",
-                newName: "AdminReports");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameTable(
-                name: "AdminReports",
-                newName: "AdminReport");
+
         }
     }
 }

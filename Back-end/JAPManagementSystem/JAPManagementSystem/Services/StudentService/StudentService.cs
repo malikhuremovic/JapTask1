@@ -175,7 +175,7 @@ namespace JAPManagementSystem.Services.StudentService
                     StudentFetchConfig.sorts,
                     StudentFetchConfig.filters);
                 response.Data = _mapper.Map<GetStudentPageDto>(students);
-                response.Message = "You have fetched a page no. " + pageNumber + " with " + students.PageSize + " student(s).";
+                response.Message = "You have fetched a page no. " + pageNumber + " with " + students.Results.Count() + " student(s).";
             }
             catch (Exception exc)
             {
