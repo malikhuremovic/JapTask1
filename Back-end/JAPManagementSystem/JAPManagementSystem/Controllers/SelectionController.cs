@@ -1,6 +1,6 @@
 ﻿using JAPManagementSystem.DTOs.Selection;
 using JAPManagementSystem.DTOs.StudentDto;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.Response;
 using JAPManagementSystem.Models.SelectionModel;
 using JAPManagementSystem.Services.SelectionService;
 using Microsoft.AspNetCore.Authorization;

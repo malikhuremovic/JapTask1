@@ -1,5 +1,5 @@
 ﻿using EntityFrameworkPaginate;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.ProgramModel;
 using JAPManagementSystem.Models.SelectionModel;
 
 namespace JAPManagementSystem.Data

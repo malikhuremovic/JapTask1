@@ -1,4 +1,4 @@
-﻿namespace JAPManagementSystem.Models
+﻿namespace JAPManagementSystem.Models.ProgramModel
 {
     public class ProgramItem
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using JAPManagementSystem.DTOs.Program;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.ProgramModel;
 
 namespace JAPManagementSystem.AutoMapperMaps
 {

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using JAPManagementSystem.DTOs.User;
-using JAPManagementSystem.Models;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Models.UserModel;
 using Microsoft.AspNetCore.Identity;

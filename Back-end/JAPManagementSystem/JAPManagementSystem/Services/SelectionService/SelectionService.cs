@@ -2,7 +2,7 @@
 using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Selection;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.Response;
 using JAPManagementSystem.Models.SelectionModel;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,7 +1,7 @@
-﻿using JAPManagementSystem.Models;
-using JAPManagementSystem.DTOs.Selection;
+﻿using JAPManagementSystem.DTOs.Selection;
 using Microsoft.AspNetCore.Mvc;
 using JAPManagementSystem.Models.SelectionModel;
+using JAPManagementSystem.Models.Response;
 
 namespace JAPManagementSystem.Services.SelectionService
 {

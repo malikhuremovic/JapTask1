@@ -1,4 +1,4 @@
-﻿using JAPManagementSystem.Models;
+﻿using JAPManagementSystem.Models.ProgramModel;
 
 namespace JAPManagementSystem.DTOs.Selection
 {

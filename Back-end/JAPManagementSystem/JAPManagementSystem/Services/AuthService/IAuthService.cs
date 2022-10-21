@@ -1,6 +1,6 @@
 ﻿using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.DTOs.User;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.Response;
 using JAPManagementSystem.Models.StudentModel;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 

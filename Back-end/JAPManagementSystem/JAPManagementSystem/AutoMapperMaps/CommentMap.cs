@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.User;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.StudentModel;
 
 namespace JAPManagementSystem.AutoMapperMaps
 {

@@ -1,7 +1,6 @@
-﻿using JAPManagementSystem.Models.StudentModel;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JAPManagementSystem.Models
+namespace JAPManagementSystem.Models.StudentModel
 {
     public class Comment
     {

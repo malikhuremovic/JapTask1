@@ -2,7 +2,7 @@
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.DTOs.User;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.Response;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Models.UserModel;
 using JAPManagementSystem.Services.EmailService;

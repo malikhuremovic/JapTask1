@@ -1,4 +1,5 @@
 ﻿using JAPManagementSystem.DTOs;
+using JAPManagementSystem.Models.ProgramModel;
 using JAPManagementSystem.Models.StudentModel;
 
 namespace JAPManagementSystem.Models.SelectionModel
