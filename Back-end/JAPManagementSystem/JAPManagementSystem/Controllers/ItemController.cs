@@ -14,8 +14,8 @@ namespace JAPManagementSystem.Controllers
     [Route("/api/[controller]")]
     public class ItemController : ControllerBase
     {
-        private readonly ILectureService _lectureService;
-        public ItemController(ILectureService lectureService)
+        private readonly IItemService _lectureService;
+        public ItemController(IItemService lectureService)
         {
             _lectureService = lectureService;
         }
