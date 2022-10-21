@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JAPManagementSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221017074855_Migration With Added Admin")]
-    partial class MigrationWithAddedAdmin
+    [Migration("20221020080931_ABCD")]
+    partial class ABCD
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -110,6 +110,30 @@ namespace JAPManagementSystem.Migrations
                         });
                 });
 
+            modelBuilder.Entity("JAPManagementSystem.Models.Lecture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExpectedHours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Lectures");
+                });
+
             modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>
                 {
                     b.Property<int>("Id")
@@ -162,6 +186,21 @@ namespace JAPManagementSystem.Migrations
                             Name = "Dev QA June",
                             Status = 2
                         });
+                });
+
+            modelBuilder.Entity("JapProgramLecture", b =>
+                {
+                    b.Property<int>("LectureId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProgramId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LectureId", "ProgramId");
+
+                    b.HasIndex("ProgramId");
+
+                    b.ToTable("JapProgramLecture");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -395,17 +434,19 @@ namespace JAPManagementSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "stringstring",
+                            Id = "0b5260a0-94c9-4681-8468-945a4aa4373f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9b4d5152-3afc-4f86-a11f-72902fb02302",
-                            Email = "malikhuremovic01@gmail.com",
+                            ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
+                            Email = "malikhuremovic2001@hotmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAENcrT5CE4+xUrK/b9+hH8bExDdQ9mhyst1LsUEzP8/Qp5npNrCLGRS2feRIorsxs6A==",
+                            NormalizedEmail = "MALIKHUREMOVIC2001@HOTMAIL.COM",
+                            NormalizedUserName = "MALIKHUREM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "592a4f2b-e965-4024-9051-14f948776eb9",
+                            SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
                             TwoFactorEnabled = false,
-                            UserName = "malikhuremovic",
+                            UserName = "malikhurem",
                             FirstName = "Malik",
                             LastName = "Huremovic",
                             Role = 0
@@ -445,6 +486,21 @@ namespace JAPManagementSystem.Migrations
                         .HasForeignKey("JapProgramId");
 
                     b.Navigation("JapProgram");
+                });
+
+            modelBuilder.Entity("JapProgramLecture", b =>
+                {
+                    b.HasOne("JAPManagementSystem.Models.Lecture", null)
+                        .WithMany()
+                        .HasForeignKey("LectureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JAPManagementSystem.Models.JapProgram", null)
+                        .WithMany()
+                        .HasForeignKey("ProgramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

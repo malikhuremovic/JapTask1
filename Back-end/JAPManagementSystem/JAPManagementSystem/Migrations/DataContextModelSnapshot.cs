@@ -67,6 +67,37 @@ namespace JAPManagementSystem.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("JAPManagementSystem.Models.Item", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExpectedHours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isEvent")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Items");
+                });
+
             modelBuilder.Entity("JAPManagementSystem.Models.JapProgram", b =>
                 {
                     b.Property<int>("Id")
@@ -106,6 +137,24 @@ namespace JAPManagementSystem.Migrations
                             Content = "Linux & Docker",
                             Name = "JAP DevOps"
                         });
+                });
+
+            modelBuilder.Entity("JAPManagementSystem.Models.ProgramItem", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProgramId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemId", "ProgramId");
+
+                    b.HasIndex("ProgramId");
+
+                    b.ToTable("ProgramItems");
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>
@@ -438,6 +487,25 @@ namespace JAPManagementSystem.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("JAPManagementSystem.Models.ProgramItem", b =>
+                {
+                    b.HasOne("JAPManagementSystem.Models.Item", "Item")
+                        .WithMany("ProgramItem")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JAPManagementSystem.Models.JapProgram", "Program")
+                        .WithMany("ProgramItem")
+                        .HasForeignKey("ProgramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Program");
+                });
+
             modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>
                 {
                     b.HasOne("JAPManagementSystem.Models.JapProgram", "JapProgram")
@@ -505,6 +573,16 @@ namespace JAPManagementSystem.Migrations
                         .HasForeignKey("SelectionId");
 
                     b.Navigation("Selection");
+                });
+
+            modelBuilder.Entity("JAPManagementSystem.Models.Item", b =>
+                {
+                    b.Navigation("ProgramItem");
+                });
+
+            modelBuilder.Entity("JAPManagementSystem.Models.JapProgram", b =>
+                {
+                    b.Navigation("ProgramItem");
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>

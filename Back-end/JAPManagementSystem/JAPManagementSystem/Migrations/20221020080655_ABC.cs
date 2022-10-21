@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JAPManagementSystem.Migrations
 {
-    public partial class hopetobesuccess : Migration
+    public partial class ABC : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -224,19 +224,19 @@ namespace JAPManagementSystem.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "JapPrograms",
-                columns: new[] { "Id", "Content", "Name" },
-                values: new object[] { 1, ".NET & React.js", "JAP DEV" });
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "0b5260a0-94c9-4681-8468-945a4aa4373f", 0, "0af37133-6d9e-4e43-aa0a-e88240493840", "Admin", "malikhuremovic2001@hotmail.com", false, "Malik", "Huremovic", false, null, "MALIKHUREMOVIC2001@HOTMAIL.COM", "MALIKHUREM", "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==", null, false, 0, "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN", false, "malikhurem" });
 
             migrationBuilder.InsertData(
                 table: "JapPrograms",
                 columns: new[] { "Id", "Content", "Name" },
-                values: new object[] { 2, "Selenium & Unit & Integration Testing", "JAP QA" });
-
-            migrationBuilder.InsertData(
-                table: "JapPrograms",
-                columns: new[] { "Id", "Content", "Name" },
-                values: new object[] { 3, "Linux & Docker", "JAP DevOps" });
+                values: new object[,]
+                {
+                    { 1, ".NET & React.js", "JAP DEV" },
+                    { 2, "Selenium & Unit & Integration Testing", "JAP QA" },
+                    { 3, "Linux & Docker", "JAP DevOps" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Selections",
