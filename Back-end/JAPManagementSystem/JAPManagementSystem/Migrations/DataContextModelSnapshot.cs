@@ -67,7 +67,7 @@ namespace JAPManagementSystem.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.Item", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.JapItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,6 +82,9 @@ namespace JAPManagementSystem.Migrations
                     b.Property<int>("ExpectedHours")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsEvent")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -89,9 +92,6 @@ namespace JAPManagementSystem.Migrations
                     b.Property<string>("URL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isEvent")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -489,14 +489,14 @@ namespace JAPManagementSystem.Migrations
 
             modelBuilder.Entity("JAPManagementSystem.Models.ProgramItem", b =>
                 {
-                    b.HasOne("JAPManagementSystem.Models.Item", "Item")
-                        .WithMany("ProgramItem")
+                    b.HasOne("JAPManagementSystem.Models.JapItem", "Item")
+                        .WithMany("ProgramItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("JAPManagementSystem.Models.JapProgram", "Program")
-                        .WithMany("ProgramItem")
+                        .WithMany("ProgramItems")
                         .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -575,14 +575,14 @@ namespace JAPManagementSystem.Migrations
                     b.Navigation("Selection");
                 });
 
-            modelBuilder.Entity("JAPManagementSystem.Models.Item", b =>
+            modelBuilder.Entity("JAPManagementSystem.Models.JapItem", b =>
                 {
-                    b.Navigation("ProgramItem");
+                    b.Navigation("ProgramItems");
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.JapProgram", b =>
                 {
-                    b.Navigation("ProgramItem");
+                    b.Navigation("ProgramItems");
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>

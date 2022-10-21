@@ -1,4 +1,4 @@
-﻿namespace JAPManagementSystem.DTOs.LectureDTOs
+﻿namespace JAPManagementSystem.DTOs.JapItemDTOs
 {
     public class GetItemPageDto
     {

@@ -18,19 +18,19 @@ namespace JAPManagementSystem.Data
             base.OnModelCreating(_modelBuilder);
 
             _modelBuilder.Entity<JapProgram>().HasKey(j => j.Id);
-            _modelBuilder.Entity<Item>().HasKey(l => l.Id);
+            _modelBuilder.Entity<JapItem>().HasKey(l => l.Id);
 
-            _modelBuilder.Entity<Item>()
+            _modelBuilder.Entity<JapItem>()
             .HasMany(p => p.Programs)
             .WithMany(p => p.Items)
             .UsingEntity<ProgramItem>(
                 j => j
                     .HasOne(pt => pt.Program)
-                    .WithMany(t => t.ProgramItem)
+                    .WithMany(t => t.ProgramItems)
                     .HasForeignKey(pt => pt.ProgramId),
                 j => j
                     .HasOne(pt => pt.Item)
-                    .WithMany(p => p.ProgramItem)
+                    .WithMany(p => p.ProgramItems)
                     .HasForeignKey(pt => pt.ItemId),
                 j =>
                 {
@@ -106,7 +106,7 @@ namespace JAPManagementSystem.Data
         public DbSet<Selection> Selections { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<AdminReport> AdminReport { get; set; }
-        public DbSet<Item> Items { get; set; }
+        public DbSet<JapItem> Items { get; set; }
         public DbSet<ProgramItem> ProgramItems { get; set; }
     }
 }

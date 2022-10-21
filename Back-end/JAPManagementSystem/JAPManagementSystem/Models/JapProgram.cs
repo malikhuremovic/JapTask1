@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Content { get; set; }
-        public List<Item> Items { get; set; } = new List<Item>();
-        public List<ProgramItem> ProgramItem { get; set; } = new List<ProgramItem>();
+        public List<JapItem> Items { get; set; } = new List<JapItem>();
+        public List<ProgramItem> ProgramItems { get; set; } = new List<ProgramItem>();
     }
 }

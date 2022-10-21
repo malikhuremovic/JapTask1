@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EntityFrameworkPaginate;
-using JAPManagementSystem.DTOs.LectureDTOs;
+using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.Models;
 
 namespace JAPManagementSystem.AutoMapperMaps
@@ -8,10 +8,10 @@ namespace JAPManagementSystem.AutoMapperMaps
     public class ItemMap : Profile
     {
         public ItemMap() {
-            CreateMap<AddItemDto, Item>();
-            CreateMap<Item, GetItemDto>();
-            CreateMap<ModifyItemDto, Item>();
-            CreateMap<Page<Item>, GetItemPageDto>();
+            CreateMap<AddItemDto, JapItem>();
+            CreateMap<JapItem, GetItemDto>();
+            CreateMap<ModifyItemDto, JapItem>();
+            CreateMap<Page<JapItem>, GetItemPageDto>();
         }
     }
 }

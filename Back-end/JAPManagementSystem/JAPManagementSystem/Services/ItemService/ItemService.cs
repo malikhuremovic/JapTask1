@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
-using JAPManagementSystem.DTOs.LectureDTOs;
-using JAPManagementSystem.DTOs.Program;
+using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
 
 namespace JAPManagementSystem.Services.LectureService
 {
@@ -25,11 +22,11 @@ namespace JAPManagementSystem.Services.LectureService
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
             try
             {
-                var lecture = _mapper.Map<Item>(newLecture);
+                var lecture = _mapper.Map<JapItem>(newLecture);
                 _context.Items.Add(lecture);
                 await _context.SaveChangesAsync();
                 response.Data = _mapper.Map<GetItemDto>(lecture);
-                response.Message = "You have successfully added a new " + (newLecture.isEvent ? "event " : "lecture ") + newLecture.Name;
+                response.Message = "You have successfully added a new " + (newLecture.IsEvent ? "event " : "lecture ") + newLecture.Name;
             }catch(Exception exc)
             {
                 response.Success = false;
@@ -97,7 +94,7 @@ namespace JAPManagementSystem.Services.LectureService
                 lecture.URL = modifiedLecture.URL;
                 lecture.Description = modifiedLecture.Description;
                 lecture.ExpectedHours = modifiedLecture.ExpectedHours;
-                lecture.isEvent = modifiedLecture.isEvent;
+                lecture.IsEvent = modifiedLecture.IsEvent;
                 await _context.SaveChangesAsync();
                 response.Data = _mapper.Map<GetItemDto>(lecture);
                 response.Message = "You have successfully modified a selection: " + lecture.Name + ".";

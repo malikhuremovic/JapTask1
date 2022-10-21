@@ -1,6 +1,6 @@
 ﻿using JAPManagementSystem.Models;
 using JAPManagementSystem.DTOs.Program;
-using JAPManagementSystem.DTOs.LectureDTOs;
+using JAPManagementSystem.DTOs.JapItemDTOs;
 
 namespace JAPManagementSystem.Services.ProgramService
 {

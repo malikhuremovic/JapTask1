@@ -1,4 +1,4 @@
-﻿using JAPManagementSystem.DTOs.LectureDTOs;
+﻿using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.Models;
 
