@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JAPManagementSystem.Migrations
 {
-    public partial class ABC : Migration
+    public partial class woohooo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,6 +21,23 @@ namespace JAPManagementSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpectedHours = table.Column<int>(type: "int", nullable: false),
+                    IsEvent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +76,31 @@ namespace JAPManagementSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProgramItems",
+                columns: table => new
+                {
+                    ItemId = table.Column<int>(type: "int", nullable: false),
+                    ProgramId = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProgramItems", x => new { x.ItemId, x.ProgramId });
+                    table.ForeignKey(
+                        name: "FK_ProgramItems_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProgramItems_JapPrograms_ProgramId",
+                        column: x => x.ProgramId,
+                        principalTable: "JapPrograms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Selections",
                 columns: table => new
                 {
@@ -68,8 +110,7 @@ namespace JAPManagementSystem.Migrations
                     DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    JapProgramId = table.Column<int>(type: "int", nullable: true),
-                    SuccessRate = table.Column<int>(type: "int", nullable: true)
+                    JapProgramId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -223,6 +264,34 @@ namespace JAPManagementSystem.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "StudentItems",
+                columns: table => new
+                {
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ItemId = table.Column<int>(type: "int", nullable: false),
+                    Done = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentItems", x => new { x.ItemId, x.StudentId });
+                    table.ForeignKey(
+                        name: "FK_StudentItems_AspNetUsers_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentItems_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TwoFactorEnabled", "UserName" },
@@ -240,13 +309,13 @@ namespace JAPManagementSystem.Migrations
 
             migrationBuilder.InsertData(
                 table: "Selections",
-                columns: new[] { "Id", "DateEnd", "DateStart", "JapProgramId", "Name", "Status", "SuccessRate" },
-                values: new object[] { 1, new DateTime(2022, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Dev Jap September", 1, null });
+                columns: new[] { "Id", "DateEnd", "DateStart", "JapProgramId", "Name", "Status" },
+                values: new object[] { 1, new DateTime(2022, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Dev Jap September", 1 });
 
             migrationBuilder.InsertData(
                 table: "Selections",
-                columns: new[] { "Id", "DateEnd", "DateStart", "JapProgramId", "Name", "Status", "SuccessRate" },
-                values: new object[] { 2, new DateTime(2022, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Dev QA June", 2, null });
+                columns: new[] { "Id", "DateEnd", "DateStart", "JapProgramId", "Name", "Status" },
+                values: new object[] { 2, new DateTime(2022, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Dev QA June", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -298,9 +367,19 @@ namespace JAPManagementSystem.Migrations
                 column: "SId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProgramItems_ProgramId",
+                table: "ProgramItems",
+                column: "ProgramId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Selections_JapProgramId",
                 table: "Selections",
                 column: "JapProgramId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentItems_StudentId",
+                table: "StudentItems",
+                column: "StudentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -324,10 +403,19 @@ namespace JAPManagementSystem.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "ProgramItems");
+
+            migrationBuilder.DropTable(
+                name: "StudentItems");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "Selections");
