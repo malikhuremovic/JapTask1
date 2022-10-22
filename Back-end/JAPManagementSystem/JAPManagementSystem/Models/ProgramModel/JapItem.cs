@@ -1,4 +1,6 @@
-﻿namespace JAPManagementSystem.Models.ProgramModel
+﻿using JAPManagementSystem.Models.StudentModel;
+
+namespace JAPManagementSystem.Models.ProgramModel
 {
     public class JapItem
     {
@@ -10,5 +12,7 @@
         public bool IsEvent { get; set; }
         public List<JapProgram> Programs { get; set; } = new List<JapProgram>();
         public List<ProgramItem> ProgramItems { get; set; } = new List<ProgramItem>();
+        public List<Student> Students { get; set; } = new List<Student>();
+        public List<StudentItem> StudentItems { get; set; } = new List<StudentItem>();
     }
 }
