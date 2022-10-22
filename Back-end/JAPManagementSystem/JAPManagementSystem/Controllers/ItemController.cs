@@ -45,10 +45,10 @@ namespace JAPManagementSystem.Controllers
         }
 
         [HttpGet("get/all")]
-        public ActionResult<ServiceResponse<GetItemPageDto>> GetLectureWithParams(string? name, string? description, string? URL, int? expectedHours, string sort = "name", int page = 1, int pageSize = 10, bool descending = true)
+        public ActionResult<ServiceResponse<GetItemPageDto>> GetLectureWithParams(string? name, string? description, string? URL, int? expectedHours, string? isEvent, string sort = "name", int page = 1, int pageSize = 10, bool descending = true)
         {
             ServiceResponse<GetItemPageDto> response = new ServiceResponse<GetItemPageDto>();
-            response = _lectureService.GetLecturesWithParams(page, pageSize, name, description, URL, expectedHours, sort, descending);
+            response = _lectureService.GetLecturesWithParams(page, pageSize, name, description, URL, expectedHours, isEvent, sort, descending);
             if (response.Success == false)
             {
                 return BadRequest(response);

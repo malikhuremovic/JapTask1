@@ -108,11 +108,11 @@ namespace JAPManagementSystem.Services.LectureService
             return response;
         }
 
-        public ServiceResponse<GetItemPageDto> GetLecturesWithParams(int pageNumber, int pageSize, string? name, string? description, string? URL, int? expectedHours, string sort, bool descending)
+        public ServiceResponse<GetItemPageDto> GetLecturesWithParams(int pageNumber, int pageSize, string? name, string? description, string? URL, int? expectedHours, string? isEvent, string sort, bool descending)
         {
 
             ServiceResponse<GetItemPageDto> response = new ServiceResponse<GetItemPageDto>();
-            ItemFetchConfig.Initialize(name, description, URL, expectedHours, sort, descending);
+            ItemFetchConfig.Initialize(name, description, URL, expectedHours, isEvent, sort, descending);
             try
             {
                 var lectures = _context.Items
