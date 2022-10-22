@@ -10,13 +10,13 @@ import LoginPage from './Pages/LoginPage';
 import LandingPage from './Pages/LandingPage';
 import StudentDetailsPageAdmin from './Pages/StudentDetailsPageAdmin';
 import ProgramPage from './Pages/ProgramPage';
+import ReportPage from './Pages/ReportPage';
 import LogoutPage from './Pages/LogoutPage';
 import PageLayoutWrapper from './Pages/PageLayoutWrapper';
 import MainSelectionComponent from './Components/Selection/MainSelectionComponent';
 import ProtectedRoute from './Pages/ProtectedRoute';
 
 import './App.module.css';
-import ReportPage from './Pages/ReportPage';
 
 function App() {
   const { userDataState } = useContext(UserContext);

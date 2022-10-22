@@ -20,7 +20,7 @@ const StudentForm = ({
             type="text"
             placeholder="Enter first name"
             onChange={handleStudentFormInput}
-            value={studentFormData.firstName}
+            value={studentFormData?.firstName}
             disabled={disabled ? true : false}
           />
         </Col>
@@ -35,7 +35,7 @@ const StudentForm = ({
             type="text"
             placeholder="Enter last name"
             onChange={handleStudentFormInput}
-            value={studentFormData.lastName}
+            value={studentFormData?.lastName}
             disabled={disabled ? true : false}
           />
         </Col>
@@ -50,7 +50,7 @@ const StudentForm = ({
             type="email"
             placeholder="Enter email"
             onChange={handleStudentFormInput}
-            value={studentFormData.email}
+            value={studentFormData?.email}
             disabled={disabled ? true : false}
           />
         </Col>
@@ -69,14 +69,14 @@ const StudentForm = ({
             name="status"
             className="form-select"
             defaultValue={
-              studentFormData.status ? studentFormData.status : 'none'
+              studentFormData?.status ? studentFormData.status : 'none'
             }
             aria-label="Default select example"
             required
             onChange={handleStudentFormInput}
             disabled={disabled ? true : false}
           >
-            {!studentFormData.status && <option value="none">Status</option>}
+            {!studentFormData?.status && <option value="none">Status</option>}
             <option value="InProgram">InProgram</option>
             <option value="Success">Success</option>
             <option value="Failed">Failed</option>
@@ -93,7 +93,7 @@ const StudentForm = ({
             name="selection"
             className="form-select"
             defaultValue={
-              studentFormData.selection
+              studentFormData?.selection
                 ? studentFormData.selection.name
                 : 'none'
             }
@@ -102,10 +102,10 @@ const StudentForm = ({
             onChange={handleStudentFormInput}
             disabled={disabled ? true : false}
           >
-            {!studentFormData.selection && (
+            {!studentFormData?.selection && (
               <option value="none">Selections</option>
             )}
-            {availableSelections.map(s => {
+            {availableSelections?.map(s => {
               return (
                 <option key={s.id} value={s.id}>
                   {' '}

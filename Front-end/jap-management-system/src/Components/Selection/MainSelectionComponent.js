@@ -134,9 +134,11 @@ const MainSelectionComponent = () => {
   };
 
   const handleAddState = () => {
-    setSelectionFormData(() => {
-      return INITIAL_SELECTION_FORM_DATA;
-    });
+    if (!actionState.show) {
+      setSelectionFormData(() => {
+        return INITIAL_SELECTION_FORM_DATA;
+      });
+    }
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
         action: 'add',
@@ -147,6 +149,20 @@ const MainSelectionComponent = () => {
   };
 
   const handleEditState = ev => {
+    if (!actionState.show) {
+      const id = +ev.target.childNodes[0].id;
+      const selection = selections.find(s => s.id === id);
+      setSelectionFormData(() => {
+        return {
+          id: selection.id,
+          name: selection.name,
+          dateStart: selection.dateStart,
+          dateEnd: selection.dateEnd,
+          status: selection.status,
+          japProgramId: selection.japProgram.id
+        };
+      });
+    }
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
         action: 'edit',
@@ -154,34 +170,24 @@ const MainSelectionComponent = () => {
       };
       return UPDATED_ACTION_STATE;
     });
-    const id = +ev.target.childNodes[0].id;
-    const selection = selections.find(s => s.id === id);
-    setSelectionFormData(() => {
-      return {
-        id: selection.id,
-        name: selection.name,
-        dateStart: selection.dateStart,
-        dateEnd: selection.dateEnd,
-        status: selection.status,
-        japProgramId: selection.japProgram.id
-      };
-    });
   };
 
   const handleDeleteState = ev => {
+    if (!actionState.show) {
+      const id = +ev.target.childNodes[0].id;
+      const selection = selections.find(s => s.id === id);
+      setSelectionFormData(() => {
+        return {
+          id: selection.id
+        };
+      });
+    }
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
         action: 'delete',
         show: prevState.action === 'delete' ? !prevState.show : true
       };
       return UPDATED_ACTION_STATE;
-    });
-    const id = +ev.target.childNodes[0].id;
-    const selection = selections.find(s => s.id === id);
-    setSelectionFormData(() => {
-      return {
-        id: selection.id
-      };
     });
   };
 
@@ -293,10 +299,14 @@ const MainSelectionComponent = () => {
         </Button>
       </div>
       <SelectionActionForms
+        formModel="selection"
         handleSelectionFormInput={handleSelectionFormInput}
         handleAddSelection={handleAddSelection}
         handleEditSelection={handleEditSelection}
         handleDeleteSelection={handleDeleteSelection}
+        handleAddState={handleAddState}
+        handleEditState={handleEditState}
+        handleDeleteState={handleDeleteState}
         actionState={actionState}
         selectionFormData={selectionFormData}
         availablePrograms={availablePrograms}

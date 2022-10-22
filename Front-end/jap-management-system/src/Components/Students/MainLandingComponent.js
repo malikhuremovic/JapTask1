@@ -141,9 +141,11 @@ const MainLandingComponent = () => {
   };
 
   const handleAddState = () => {
-    setStudentFormData(() => {
-      return INITIAL_STUDENT_FORM_DATA;
-    });
+    if (!actionState.show) {
+      setStudentFormData(() => {
+        return INITIAL_STUDENT_FORM_DATA;
+      });
+    }
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
         action: 'add',
@@ -154,6 +156,20 @@ const MainLandingComponent = () => {
   };
 
   const handleEditState = ev => {
+    if (!actionState.show) {
+      const id = ev.target.childNodes[0].id;
+      const student = students.find(s => s.id === id);
+      setStudentFormData(() => {
+        return {
+          id: student.id,
+          firstName: student.firstName,
+          lastName: student.lastName,
+          email: student.email,
+          status: student.status,
+          selection: student.selection
+        };
+      });
+    }
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
         action: 'edit',
@@ -161,34 +177,24 @@ const MainLandingComponent = () => {
       };
       return UPDATED_ACTION_STATE;
     });
-    const id = ev.target.childNodes[0].id;
-    const student = students.find(s => s.id === id);
-    setStudentFormData(() => {
-      return {
-        id: student.id,
-        firstName: student.firstName,
-        lastName: student.lastName,
-        email: student.email,
-        status: student.status,
-        selection: student.selection
-      };
-    });
   };
 
   const handleDeleteState = ev => {
+    if (!actionState.show) {
+      const id = ev.target.childNodes[0].id;
+      const student = students.find(s => s.id === id);
+      setStudentFormData(() => {
+        return {
+          id: student.id
+        };
+      });
+    }
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
         action: 'delete',
         show: prevState.action === 'delete' ? !prevState.show : true
       };
       return UPDATED_ACTION_STATE;
-    });
-    const id = ev.target.childNodes[0].id;
-    const student = students.find(s => s.id === id);
-    setStudentFormData(() => {
-      return {
-        id: student.id
-      };
     });
   };
 
@@ -312,10 +318,14 @@ const MainLandingComponent = () => {
         </Button>
       </div>
       <ActionForms
+        formModel="student"
+        handleAddState={handleAddState}
+        handleEditState={handleEditState}
         handleStudentFormInput={handleStudentFormInput}
+        handleDeleteStudent={handleDeleteStudent}
         handleAddStudent={handleAddStudent}
         handleEditStudent={handleEditStudent}
-        handleDeleteStudent={handleDeleteStudent}
+        handleDeleteState={handleDeleteState}
         actionState={actionState}
         studentFormData={studentFormData}
         availableSelections={availableSelections}

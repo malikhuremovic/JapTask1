@@ -1,13 +1,17 @@
-import StudentForm from './StudentForm';
 import StudentDeleteForm from './StudentDeleteForm';
 
 import classes from './ActionForms.module.css';
+import FormModal from '../FormModal';
 
 const ActionForms = ({
+  formModel,
   handleStudentFormInput,
   handleAddStudent,
   handleEditStudent,
   handleDeleteStudent,
+  handleAddState,
+  handleEditState,
+  handleDeleteState,
   actionState,
   studentFormData,
   availableSelections
@@ -15,25 +19,37 @@ const ActionForms = ({
   return (
     <div className={classes.action_form}>
       {actionState.action === 'add' && actionState.show && (
-        <StudentForm
+        <FormModal
+          title="Add student"
           formType="add"
+          formModel={formModel}
+          handleState={handleAddState}
           handleFormSubmission={handleAddStudent}
-          handleStudentFormInput={handleStudentFormInput}
-          studentFormData={studentFormData}
-          availableSelections={availableSelections}
+          handleFormInput={handleStudentFormInput}
+          formData={studentFormData}
+          availableItems={availableSelections}
         />
       )}
       {actionState.action === 'edit' && actionState.show && (
-        <StudentForm
+        <FormModal
+          title="Edit student"
           formType="edit"
+          formModel={formModel}
+          handleState={handleEditState}
           handleFormSubmission={handleEditStudent}
-          handleStudentFormInput={handleStudentFormInput}
-          studentFormData={studentFormData}
-          availableSelections={availableSelections}
+          handleFormInput={handleStudentFormInput}
+          formData={studentFormData}
+          availableItems={availableSelections}
         />
       )}
       {actionState.action === 'delete' && actionState.show && (
-        <StudentDeleteForm handleDeleteStudent={handleDeleteStudent} />
+        <FormModal
+          formType="delete"
+          title="Delete student"
+          formModel={formModel}
+          handleState={handleDeleteState}
+          handleDelete={handleDeleteStudent}
+        />
       )}
     </div>
   );

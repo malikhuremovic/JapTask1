@@ -1,13 +1,16 @@
-import SelectionDeleteForm from './SelectionDeleteForm';
-import SelectionForm from './SelectionForm';
+import FormModal from '../FormModal';
 
 import classes from '../Students/ActionForms.module.css';
 
 const SelectionActionForms = ({
+  formModel,
   handleSelectionFormInput,
   handleAddSelection,
   handleEditSelection,
   handleDeleteSelection,
+  handleAddState,
+  handleEditState,
+  handleDeleteState,
   actionState,
   selectionFormData,
   availablePrograms
@@ -15,25 +18,37 @@ const SelectionActionForms = ({
   return (
     <div className={classes.action_form}>
       {actionState.action === 'add' && actionState.show && (
-        <SelectionForm
+        <FormModal
+          title="Add selection"
           formType="add"
+          formModel={formModel}
+          handleState={handleAddState}
           handleFormSubmission={handleAddSelection}
-          handleSelectionFormInput={handleSelectionFormInput}
-          selectionFormData={selectionFormData}
-          availablePrograms={availablePrograms}
+          handleFormInput={handleSelectionFormInput}
+          formData={selectionFormData}
+          availableItems={availablePrograms}
         />
       )}
       {actionState.action === 'edit' && actionState.show && (
-        <SelectionForm
+        <FormModal
+          title="Edit selection"
           formType="edit"
+          formModel={formModel}
+          handleState={handleEditState}
           handleFormSubmission={handleEditSelection}
-          handleSelectionFormInput={handleSelectionFormInput}
-          selectionFormData={selectionFormData}
-          availablePrograms={availablePrograms}
+          handleFormInput={handleSelectionFormInput}
+          formData={selectionFormData}
+          availableItems={availablePrograms}
         />
       )}
       {actionState.action === 'delete' && actionState.show && (
-        <SelectionDeleteForm handleDeleteSelection={handleDeleteSelection} />
+        <FormModal
+          title="Delete selection"
+          formType="delete"
+          formModel={formModel}
+          handleState={handleDeleteState}
+          handleDelete={handleDeleteSelection}
+        />
       )}
     </div>
   );

@@ -27,13 +27,11 @@ const StudentDetailsPageAdmin = () => {
 
   const query = useQuery();
 
-  const fetchStudents = useCallback(query => {
-    const id = query.get('id');
+  const fetchStudents = useCallback(id => {
     studentService
       .fetchStudentById(id)
       .then(response => {
         setStudent(response.data.data);
-        setStudentEdit(response.data.data);
       })
       .catch(err => console.log(err));
 
@@ -46,7 +44,8 @@ const StudentDetailsPageAdmin = () => {
   }, []);
 
   useEffect(() => {
-    fetchStudents(query);
+    const id = query.get('id');
+    fetchStudents(id);
   }, [fetchStudents, query]);
 
   const handleEditStudent = ev => {
@@ -126,7 +125,7 @@ const StudentDetailsPageAdmin = () => {
           availableSelections={availableSelections}
           handleFormSubmission={handleEditStudent}
           handleStudentFormInput={handleStudentFormInput}
-          studentFormData={studentEdit}
+          studentFormData={student}
         />
       </div>
       <div className={classes.student__comments}>
@@ -134,7 +133,7 @@ const StudentDetailsPageAdmin = () => {
         {student.comments &&
           student.comments.map(comment => {
             return (
-              <div className={classes.comment_box}>
+              <div key={comment.createdAt} className={classes.comment_box}>
                 <span>
                   Created: {comment.createdAt.split('T').join(' at ')}
                 </span>
