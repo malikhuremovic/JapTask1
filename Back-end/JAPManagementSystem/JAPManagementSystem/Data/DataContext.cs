@@ -1,4 +1,4 @@
-﻿using JAPManagementSystem.Models;
+﻿using JAPManagementSystem.Models.ProgramModel;
 using JAPManagementSystem.Models.SelectionModel;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Models.UserModel;
@@ -37,6 +37,22 @@ namespace JAPManagementSystem.Data
                     j.HasKey(t => new { t.ItemId, t.ProgramId });
                 });
 
+            _modelBuilder.Entity<JapItem>()
+            .HasMany(p => p.Students)
+            .WithMany(p => p.Items)
+            .UsingEntity<StudentItem>(
+                j => j
+                    .HasOne(pt => pt.Student)
+                    .WithMany(t => t.StudentItems)
+                    .HasForeignKey(pt => pt.StudentId),
+                j => j
+                    .HasOne(pt => pt.Item)
+                    .WithMany(p => p.StudentItems)
+                    .HasForeignKey(pt => pt.ItemId),
+                j =>
+                {
+                    j.HasKey(t => new { t.ItemId, t.StudentId });
+                });
 
             _modelBuilder.Entity<AdminReport>().ToTable("AdminReports", x => x.ExcludeFromMigrations())
         .HasNoKey();
@@ -108,5 +124,6 @@ namespace JAPManagementSystem.Data
         public DbSet<AdminReport> AdminReport { get; set; }
         public DbSet<JapItem> Items { get; set; }
         public DbSet<ProgramItem> ProgramItems { get; set; }
+        public DbSet<StudentItem> StudentItems { get; set; }
     }
 }
