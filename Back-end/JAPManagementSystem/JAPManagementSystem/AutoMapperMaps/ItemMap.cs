@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EntityFrameworkPaginate;
 using JAPManagementSystem.DTOs.JapItemDTOs;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.ProgramModel;
 
 namespace JAPManagementSystem.AutoMapperMaps
 {
