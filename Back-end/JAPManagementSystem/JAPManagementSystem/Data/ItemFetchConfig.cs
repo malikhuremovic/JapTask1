@@ -20,8 +20,10 @@ namespace JAPManagementSystem.Data
             sorts = new Sorts<JapItem>();
             sorts.Add(sort.Equals("name"), l => l.Name, descending);
             sorts.Add(sort.Equals("description"), l => l.Description, descending);
-            sorts.Add(sort.Equals("URL"), l => l.URL, descending);
+            sorts.Add(sort.Equals("url"), l => l.URL, descending);
             sorts.Add(sort.Equals("expectedHours"), l => l.ExpectedHours, descending);
+            sorts.Add(sort.Equals("isEvent"), l => l.IsEvent, descending);
+
         }
     }
 }
