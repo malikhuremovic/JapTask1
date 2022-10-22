@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 
 import studentService from '../Services/studentService';
 
 import studentIcon from '../Assets/studentIcon.png';
 
-import classes from './StudentDetailsPage.module.css';
+import classes from './DetailsPage.module.css';
 
 const StudentDetailsPage = () => {
   const [student, setStudent] = useState({});

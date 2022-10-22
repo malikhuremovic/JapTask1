@@ -4,14 +4,14 @@ import { useHistory } from 'react-router-dom';
 
 import useQuery from '../Hooks/useQuery';
 
-import StudentForm from '../Components/Students/StudentForm';
+import StudentForm from '../Components/Student/StudentForm';
 
 import studentIcon from '../Assets/studentIcon.png';
 
 import studentService from '../Services/studentService';
 import selectionService from '../Services/selectionService';
 
-import classes from './StudentDetailsPage.module.css';
+import classes from './DetailsPage.module.css';
 
 const StudentDetailsPageAdmin = () => {
   const history = useHistory();

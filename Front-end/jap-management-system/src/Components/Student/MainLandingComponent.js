@@ -4,12 +4,12 @@ import { Button } from 'react-bootstrap';
 import studentService from '../../Services/studentService';
 import selectionService from '../../Services/selectionService';
 
-import ActionForms from './ActionForms';
+import StudentActionForms from './StudentActionForms';
 import StudentTable from './StudentTable';
 
 import useQuery from '../../Hooks/useQuery';
 
-import classes from './LandingComponent.module.css';
+import classes from '../Style/MainComponent.module.css';
 
 const MainLandingComponent = () => {
   const query = useQuery();
@@ -317,7 +317,7 @@ const MainLandingComponent = () => {
           Add new student
         </Button>
       </div>
-      <ActionForms
+      <StudentActionForms
         formModel="student"
         handleAddState={handleAddState}
         handleEditState={handleEditState}

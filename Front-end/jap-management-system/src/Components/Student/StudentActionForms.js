@@ -1,9 +1,8 @@
-import StudentDeleteForm from './StudentDeleteForm';
-
-import classes from './ActionForms.module.css';
 import FormModal from '../FormModal';
 
-const ActionForms = ({
+import classes from '../Style/ActionForms.module.css';
+
+const StudentActionForms = ({
   formModel,
   handleStudentFormInput,
   handleAddStudent,
@@ -55,4 +54,4 @@ const ActionForms = ({
   );
 };
 
-export default ActionForms;
+export default StudentActionForms;

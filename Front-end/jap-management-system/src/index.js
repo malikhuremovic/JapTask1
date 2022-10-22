@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from './App';
-import utils from './Util/tokenUtil';
 
 import { UserContextProvider } from './Store/userContext';
 import { logoutUser } from './Util/userUtil';
 import { BrowserRouter } from 'react-router-dom';
 
 import services from './Services/userService';
+
+import utils from './Util/tokenUtil';
 
 const initialize = async () => {
   const token = utils.getAccessToken();
@@ -24,6 +25,8 @@ const initialize = async () => {
       alert('Authentication has failed. Invalid token. Please log in again.');
       logoutUser();
     }
+    alert('No service available');
+    logoutUser();
   }
   return user;
 };
