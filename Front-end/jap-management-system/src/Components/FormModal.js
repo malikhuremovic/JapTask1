@@ -7,6 +7,8 @@ import SelectionForm from './Selection/SelectionForm';
 import SelectionDeleteForm from './Selection/SelectionDeleteForm';
 
 import classes from './FormModal.module.css';
+import LectureForm from './Lecture/LectureForm';
+import LectureDeleteForm from './Lecture/LectureDeleteForm';
 
 const FormModal = ({
   title,
@@ -56,6 +58,21 @@ const FormModal = ({
               )}
               {formType === 'delete' && (
                 <SelectionDeleteForm handleDeleteSelection={handleDelete} />
+              )}
+            </React.Fragment>
+          )}
+          {formModel === 'lecture' && (
+            <React.Fragment>
+              {formType !== 'delete' && (
+                <LectureForm
+                  formType={formType}
+                  handleFormSubmission={handleFormSubmission}
+                  handleLectureFormInput={handleFormInput}
+                  lectureFormData={formData}
+                />
+              )}
+              {formType === 'delete' && (
+                <LectureDeleteForm handleDeleteSelection={handleDelete} />
               )}
             </React.Fragment>
           )}

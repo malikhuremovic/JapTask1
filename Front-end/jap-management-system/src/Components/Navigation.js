@@ -7,6 +7,7 @@ import userIcon from '../Assets/userIcon.png';
 import { Link } from 'react-router-dom';
 
 import classes from './Navigation.module.css';
+import routes from '../Data/routes';
 
 const Navigation = () => {
   const { userDataState } = useContext(UserContext);
@@ -34,22 +35,27 @@ const Navigation = () => {
                     </Link>
                   )}
                   {userDataState.role === 'Admin' && (
-                    <Link onClick={closeNav} to="/selections">
+                    <Link onClick={closeNav} to={routes.selections}>
                       Selection Management
                     </Link>
                   )}
                   {userDataState.role === 'Admin' && (
-                    <Link onClick={closeNav} to="/program">
+                    <Link onClick={closeNav} to={routes.programDetails}>
                       Program Management
                     </Link>
                   )}
                   {userDataState.role === 'Admin' && (
-                    <Link onClick={closeNav} to="/report">
+                    <Link onClick={closeNav} to={routes.lectures}>
+                      Lectures Management
+                    </Link>
+                  )}
+                  {userDataState.role === 'Admin' && (
+                    <Link onClick={closeNav} to={routes.report}>
                       Report
                     </Link>
                   )}
                   {userDataState.role === 'Student' && (
-                    <Link onClick={closeNav} to="/">
+                    <Link onClick={closeNav} to={routes.index}>
                       My Profile
                     </Link>
                   )}

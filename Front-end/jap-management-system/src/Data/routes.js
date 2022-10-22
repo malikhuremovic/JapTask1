@@ -5,6 +5,7 @@ const routes = {
   studentDetails: '/student',
   programDetails: '/program',
   selections: '/selections',
+  lectures: '/lectures',
   report: '/report'
 };
 

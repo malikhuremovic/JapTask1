@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 
 import App from './App';
 
+import { BrowserRouter } from 'react-router-dom';
 import { UserContextProvider } from './Store/userContext';
 import { logoutUser } from './Util/userUtil';
-import { BrowserRouter } from 'react-router-dom';
 
 import services from './Services/userService';
 

@@ -2,8 +2,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import React, { useContext } from 'react';
 
-import routes from './Data/routes';
-
 import UserContext from './Store/userContext';
 
 import LoginPage from './Pages/LoginPage';
@@ -13,8 +11,12 @@ import ProgramPage from './Pages/ProgramPage';
 import ReportPage from './Pages/ReportPage';
 import LogoutPage from './Pages/LogoutPage';
 import PageLayoutWrapper from './Pages/PageLayoutWrapper';
-import MainSelectionComponent from './Components/Selection/MainSelectionComponent';
 import ProtectedRoute from './Pages/ProtectedRoute';
+
+import SelectionsPage from './Pages/SelectionsPage';
+import LecturesPage from './Pages/LecturesPage';
+
+import routes from './Data/routes';
 
 import './App.module.css';
 
@@ -31,10 +33,13 @@ function App() {
           <LogoutPage />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.selections} roles={['Admin']}>
-          <MainSelectionComponent />
+          <SelectionsPage />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.programDetails} roles={['Admin']}>
           <ProgramPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path={routes.lectures} roles={['Admin']}>
+          <LecturesPage />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.report} roles={['Admin']}>
           <ReportPage />
