@@ -1,6 +1,6 @@
 ﻿using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.DTOs.Program;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.Response;
 
 namespace JAPManagementSystem.Services.LectureService
 {

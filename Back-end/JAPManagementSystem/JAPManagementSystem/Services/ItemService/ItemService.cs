@@ -2,7 +2,8 @@
 using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.JapItemDTOs;
-using JAPManagementSystem.Models;
+using JAPManagementSystem.Models.ProgramModel;
+using JAPManagementSystem.Models.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace JAPManagementSystem.Services.LectureService

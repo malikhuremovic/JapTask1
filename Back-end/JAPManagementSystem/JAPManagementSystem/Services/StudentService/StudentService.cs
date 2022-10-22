@@ -2,6 +2,7 @@
 using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Comment;
+using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.DTOs.User;
 using JAPManagementSystem.Models.Response;
@@ -129,6 +130,53 @@ namespace JAPManagementSystem.Services.StudentService
             {
                 response.Message = exc.Message;
                 response.Success = false;
+            }
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetStudentDto>> GetStudentById(string id)
+        {
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+            try { 
+            var student = await _context.Students
+                    .Include(s => s.Comments)
+                    .Include(s => s.Selection)
+                    .ThenInclude(s => s.JapProgram)
+                    .FirstOrDefaultAsync(s => s.Id
+                    .Equals(id));
+
+            if (student == null)
+            {
+                throw new Exception("No student was found.");
+            }
+            response.Data = _mapper.Map<GetStudentDto>(student);
+        }catch(Exception exc)
+            {
+                response.Message = exc.Message;
+                response.Success = false;
+            }
+            return response;
+        }
+
+public async Task<ServiceResponse<GetStudentItemDto>> ModifyStudentItem(string studentId, ModifyStudentItemDto modifiedItem)
+        {
+            ServiceResponse<GetStudentItemDto> response = new ServiceResponse<GetStudentItemDto>();
+            try
+            {
+                var item = await _context.StudentItems.FirstOrDefaultAsync(st => (st.StudentId == studentId && st.ItemId == modifiedItem.ItemId));
+                if(item == null)
+                {
+                    throw new Exception("There is no item with the ID : " + modifiedItem.ItemId);
+                }
+                item.Status = modifiedItem.Status;
+                item.Done = modifiedItem.Done;
+                await _context.SaveChangesAsync();
+                response.Data = _mapper.Map<GetStudentItemDto>(item);
+                response.Message = "You have successfully modified a student program item (lecture, event).";
+            }catch(Exception exc)
+            {
+                response.Success = false;
+                response.Message = exc.Message;
             }
             return response;
         }

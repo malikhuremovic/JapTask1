@@ -1,6 +1,6 @@
-﻿using JAPManagementSystem.Models;
-using JAPManagementSystem.DTOs.Program;
+﻿using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.DTOs.JapItemDTOs;
+using JAPManagementSystem.Models.Response;
 
 namespace JAPManagementSystem.Services.ProgramService
 {
