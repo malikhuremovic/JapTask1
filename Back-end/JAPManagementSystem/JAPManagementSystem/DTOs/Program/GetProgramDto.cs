@@ -1,5 +1,4 @@
 ﻿using JAPManagementSystem.DTOs.JapItemDTOs;
-using JAPManagementSystem.Models;
 
 namespace JAPManagementSystem.DTOs.Program
 {
@@ -8,6 +7,6 @@ namespace JAPManagementSystem.DTOs.Program
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
-        public List<GetItemDto> Lectures { get; set; } = new List<GetItemDto>();
+        public List<GetItemDto> Items { get; set; } = new List<GetItemDto>();
     }
 }
