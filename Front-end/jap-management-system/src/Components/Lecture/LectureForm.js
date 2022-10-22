@@ -74,10 +74,9 @@ const LectureForm = ({
         </Form.Label>
         <Col sm={10}>
           <Form.Check
-            name="event"
+            name="isEvent"
             label="Yes, this is an event"
             onChange={handleLectureFormInput}
-            value={lectureFormData.isEvent ? true : false}
             checked={lectureFormData.isEvent ? true : false}
           />
         </Col>

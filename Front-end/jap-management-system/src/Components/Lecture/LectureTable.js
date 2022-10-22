@@ -114,7 +114,7 @@ const LectureTable = ({
             <th scope="col">
               <div className={classes.column__Title__Sort}>
                 <div
-                  name="exprectedHours"
+                  name="expectedHours"
                   className={classes.sortBlock}
                   onClick={handleSortAction}
                 >
@@ -136,15 +136,15 @@ const LectureTable = ({
             <th scope="col">
               <div className={classes.column__Title__Sort}>
                 <div
-                  name="event"
+                  name="isEvent"
                   className={classes.sortBlock}
                   onClick={handleSortAction}
                 >
                   <img
                     src={
-                      sortState.sort === 'event' && sortState.descending
+                      sortState.sort === 'isEvent' && sortState.descending
                         ? sortIconDesc
-                        : sortState.sort === 'event' && !sortState.descending
+                        : sortState.sort === 'isEvent' && !sortState.descending
                         ? sortIconAsc
                         : sortIconDesc
                     }
@@ -216,7 +216,7 @@ const LectureTable = ({
                 <Col sm={10}>
                   <Form.Check
                     className={classes.checboxFilter}
-                    name="event"
+                    name="isEvent"
                     label="Filter by event property"
                     value={searchState?.isEvent ? false : true}
                     onChange={handleSearchState}

@@ -14,7 +14,7 @@ const MainLectureComponent = () => {
     description: '',
     url: '',
     expectedHours: '',
-    isEvent: false
+    isEvent: ''
   };
 
   const [lectureFormData, setLectureFormData] = useState(
@@ -27,7 +27,7 @@ const MainLectureComponent = () => {
     description: '',
     url: '',
     expectedHours: '',
-    isEvent: false
+    isEvent: ''
   };
   const [searchState, setSearchState] = useState(INITIAL_SEARCH_STATE);
   const INITIAL_ACTION_STATE = {
@@ -104,11 +104,14 @@ const MainLectureComponent = () => {
 
   const handleSearchState = ev => {
     const field = ev.target.name;
-    const value = ev.target.value;
+    let value = ev.target.value;
     setSearchState(prevState => {
       let UPDATED_SEARCH_STATE = {
         ...prevState
       };
+      if (field === 'isEvent') {
+        value = ev.target.checked;
+      }
       UPDATED_SEARCH_STATE[field] = value;
       return UPDATED_SEARCH_STATE;
     });
@@ -257,9 +260,8 @@ const MainLectureComponent = () => {
         lecture.url = value;
       } else if (inputName === 'expectedHours') {
         lecture.expectedHours = value;
-      } else if (inputName === 'event') {
-        if (ev.target.checked) lecture.isEvent = true;
-        else lecture.isEvent = false;
+      } else if (inputName === 'isEvent') {
+        lecture.isEvent = ev.target.checked;
       }
       return lecture;
     });
