@@ -6,7 +6,7 @@ import searchIcon from '../../Assets/searchIcon.png';
 import sortIconAsc from '../../Assets/sortIconDesc.png';
 import sortIconDesc from '../../Assets/sortIconAsc.png';
 
-import classes from '../Students/StudentTable.module.css';
+import classes from '../Style/Table.module.css';
 
 const SelectionTable = ({
   handlePageState,

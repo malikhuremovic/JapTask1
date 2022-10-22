@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import ProgramTable from '../Components/ProgramTable';
+import ProgramTable from '../Components/Program/ProgramTable';
 
 import programIcon from '../Assets/programIcon.png';
 

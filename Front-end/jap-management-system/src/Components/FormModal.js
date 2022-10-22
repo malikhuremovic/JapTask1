@@ -1,10 +1,12 @@
 import React from 'react';
-import classes from './FormModal.module.css';
-import StudentForm from './Students/StudentForm';
+
+import StudentForm from './Student/StudentForm';
 import closeIcon from '../Assets/closeIcon.png';
-import StudentDeleteForm from './Students/StudentDeleteForm';
+import StudentDeleteForm from './Student/StudentDeleteForm';
 import SelectionForm from './Selection/SelectionForm';
 import SelectionDeleteForm from './Selection/SelectionDeleteForm';
+
+import classes from './FormModal.module.css';
 
 const FormModal = ({
   title,
@@ -22,7 +24,7 @@ const FormModal = ({
       <div className={classes.modal}>
         <div className={classes.formTitle}>
           <h4>{title}</h4>
-          <img src={closeIcon} onClick={handleState} />
+          <img src={closeIcon} alt="close button" onClick={handleState} />
         </div>
         <div className={classes.modalForm}>
           {formModel === 'student' && (

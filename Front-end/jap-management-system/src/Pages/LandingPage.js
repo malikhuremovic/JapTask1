@@ -1,7 +1,7 @@
 import React from 'react';
 
 import StudentDetailsPage from './StudentDetailsPage';
-import MainLandingComponent from '../Components/Students/MainLandingComponent';
+import MainLandingComponent from '../Components/Student/MainLandingComponent';
 
 import classes from './LandingPage.module.css';
 

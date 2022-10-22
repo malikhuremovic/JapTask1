@@ -1,5 +1,5 @@
-import searchIcon from '../Assets/searchIcon.png';
-import sortIconDesc from '../Assets/sortIconAsc.png';
+import searchIcon from '../../Assets/searchIcon.png';
+import sortIconDesc from '../../Assets/sortIconAsc.png';
 
 import classes from './ProgramTable.module.css';
 

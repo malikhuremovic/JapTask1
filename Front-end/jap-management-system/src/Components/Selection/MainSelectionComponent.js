@@ -7,7 +7,7 @@ import programService from '../../Services/programService';
 import SelectionTable from './SelectionTable';
 import SelectionActionForms from './SelectionActionForms';
 
-import classes from '../Students/LandingComponent.module.css';
+import classes from '../Style/MainComponent.module.css';
 
 const MainSelectionComponent = () => {
   const [availablePrograms, setAvailablePrograms] = useState([]);

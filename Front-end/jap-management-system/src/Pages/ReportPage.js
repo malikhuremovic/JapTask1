@@ -1,7 +1,7 @@
-import ReportTable from '../Components/ReportTable';
+import React, { useState, useEffect, useCallback } from 'react';
+import ReportTable from '../Components/Report/ReportTable';
 import reportIcon from '../Assets/reportIcon.png';
 import selectionService from '../Services/selectionService';
-import { useState, useEffect, useCallback } from 'react';
 
 import classes from './ProgramPage.module.css';
 const ReportPage = () => {

@@ -1,6 +1,6 @@
 import FormModal from '../FormModal';
 
-import classes from '../Students/ActionForms.module.css';
+import classes from '../Style/ActionForms.module.css';
 
 const SelectionActionForms = ({
   formModel,
