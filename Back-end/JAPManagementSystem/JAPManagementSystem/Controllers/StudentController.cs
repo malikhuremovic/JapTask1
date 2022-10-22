@@ -1,4 +1,5 @@
 ﻿using JAPManagementSystem.DTOs.Comment;
+using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.Models.Response;
 using JAPManagementSystem.Models.StudentModel;
@@ -77,6 +78,19 @@ namespace JAPManagementSystem.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpGet("get/id/admin")]
+        public async Task<ActionResult<ServiceResponse<GetStudentDto>>> GetStudentById(string id)
+        {
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+            response = await _studentService.GetStudentById(id);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet("get")]
         public ActionResult<ServiceResponse<GetStudentPageDto>> GetStudentsWithParams(string? firstName, string? lastName, string? email, string? selectionName, string? japProgramName, StudentStatus? status, int page = 1, int pageSize = 10, string? sort = "firstName", bool descending = true)
         {
@@ -95,6 +109,24 @@ namespace JAPManagementSystem.Controllers
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             response = await _studentService.ModifyStudent(modifiedStudent);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [Authorize(Roles = "Admin, Student")]
+        [HttpPatch("/item/modify")]
+        public async Task<ActionResult<ServiceResponse<GetStudentItemDto>>> ModifyStudentItem(ModifyStudentItemDto modifiedItem)
+        {
+            ServiceResponse<GetStudentItemDto> response = new ServiceResponse<GetStudentItemDto>();
+            Request.Headers.TryGetValue("Authorization", out var token);
+            string tokenValue = token
+                .ToString()
+                .Split(" ")
+                .ElementAt(1);
+            response = await _studentService.ModifyStudentItem(tokenValue, modifiedItem);
             if (!response.Success)
             {
                 return BadRequest(response);
