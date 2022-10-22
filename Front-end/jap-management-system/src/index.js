@@ -25,7 +25,7 @@ const initialize = async () => {
       alert('Authentication has failed. Invalid token. Please log in again.');
       logoutUser();
     }
-    alert('No servi available');
+    alert('No service available');
     logoutUser();
   }
   return user;
