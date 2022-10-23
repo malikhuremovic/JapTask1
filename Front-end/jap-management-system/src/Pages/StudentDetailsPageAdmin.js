@@ -12,6 +12,7 @@ import studentService from '../Services/studentService';
 import selectionService from '../Services/selectionService';
 
 import classes from './DetailsPage.module.css';
+import routes from '../Data/routes';
 
 const StudentDetailsPageAdmin = () => {
   const history = useHistory();
@@ -112,6 +113,11 @@ const StudentDetailsPageAdmin = () => {
     });
   };
 
+  const handleEditFormSubmission = () => {
+    handleEditStudent();
+    window.location.replace(routes.index);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.top}>
@@ -123,7 +129,7 @@ const StudentDetailsPageAdmin = () => {
         <StudentForm
           formType={'edit'}
           availableSelections={availableSelections}
-          handleFormSubmission={handleEditStudent}
+          handleFormSubmission={handleEditFormSubmission}
           handleStudentFormInput={handleStudentFormInput}
           studentFormData={student}
         />
