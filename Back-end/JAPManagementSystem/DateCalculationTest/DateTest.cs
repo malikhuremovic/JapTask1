@@ -1,11 +1,11 @@
-using DateCalculation;
+using DateCalculation.Util;
 
 namespace DateCalculationTest
 {
     [TestFixture]
     public class Tests
     {
-        private DateCalculator calculator;
+        private IDateCalculator calculator;
 
         [SetUp]
         public void Setup()

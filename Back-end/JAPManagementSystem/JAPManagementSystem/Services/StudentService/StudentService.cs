@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DateCalculation;
+using DateCalculation.Util;
 using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Comment;
@@ -24,15 +24,16 @@ namespace JAPManagementSystem.Services.StudentService
         private readonly IAuthService _authService;
         private readonly IEmailService _mailService;
         private readonly IProgramService _programService;
-        private readonly DateCalculator _dateCalculation;
+        private readonly IDateCalculator _dateCalculation;
 
-        public StudentService(IAuthService authService, DataContext context, IMapper mapper, IEmailService mailService, IProgramService programService)
+        public StudentService(IAuthService authService, DataContext context, IMapper mapper, IEmailService mailService, IProgramService programService, IDateCalculator dateCalculator)
         {
             _authService = authService;
             _context = context;
             _mapper = mapper;
             _mailService = mailService;
             _programService = programService;
+            _dateCalculation = dateCalculator;
         }
 
         public List<AddStudentItemDto> CalculateStartAndEndDate(Student student, List<AddStudentItemDto> studentItemList)

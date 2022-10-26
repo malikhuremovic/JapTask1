@@ -7,6 +7,7 @@ using JAPManagementSystem.Services.StudentService;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using JAPManagementSystem.Services.HangfireServices;
+using DateCalculation.Util;
 
 namespace JAPManagementSystem.Extensions
 {
@@ -20,6 +21,7 @@ namespace JAPManagementSystem.Extensions
             service.AddScoped<IAuthService, AuthService>();
             service.AddScoped<IItemService, ItemService>();
             service.AddScoped<IHangfireReportService, HangfireReportService>();
+            service.AddScoped<IDateCalculator, DateCalculator>();
             service.AddSingleton<IEmailService, EmailService>();
         }
     }
