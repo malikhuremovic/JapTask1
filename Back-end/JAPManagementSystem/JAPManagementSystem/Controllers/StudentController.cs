@@ -1,6 +1,7 @@
 ﻿using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.DTOs.StudentDto;
+using JAPManagementSystem.DTOs.StudentDTOs;
 using JAPManagementSystem.Models.Response;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Services.StudentService;
@@ -59,6 +60,20 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet("get/program")]
+        public async Task<ActionResult<ServiceResponse<StudentPersonalProgram>>> GetStudentPersonalProgram(string id)
+        {
+            ServiceResponse<StudentPersonalProgram> response = new ServiceResponse<StudentPersonalProgram>();
+            response = await _studentService.GetStudentPersonalProgram(id);
+            if (!response.Success)
+            {
+                return StatusCode(500, response);
+            }
+            return Ok(response);
+        }
+
+
         [Authorize(Roles = "Admin, Student")]
         [HttpGet("get/id")]
         public async Task<ActionResult<ServiceResponse<GetStudentDto>>> GetStudentByToken()
@@ -91,7 +106,7 @@ namespace JAPManagementSystem.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("get")]
+        [HttpGet("get/all/params")]
         public ActionResult<ServiceResponse<GetStudentPageDto>> GetStudentsWithParams(string? firstName, string? lastName, string? email, string? selectionName, string? japProgramName, StudentStatus? status, int page = 1, int pageSize = 10, string? sort = "firstName", bool descending = true)
         {
             ServiceResponse<GetStudentPageDto> response = new ServiceResponse<GetStudentPageDto>();

@@ -55,7 +55,7 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
-        [HttpGet("get")]
+        [HttpGet("get/all/params")]
         public ActionResult<ServiceResponse<GetSelectionPageDto>> GetSelectionsWithParams(string? name, string? japProgramName, DateTime? dateStart, DateTime? dateEnd, SelectionStatus? status, string? sort = "name", int page = 1, int pageSize = 10, bool descending = true)
         {
             ServiceResponse<GetSelectionPageDto> response = new ServiceResponse<GetSelectionPageDto>();

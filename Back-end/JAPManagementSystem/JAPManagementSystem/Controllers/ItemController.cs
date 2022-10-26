@@ -45,6 +45,19 @@ namespace JAPManagementSystem.Controllers
         }
 
         [HttpGet("get/all")]
+        public async Task<ActionResult<ServiceResponse<List<GetItemDto>>>> GetAllLectures()
+        {
+            ServiceResponse<List<GetItemDto>> response = new ServiceResponse<List<GetItemDto>>();
+            response = await _lectureService.GetAllLectures();
+            if (response.Success == false)
+            {
+                return BadRequest(response);
+            }
+            return StatusCode(201, response);
+        }
+
+
+        [HttpGet("get/all/params")]
         public ActionResult<ServiceResponse<GetItemPageDto>> GetLectureWithParams(string? name, string? description, string? URL, int? expectedHours, string? isEvent, string sort = "name", int page = 1, int pageSize = 10, bool descending = true)
         {
             ServiceResponse<GetItemPageDto> response = new ServiceResponse<GetItemPageDto>();
