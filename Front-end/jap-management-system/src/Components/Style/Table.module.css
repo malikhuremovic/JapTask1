@@ -7,6 +7,10 @@
   display: inline-block;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .checboxFilter {
   position: relative;
   top: 45%;
@@ -34,5 +38,15 @@
 
 .action__button {
   margin: 0.5rem;
-  width: 75px;
+}
+
+.drag {
+  cursor: move; /* fallback: no `url()` support or images disabled */
+  cursor: -webkit-grabbing; /* Chrome 1-21, Safari 4+ */
+  cursor: -moz-grabbing; /* Firefox 1.5-26 */
+  cursor: grabbing; /* W3C standards syntax, should come least */
+}
+
+.drag:active {
+  background-color: rgba(13, 109, 253, 0.082);
 }

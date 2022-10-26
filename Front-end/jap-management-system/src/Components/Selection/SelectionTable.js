@@ -239,7 +239,19 @@ const SelectionTable = ({
             selections.map((s, index) => {
               return (
                 <tr key={s.id}>
-                  <th scope="row">{index + 1}</th>
+                  <th scope="row">
+                    <Button style={{ minWidth: 40 }} variant="success" disabled>
+                      <span style={{ fontSize: 16 }}>
+                        {index +
+                          1 +
+                          (paginationInfo.currentPage > 1
+                            ? paginationInfo.currentPage *
+                                paginationInfo.pageSize -
+                              paginationInfo.pageSize
+                            : 0)}
+                      </span>
+                    </Button>
+                  </th>
                   <td>{s.name}</td>
                   <td>{s.dateStart.split('T')[0]}</td>
                   <td>{s.dateEnd.split('T')[0]}</td>
@@ -247,14 +259,13 @@ const SelectionTable = ({
                   <td>
                     {!s.japProgram ? <b>Not allocated</b> : s.japProgram.name}
                   </td>
-                  <td>
+                  <td style={{ display: 'flex' }}>
                     <Link to={`/?selection=${s.name}`}>
                       <Button
-                        style={{ minWidth: 170 }}
                         className={classes.action__button}
                         variant="primary"
                       >
-                        Modify Students
+                        Students
                       </Button>
                     </Link>
                     <div>

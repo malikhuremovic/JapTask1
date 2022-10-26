@@ -272,21 +272,60 @@ const StudentTable = ({
           {students.map((s, index) => {
             return (
               <tr key={s.id}>
-                <th scope="row">{index + 1}</th>
+                <th scope="row">
+                  <Button style={{ minWidth: 40 }} variant="success" disabled>
+                    <span style={{ fontSize: 16 }}>
+                      {index +
+                        1 +
+                        (paginationInfo.currentPage > 1
+                          ? paginationInfo.currentPage *
+                              paginationInfo.pageSize -
+                            paginationInfo.pageSize
+                          : 0)}
+                    </span>
+                  </Button>
+                </th>
                 <td>{s.firstName}</td>
                 <td>{s.lastName}</td>
                 <td>{s.email}</td>
                 <td>
-                  {!s.selection ? <b>Not allocated</b> : s.selection.name}
+                  {!s.selection ? (
+                    <Button style={{ minWidth: 40 }} variant="danger" disabled>
+                      <span style={{ fontSize: 16 }}>Not allocated</span>
+                    </Button>
+                  ) : (
+                    s.selection.name
+                  )}
                 </td>
                 <td>
                   {!s.selection ? (
-                    <b>Not allocated</b>
+                    <Button style={{ minWidth: 40 }} variant="danger" disabled>
+                      <span style={{ fontSize: 16 }}>Not allocated</span>
+                    </Button>
                   ) : (
                     s.selection.japProgram.name
                   )}
                 </td>
-                <td>{s.status}</td>
+                <td>
+                  {' '}
+                  <Button
+                    style={{ minWidth: 115 }}
+                    variant={
+                      s.status === 'InProgram'
+                        ? 'info'
+                        : s.status === 'Success'
+                        ? 'success'
+                        : s.status === 'Failed'
+                        ? 'danger'
+                        : s.status === 'Extended'
+                        ? 'warning'
+                        : ''
+                    }
+                    disabled
+                  >
+                    <span style={{ fontSize: 16 }}>{s.status}</span>
+                  </Button>
+                </td>
                 <td>
                   <Link to={`/student?id=${s.id}`}>
                     <Button

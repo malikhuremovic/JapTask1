@@ -93,9 +93,7 @@ const StudentForm = ({
             name="selection"
             className="form-select"
             defaultValue={
-              studentFormData?.selection
-                ? studentFormData.selection.name
-                : 'none'
+              studentFormData?.selection ? studentFormData.selection.id : 'none'
             }
             aria-label="Default select example"
             required
@@ -105,7 +103,7 @@ const StudentForm = ({
             {!studentFormData?.selection && (
               <option value="none">Selections</option>
             )}
-            {availableSelections?.map(s => {
+            {availableSelections.map(s => {
               return (
                 <option key={s.id} value={s.id}>
                   {' '}
@@ -120,13 +118,20 @@ const StudentForm = ({
       <Form.Group as={Row} className="mb-3">
         <Col sm={{ span: 10, offset: 2 }}>
           {formType === 'add' && (
-            <Button style={{ width: 70 }} type="submit">
-              Add
+            <Button
+              style={{ position: 'relative', left: '-20%' }}
+              type="submit"
+            >
+              Add new student
             </Button>
           )}
           {formType === 'edit' && (
-            <Button style={{ width: 70 }} type="submit" variant="success">
-              Edit
+            <Button
+              style={{ position: 'relative', left: '-20%' }}
+              type="submit"
+              variant="success"
+            >
+              Edit student
             </Button>
           )}
         </Col>

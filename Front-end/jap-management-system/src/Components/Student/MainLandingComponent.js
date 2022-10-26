@@ -10,6 +10,7 @@ import StudentTable from './StudentTable';
 import useQuery from '../../Hooks/useQuery';
 
 import classes from '../Style/MainComponent.module.css';
+import config from '../../Data/config';
 
 const MainLandingComponent = () => {
   const query = useQuery();
@@ -46,7 +47,7 @@ const MainLandingComponent = () => {
   const [sortState, setSortState] = useState(INITIAL_SORT_STATE);
   const INITIAL_PAGE_STATE = {
     page: 1,
-    pageSize: 2
+    pageSize: config.PAGE_SIZE
   };
   const [pageState, setPageState] = useState(INITIAL_PAGE_STATE);
   const INITIAL_PAGINATION_INFO_STATE = {
