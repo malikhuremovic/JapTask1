@@ -51,7 +51,7 @@ namespace JAPManagementSystem.Services.StudentService
                 {
                     previousEndDate = studentItemList.ElementAt(i - 1).EndDate;
                 }
-                _dateCalculation.CalculateTimeDifference(previousEndDate, studentItem.ExpectedHours, out DateTime newStartDate, out DateTime newEndDate);
+                _dateCalculation.CalculateTimeDifferenceWithWorkingHours(previousEndDate, studentItem.ExpectedHours, out DateTime newStartDate, out DateTime newEndDate);
                 studentItem.StartDate = newStartDate;
                 studentItem.EndDate = newEndDate;
                 updatedItemList.Add(studentItem);

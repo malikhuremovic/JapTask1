@@ -17,8 +17,8 @@ namespace DateCalculationTest
         public void PositiveTestEndDateCalculated()
         {
             DateTime endDate = new DateTime(2022, 10, 1);
-            int expectedHoursToComplete = 48;
-            calculator.CalculateTimeDifference(endDate, expectedHoursToComplete, out DateTime newStartDate, out DateTime newEndDate);
+            int expectedHoursToComplete = 16;
+            calculator.CalculateTimeDifferenceWithWorkingHours(endDate, expectedHoursToComplete, out DateTime newStartDate, out DateTime newEndDate);
             Assert.That(newEndDate, Is.EqualTo(new DateTime(2022, 10, 3)));
         }
 
@@ -26,9 +26,9 @@ namespace DateCalculationTest
         public void PositiveTestEndDateCalculatedSecond()
         {
             DateTime endDate = new DateTime(2022, 12, 1);
-            int expectedHoursToComplete = 58;
-            calculator.CalculateTimeDifference(endDate, expectedHoursToComplete, out DateTime newStartDate, out DateTime newEndDate);
-            Assert.That(newEndDate, Is.EqualTo(new DateTime(2022, 12, 3, 10, 0, 0)));
+            int expectedHoursToComplete = 10;
+            calculator.CalculateTimeDifferenceWithWorkingHours(endDate, expectedHoursToComplete, out DateTime newStartDate, out DateTime newEndDate);
+            Assert.That(newEndDate, Is.EqualTo(new DateTime(2022, 12, 2, 2, 0, 0)));
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace DateCalculationTest
         {
             DateTime endDate = new DateTime(2022, 12, 5);
             int expectedHoursToComplete = 28;
-            calculator.CalculateTimeDifference(endDate, expectedHoursToComplete, out DateTime newStartDate, out DateTime newEndDate);
+            calculator.CalculateTimeDifferenceWithWorkingHours(endDate, expectedHoursToComplete, out DateTime newStartDate, out DateTime newEndDate);
             Assert.That(newEndDate, Is.Not.EqualTo(new DateTime(2022, 12, 10)));
         }
 
@@ -45,7 +45,7 @@ namespace DateCalculationTest
         {
             DateTime endDate = new DateTime(2022, 12, 5);
             int expectedHoursToComplete = 2;
-            calculator.CalculateTimeDifference(endDate, expectedHoursToComplete, out DateTime newStartDate, out DateTime newEndDate);
+            calculator.CalculateTimeDifferenceWithWorkingHours(endDate, expectedHoursToComplete, out DateTime newStartDate, out DateTime newEndDate);
             Assert.That(newEndDate, Is.Not.EqualTo(new DateTime(2022, 12, 6)));
         }
     }
