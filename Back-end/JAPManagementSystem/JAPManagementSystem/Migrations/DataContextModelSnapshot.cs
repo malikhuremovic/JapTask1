@@ -51,6 +51,89 @@ namespace JAPManagementSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Lorem ipsum dolor sit amet",
+                            ExpectedHours = 25,
+                            IsEvent = false,
+                            Name = "Modern React with Redux",
+                            URL = "www.loremipsum.dolor"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Lorem ipsum dolor sit amet",
+                            ExpectedHours = 8,
+                            IsEvent = false,
+                            Name = "SQL Bootcamp",
+                            URL = "www.loremipsum.dolor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Lorem ipsum dolor sit amet",
+                            ExpectedHours = 10,
+                            IsEvent = true,
+                            Name = "Send completed assignment to mentor",
+                            URL = ""
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Lorem ipsum dolor sit amet",
+                            ExpectedHours = 17,
+                            IsEvent = false,
+                            Name = "Postman API Testing",
+                            URL = "www.loremipsum.dolor"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Lorem ipsum dolor sit amet",
+                            ExpectedHours = 12,
+                            IsEvent = false,
+                            Name = ".NET Core API | Jumpstart",
+                            URL = "www.loremipsum.dolor"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Lorem ipsum dolor sit amet",
+                            ExpectedHours = 12,
+                            IsEvent = true,
+                            Name = "Project task no.1",
+                            URL = "www.loremipsum.org"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Lorem ipsum dolor sit amet",
+                            ExpectedHours = 13,
+                            IsEvent = false,
+                            Name = "HTML5 & CSS3 with Animations",
+                            URL = "www.loremipsum.dolor"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Lorem ipsum dolor sit amet",
+                            ExpectedHours = 14,
+                            IsEvent = false,
+                            Name = "Complete Javascript Bootcamp | ES6",
+                            URL = "www.loremipsum.dolor"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Lorem ipsum dolor sit amet",
+                            ExpectedHours = 3,
+                            IsEvent = true,
+                            Name = "Task refactor",
+                            URL = ""
+                        });
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.ProgramModel.JapProgram", b =>
@@ -145,7 +228,7 @@ namespace JAPManagementSystem.Migrations
                     b.Property<DateTime>("DateStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("JapProgramId")
+                    b.Property<int>("JapProgramId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -470,6 +553,71 @@ namespace JAPManagementSystem.Migrations
                     b.HasIndex("SelectionId");
 
                     b.HasDiscriminator().HasValue("Student");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "10b5260a0-94c9-4681-8468-945a4aa4373f",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
+                            Email = "johndoe@hotmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JOHNDOE@HOTMAIL.COM",
+                            NormalizedUserName = "JOHNDOE",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
+                            TwoFactorEnabled = false,
+                            UserName = "johndoe",
+                            FirstName = "John",
+                            LastName = "Doe",
+                            Role = 1,
+                            SelectionId = 1,
+                            Status = 2
+                        },
+                        new
+                        {
+                            Id = "1023b5260a0-94c9-4681-8468-945a4aa4373f",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
+                            Email = "janedoe@hotmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JANEDOE@HOTMAIL.COM",
+                            NormalizedUserName = "JANEDOE",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
+                            TwoFactorEnabled = false,
+                            UserName = "janedoe",
+                            FirstName = "Jane",
+                            LastName = "Doe",
+                            Role = 1,
+                            SelectionId = 2,
+                            Status = 3
+                        },
+                        new
+                        {
+                            Id = "1230b5260a0-94c9-4681-8468-945a4aa4373f",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
+                            Email = "snoopdogg@hotmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SNOOPDOGG@HOTMAIL.COM",
+                            NormalizedUserName = "SNOOPDOGG",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
+                            TwoFactorEnabled = false,
+                            UserName = "snoopdogg",
+                            FirstName = "Snoop",
+                            LastName = "Dogg",
+                            Role = 1,
+                            SelectionId = 1,
+                            Status = 3
+                        });
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.UserModel.Admin", b =>
@@ -522,8 +670,10 @@ namespace JAPManagementSystem.Migrations
             modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>
                 {
                     b.HasOne("JAPManagementSystem.Models.ProgramModel.JapProgram", "JapProgram")
-                        .WithMany()
-                        .HasForeignKey("JapProgramId");
+                        .WithMany("Selections")
+                        .HasForeignKey("JapProgramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("JapProgram");
                 });
@@ -628,6 +778,8 @@ namespace JAPManagementSystem.Migrations
             modelBuilder.Entity("JAPManagementSystem.Models.ProgramModel.JapProgram", b =>
                 {
                     b.Navigation("ProgramItems");
+
+                    b.Navigation("Selections");
                 });
 
             modelBuilder.Entity("JAPManagementSystem.Models.SelectionModel.Selection", b =>

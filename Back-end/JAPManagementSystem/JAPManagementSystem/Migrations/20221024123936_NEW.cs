@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JAPManagementSystem.Migrations
 {
-    public partial class woohooo : Migration
+    public partial class NEW : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -110,7 +110,7 @@ namespace JAPManagementSystem.Migrations
                     DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    JapProgramId = table.Column<int>(type: "int", nullable: true)
+                    JapProgramId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,7 +119,8 @@ namespace JAPManagementSystem.Migrations
                         name: "FK_Selections_JapPrograms_JapProgramId",
                         column: x => x.JapProgramId,
                         principalTable: "JapPrograms",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -298,6 +299,16 @@ namespace JAPManagementSystem.Migrations
                 values: new object[] { "0b5260a0-94c9-4681-8468-945a4aa4373f", 0, "0af37133-6d9e-4e43-aa0a-e88240493840", "Admin", "malikhuremovic2001@hotmail.com", false, "Malik", "Huremovic", false, null, "MALIKHUREMOVIC2001@HOTMAIL.COM", "MALIKHUREM", "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==", null, false, 0, "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN", false, "malikhurem" });
 
             migrationBuilder.InsertData(
+                table: "Items",
+                columns: new[] { "Id", "Description", "ExpectedHours", "IsEvent", "Name", "URL" },
+                values: new object[,]
+                {
+                    { 1, "Lorem ipsum dolor sit amet", 25, false, "Modern React with Redux", "www.loremipsum.dolor" },
+                    { 2, "Lorem ipsum dolor sit amet", 8, false, "SQL Bootcamp", "www.loremipsum.dolor" },
+                    { 3, "Lorem ipsum dolor sit amet", 10, true, "Send completed assignment to mentor", "" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "JapPrograms",
                 columns: new[] { "Id", "Content", "Name" },
                 values: new object[,]
@@ -316,6 +327,21 @@ namespace JAPManagementSystem.Migrations
                 table: "Selections",
                 columns: new[] { "Id", "DateEnd", "DateStart", "JapProgramId", "Name", "Status" },
                 values: new object[] { 2, new DateTime(2022, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Dev QA June", 2 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "SelectionId", "Status", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "1023b5260a0-94c9-4681-8468-945a4aa4373f", 0, "0af37133-6d9e-4e43-aa0a-e88240493840", "Student", "janedoe@hotmail.com", false, "Jane", "Doe", false, null, "JANEDOE@HOTMAIL.COM", "JANEDOE", "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==", null, false, 1, "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN", 2, 3, false, "janedoe" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "SelectionId", "Status", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "10b5260a0-94c9-4681-8468-945a4aa4373f", 0, "0af37133-6d9e-4e43-aa0a-e88240493840", "Student", "johndoe@hotmail.com", false, "John", "Doe", false, null, "JOHNDOE@HOTMAIL.COM", "JOHNDOE", "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==", null, false, 1, "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN", 1, 2, false, "johndoe" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "SelectionId", "Status", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "1230b5260a0-94c9-4681-8468-945a4aa4373f", 0, "0af37133-6d9e-4e43-aa0a-e88240493840", "Student", "snoopdogg@hotmail.com", false, "Snoop", "Dogg", false, null, "SNOOPDOGG@HOTMAIL.COM", "SNOOPDOGG", "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==", null, false, 1, "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN", 1, 3, false, "snoopdogg" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
