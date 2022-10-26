@@ -57,6 +57,24 @@ namespace JAPManagementSystem.Services.LectureService
             return response;
         }
 
+        public async Task<ServiceResponse<List<GetItemDto>>> GetAllLectures()
+        {
+            ServiceResponse<List<GetItemDto>> response = new ServiceResponse<List<GetItemDto>>();
+            try
+            {
+                var lectures = await _context.Items.ToListAsync();
+                response.Data = lectures.Select(lecture => _mapper.Map<GetItemDto>(lecture)).ToList();
+                response.Message = "You have successfully fetched all items";
+            }
+            catch (Exception exc)
+            {
+                response.Success = false;
+                response.Message = exc.Message;
+            }
+            return response;
+        }
+
+
         public async Task<ServiceResponse<GetItemDto>> DeleteLecture(int id)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
@@ -98,7 +116,7 @@ namespace JAPManagementSystem.Services.LectureService
                 lecture.IsEvent = modifiedLecture.IsEvent;
                 await _context.SaveChangesAsync();
                 response.Data = _mapper.Map<GetItemDto>(lecture);
-                response.Message = "You have successfully modified a selection: " + lecture.Name + ".";
+                response.Message = "You have successfully modified a lecture: " + lecture.Name + ".";
             }
             catch (Exception exc)
             {
