@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../Data/axiosConfig';
+import config from '../Data/config';
 import tokenUtil from '../Util/tokenUtil';
 
 const fetchAllStudents = params => {
@@ -8,7 +8,7 @@ const fetchAllStudents = params => {
     query += `${param}=${params[param]}&`;
   }
   const token = tokenUtil.getAccessToken();
-  return axios.get(config.API_URL + `/Student/get?${query}`, {
+  return axios.get(config.API_URL + `/Student/get/all/params?${query}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

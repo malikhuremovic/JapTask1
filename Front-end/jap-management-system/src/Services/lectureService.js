@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../Data/axiosConfig';
+import config from '../Data/config';
 import tokenUtil from '../Util/tokenUtil';
 
 const fetchAllLectures = params => {
@@ -8,7 +8,17 @@ const fetchAllLectures = params => {
     query += `${param}=${params[param]}&`;
   }
   const token = tokenUtil.getAccessToken();
-  return axios.get(config.API_URL + `/Item/get/all?${query}`, {
+  return axios.get(config.API_URL + `/Item/get/all/params?${query}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
+const fetchAll = () => {
+  const token = tokenUtil.getAccessToken();
+  return axios.get(config.API_URL + '/Item/get/all', {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -48,6 +58,7 @@ const deleteLecture = data => {
 
 const services = {
   fetchAllLectures,
+  fetchAll,
   addLecture,
   modifyLecture,
   deleteLecture
