@@ -7,7 +7,7 @@ namespace JAPManagementSystem.Extensions
     {
         public static void RegisterDBContext(this IServiceCollection service, ConfigurationManager config)
         { 
-            service.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+            service.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
         }
     }
 }
