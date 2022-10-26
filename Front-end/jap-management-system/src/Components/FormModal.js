@@ -9,6 +9,9 @@ import SelectionDeleteForm from './Selection/SelectionDeleteForm';
 import classes from './FormModal.module.css';
 import LectureForm from './Lecture/LectureForm';
 import LectureDeleteForm from './Lecture/LectureDeleteForm';
+import ProgramForm from './Program/ProgramForm';
+import ProgramDeleteForm from './Program/ProgramDeleteForm';
+import ProgramAddItemForm from './Program/ProgramAddItemForm';
 
 const FormModal = ({
   title,
@@ -22,13 +25,25 @@ const FormModal = ({
   availableItems
 }) => {
   return (
-    <div className={classes.backdrop}>
-      <div className={classes.modal}>
+    <React.Fragment>
+      <div className={classes.backdrop}></div>
+      <div
+        className={
+          formModel === 'program' ? classes.programModal : classes.modal
+        }
+      >
         <div className={classes.formTitle}>
           <h4>{title}</h4>
           <img src={closeIcon} alt="close button" onClick={handleState} />
         </div>
         <div className={classes.modalForm}>
+          {formModel === 'addProgramItem' && (
+            <ProgramAddItemForm
+              formType={formType}
+              handleFormSubmission={handleFormSubmission}
+              availableItems={availableItems}
+            />
+          )}
           {formModel === 'student' && (
             <React.Fragment>
               {formType !== 'delete' && (
@@ -76,9 +91,24 @@ const FormModal = ({
               )}
             </React.Fragment>
           )}
+          {formModel === 'program' && (
+            <React.Fragment>
+              {formType !== 'delete' && (
+                <ProgramForm
+                  formType={formType}
+                  handleFormSubmission={handleFormSubmission}
+                  handleProgramFormInput={handleFormInput}
+                  programFormData={formData}
+                />
+              )}
+              {formType === 'delete' && (
+                <ProgramDeleteForm handleDeleteProgram={handleDelete} />
+              )}
+            </React.Fragment>
+          )}
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

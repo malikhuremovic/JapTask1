@@ -220,6 +220,7 @@ const LectureTable = ({
                     label="Filter by event property"
                     value={searchState?.isEvent ? false : true}
                     onChange={handleSearchState}
+                    checked={searchState?.isEvent === true}
                   />
                 </Col>
               </Form.Group>
@@ -242,12 +243,62 @@ const LectureTable = ({
             lectures.map((s, index) => {
               return (
                 <tr key={s.id}>
-                  <th scope="row">{index + 1}</th>
+                  <th scope="row">
+                    <Button style={{ minWidth: 40 }} variant="success" disabled>
+                      <span style={{ fontSize: 16 }}>
+                        {index +
+                          1 +
+                          (paginationInfo.currentPage > 1
+                            ? paginationInfo.currentPage *
+                                paginationInfo.pageSize -
+                              paginationInfo.pageSize
+                            : 0)}
+                      </span>
+                    </Button>
+                  </th>
                   <td>{s.name}</td>
                   <td>{s.description}</td>
-                  <td>{s.url}</td>
-                  <td>{s.expectedHours}</td>
-                  <td>{s.isEvent ? 'True' : 'False'}</td>
+                  <td>
+                    {s.url.split(',').map(url => {
+                      return (
+                        <a
+                          style={{ textDecoration: 'none', marginRight: 10 }}
+                          href={url.trim()}
+                        >
+                          <Button variant="outline-primary">Link</Button>
+                        </a>
+                      );
+                    })}
+                  </td>
+                  <td>
+                    {' '}
+                    <Button
+                      style={{ minWidth: 50 }}
+                      disabled
+                      variant="outline-success"
+                    >
+                      {s.expectedHours}h
+                    </Button>
+                  </td>
+                  <td>
+                    {!s.isEvent ? (
+                      <Button
+                        style={{ minWidth: 100 }}
+                        variant="warning"
+                        disabled
+                      >
+                        <strong>Lecture</strong>
+                      </Button>
+                    ) : (
+                      <Button
+                        style={{ minWidth: 100 }}
+                        variant="danger"
+                        disabled
+                      >
+                        <strong>Event</strong>
+                      </Button>
+                    )}
+                  </td>
                   <td>
                     <Button
                       className={classes.action__button}

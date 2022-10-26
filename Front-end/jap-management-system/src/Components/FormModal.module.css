@@ -1,23 +1,41 @@
 .backdrop {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
   height: 100%;
   z-index: 10;
   background-color: rgba(153, 149, 149, 0.753);
 }
 
 .modal {
-  position: relative;
+  position: fixed;
   top: 45%;
   left: 50%;
   z-index: 15;
   transform: translate(-50%, -50%);
-  min-width: 400px;
+  min-width: 450px;
   width: 28%;
+  border-radius: 15px;
+  background-color: #fff;
+  padding: 25px;
+  padding-bottom: 65px;
+}
+
+.programModal {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  z-index: 15;
+  transform: translate(-50%, -50%);
+  min-width: 450px;
+  width: 60%;
+  max-height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
   border-radius: 15px;
   background-color: #fff;
   padding: 25px;
@@ -39,21 +57,16 @@
 }
 
 .modalForm {
-  width: 100%;
+  width: 120%;
   margin-top: 20px;
 }
 
 .modalForm form {
-  width: 90%;
-  margin-left: 56.5%;
+  width: 95%;
+  margin-left: 50%;
   transform: translateX(-50%);
 }
 
 .modalForm form label {
   width: 90%;
-}
-
-.modalForm form button {
-  position: absolute;
-  left: 0;
 }

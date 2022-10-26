@@ -84,13 +84,20 @@ const LectureForm = ({
       <Form.Group as={Row} className="mb-3">
         <Col sm={{ span: 10, offset: 2 }}>
           {formType === 'add' && (
-            <Button style={{ width: 70 }} type="submit">
-              Add
+            <Button
+              style={{ position: 'relative', left: '-20%' }}
+              type="submit"
+            >
+              Add new lecture
             </Button>
           )}
           {formType === 'edit' && (
-            <Button style={{ width: 70 }} type="submit" variant="success">
-              Edit
+            <Button
+              style={{ position: 'relative', left: '-20%' }}
+              type="submit"
+              variant="success"
+            >
+              Edit lecture
             </Button>
           )}
         </Col>

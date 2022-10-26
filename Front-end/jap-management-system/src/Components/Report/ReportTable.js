@@ -42,25 +42,16 @@ const ReportTable = ({ selections }) => {
             <th scope="col">#</th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div name="name" className={classes.sortBlock}>
-                  <img src={sortIconDesc} alt="sorticon" />{' '}
-                </div>{' '}
                 &nbsp; <span>Selection Name:</span>
               </div>
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div name="programName" className={classes.sortBlock}>
-                  <img src={sortIconDesc} alt="sortIcon" />{' '}
-                </div>{' '}
                 &nbsp; <span>Program Name:</span>
               </div>
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div name="successRate" className={classes.sortBlock}>
-                  <img src={sortIconDesc} alt="sortIcon" />{' '}
-                </div>{' '}
                 &nbsp; <span>Success Rate:</span>
               </div>
             </th>
@@ -107,7 +98,16 @@ const ReportTable = ({ selections }) => {
             selections.map((s, index) => {
               return (
                 <tr key={s.selectionName}>
-                  <th scope="row">{index + 1}</th>
+                  <th scope="row">
+                    {' '}
+                    <Button
+                      style={{ minWidth: 40 }}
+                      variant="secondary"
+                      disabled
+                    >
+                      <span style={{ fontSize: 16 }}>{index + 1}</span>
+                    </Button>
+                  </th>
                   <td>{s.selectionName}</td>
                   <td>{s.programName}</td>
                   <td>
