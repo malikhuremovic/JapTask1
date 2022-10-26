@@ -4,6 +4,8 @@ using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Selection;
 using JAPManagementSystem.Models.Response;
 using JAPManagementSystem.Models.SelectionModel;
+using JAPManagementSystem.Models.StudentModel;
+using JAPManagementSystem.Services.StudentService;
 using Microsoft.EntityFrameworkCore;
 
 namespace JAPManagementSystem.Services.SelectionService
@@ -12,10 +14,12 @@ namespace JAPManagementSystem.Services.SelectionService
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public SelectionService(DataContext context, IMapper mapper)
+        private readonly IStudentService _studentService;
+        public SelectionService(DataContext context, IMapper mapper, IStudentService studentService)
         {
             _context = context;
             _mapper = mapper;
+            _studentService = studentService;
         }
         public async Task<ServiceResponse<GetSelectionDto>> AddSelection(AddSelectionDto newSelection)
         {
@@ -166,6 +170,10 @@ namespace JAPManagementSystem.Services.SelectionService
                     selection.JapProgram = japProgram; 
                 }
                 await _context.SaveChangesAsync();
+                var students = selection.Students.ToArray();
+                for(int i = 0; i < students.Length; i++) { 
+                    await _studentService.PopulateStudentItems(students[i].Id);
+                }
                 response.Data = _mapper.Map<GetSelectionDto>(selection);
                 response.Message = "You have successfully modified a selection: " + selection.Name + ".";
             }catch(Exception exc)
