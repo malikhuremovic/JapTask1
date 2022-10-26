@@ -15,6 +15,8 @@ namespace JAPManagementSystem.AutoMapperMaps
             CreateMap<ModifyStudentDto, Student>();
             CreateMap<Page<Student>, GetStudentPageDto>();
             CreateMap<AddStudentItemDto, StudentItem>();
+            CreateMap<StudentItem, StudentItemDto>();
+            CreateMap<StudentItem, StudentPersonalProgram>();
         }
     }
 }

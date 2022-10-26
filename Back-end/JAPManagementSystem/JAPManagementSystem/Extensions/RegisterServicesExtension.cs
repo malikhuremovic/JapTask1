@@ -14,9 +14,9 @@ namespace JAPManagementSystem.Extensions
     {
         public static void RegisterServices(this IServiceCollection service, ConfigurationManager config)
         {
-            service.AddScoped<ISelectionService, SelectionService>();
-            service.AddScoped<IProgramService, ProgramService>();
-            service.AddScoped<IStudentService, StudentService>();
+            service.AddTransient<ISelectionService, SelectionService>();
+            service.AddTransient<IProgramService, ProgramService>();
+            service.AddTransient<IStudentService, StudentService>();
             service.AddScoped<IAuthService, AuthService>();
             service.AddScoped<IItemService, ItemService>();
             service.AddScoped<IHangfireReportService, HangfireReportService>();

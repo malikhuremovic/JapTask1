@@ -3,6 +3,7 @@ using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.JapItemDTOs;
+using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.DTOs.Selection;
 using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.DTOs.StudentDTOs;
@@ -160,20 +161,50 @@ namespace JAPManagementSystem.Services.StudentService
             return response;
         }
 
-        public async Task<ServiceResponse<StudentPersonalProgram>> GetStudentPersonalProgram(string studentId)
+        public async Task<ServiceResponse<List<StudentPersonalProgram>>> GetStudentPersonalProgram(string token)
         {
-            ServiceResponse<StudentPersonalProgram> response = new ServiceResponse<StudentPersonalProgram>();
+            ServiceResponse<List<StudentPersonalProgram>> response = new ServiceResponse<List<StudentPersonalProgram>>();
             try
             {
-                var student = await _context.Students.Where(s => s.Id.Equals(studentId)).Include(s => s.Selection).FirstAsync();
-                var programItems = await _programService.GetProgramItems(student.Selection.JapProgramId);
-                var studentItems = await _context.StudentItems.Where(st => st.StudentId.Equals(student.Id)).ToListAsync();
-                var personalProgram = new StudentPersonalProgram
+                var decodedToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+                var id = decodedToken.Claims
+                    .Where(claim => claim.Type
+                    .Equals("nameid"))
+                    .Select(claim => claim.Value)
+                    .SingleOrDefault();
+                var student = await _context.Students.Where(s => s.Id.Equals(id)).Include(s => s.Selection).FirstAsync();
+                var studentItems = await _context.StudentItems.Where(st => st.StudentId.Equals(id)).Include(s => s.Item).ToListAsync();
+                var programItems = await _context.ProgramItems.Where(p => p.ProgramId == student.Selection.JapProgramId).OrderBy(pt => pt.Order).ToListAsync();
+                var personalProgram = new List<StudentPersonalProgram>();
+                studentItems.ForEach(studentItem =>
                 {
-                    Student = student,
-                    ProgramItems = programItems.Data,
-                    StudentItems = studentItems
-                };
+                    for(int i = 0; i < programItems.Count; i++)
+                    { 
+                        if (studentItem.ItemId == programItems[i].ItemId)
+                        {
+                            personalProgram.Add(new StudentPersonalProgram
+                            {
+                                Name = studentItem.Item.Name,
+                                Description = studentItem.Item.Description,
+                                ExpectedHours = studentItem.Item.ExpectedHours,
+                                isEvent = studentItem.Item.IsEvent,
+                                Done = studentItem.Done,
+                                DateStart = studentItem.StartDate,
+                                DateEnd = studentItem.EndDate,
+                                URL = studentItem.Item.URL,
+                                Status = studentItem.Status,
+                                Order = programItems[i].Order,
+                            });
+                            break;
+                        }
+                    }
+                });
+                personalProgram.Sort(
+                    delegate (StudentPersonalProgram p1, StudentPersonalProgram p2)
+                    {
+                        return p1.Order.CompareTo(p2.Order);
+                    }
+                ); 
                 response.Data = personalProgram;
                 response.Message = "You have successfully fetched personal student program for student: " + student.UserName;
             }catch(Exception exc)

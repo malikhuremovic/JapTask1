@@ -7,7 +7,8 @@ const routes = {
   programDetailsPage: '/program/details',
   selections: '/selections',
   lectures: '/lectures',
-  report: '/report'
+  report: '/report',
+  studentReport: '/student/report'
 };
 
 export default routes;

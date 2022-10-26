@@ -60,12 +60,17 @@ namespace JAPManagementSystem.Controllers
             return Ok(response);
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("get/program")]
-        public async Task<ActionResult<ServiceResponse<StudentPersonalProgram>>> GetStudentPersonalProgram(string id)
+        [Authorize(Roles = "Admin,Student")]
+        [HttpGet("get/report")]
+        public async Task<ActionResult<ServiceResponse<List<StudentPersonalProgram>>>> GetStudentPersonalProgram()
         {
-            ServiceResponse<StudentPersonalProgram> response = new ServiceResponse<StudentPersonalProgram>();
-            response = await _studentService.GetStudentPersonalProgram(id);
+            ServiceResponse<List<StudentPersonalProgram>> response = new ServiceResponse<List<StudentPersonalProgram>>();
+            Request.Headers.TryGetValue("Authorization", out var token);
+            string tokenValue = token
+                .ToString()
+                .Split(" ")
+                .ElementAt(1);
+            response = await _studentService.GetStudentPersonalProgram(tokenValue);
             if (!response.Success)
             {
                 return StatusCode(500, response);

@@ -20,6 +20,7 @@ import routes from './Data/routes';
 
 import './App.module.css';
 import ProgramDetailsPage from './Pages/ProgramDetailsPage';
+import PersonalReportComponent from './Components/PersonalReport/PersonalReportComponent';
 
 function App() {
   const { userDataState } = useContext(UserContext);
@@ -48,6 +49,13 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.lectures} roles={['Admin']}>
           <LecturesPage />
+        </ProtectedRoute>
+        <ProtectedRoute
+          exact
+          path={routes.studentReport}
+          roles={['Student', 'Admin']}
+        >
+          <PersonalReportComponent />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.report} roles={['Admin']}>
           <ReportPage />

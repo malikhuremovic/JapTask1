@@ -15,7 +15,7 @@ namespace JAPManagementSystem.Services.StudentService
         Task<ServiceResponse<List<GetCommentDto>>> AddComment(AddCommentDto newComment);
         Task<ServiceResponse<List<GetStudentDto>>> GetAllStudents();
         Task<ServiceResponse<GetStudentDto>> GetStudentByToken(string token);
-        Task<ServiceResponse<StudentPersonalProgram>> GetStudentPersonalProgram(string studentId);
+        Task<ServiceResponse<List<StudentPersonalProgram>>> GetStudentPersonalProgram(string studentId);
         ServiceResponse<GetStudentPageDto> GetStudentsWithParams(int page, int pageSize, string? firstName, string? lastName, string? email, string? selectionName, string? japProgramName, StudentStatus? status, string sort, bool descending);
         Task PopulateStudentItems(string studentId);
         Task<ServiceResponse<GetStudentDto>> GetStudentById(string id);

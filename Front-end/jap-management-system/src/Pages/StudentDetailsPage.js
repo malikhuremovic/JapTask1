@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 
 import studentService from '../Services/studentService';
 
 import studentIcon from '../Assets/studentIcon.png';
 
 import classes from './DetailsPage.module.css';
+import routes from '../Data/routes';
+import { Link } from 'react-router-dom';
 
 const StudentDetailsPage = () => {
   const [student, setStudent] = useState({});
@@ -169,6 +171,11 @@ const StudentDetailsPage = () => {
             </Col>
           </Form.Group>
         </Form>
+      </div>
+      <div>
+        <Link to={routes.studentReport}>
+          <Button variant="primary">See your program track</Button>
+        </Link>
       </div>
       <div className={classes.student__comments}>
         <h5 style={{ marginTop: 20, marginBottom: 35 }}>Comments</h5>
