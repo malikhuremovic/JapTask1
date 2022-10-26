@@ -8,10 +8,10 @@ namespace JAPManagementSystem.Services.AuthService
 {
     public interface IAuthService
     {
-        Task<ServiceResponse<GetUserDto>> GetUserByToken(string token);
         StudentUserCreatedDto CreateStudentUser(AddStudentDto newStudent);
         Task<ServiceResponse<GetUserDto>> RegisterStudentUser(Student student, string password);
-        Task<ServiceResponse<GetUserDto>> Login(UserLoginDto user);
         Task<ServiceResponse<GetUserDto>> RegisterAdminUser(AddAdminDto admin);
+        Task<ServiceResponse<GetUserDto>> GetUserByToken(string token);
+        Task<ServiceResponse<GetUserDto>> Login(UserLoginDto user);
     }
 }
