@@ -4,6 +4,7 @@ const routes = {
   logout: '/logout',
   studentDetails: '/student',
   programDetails: '/program',
+  programDetailsPage: '/program/details',
   selections: '/selections',
   lectures: '/lectures',
   report: '/report'

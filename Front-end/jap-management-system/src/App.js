@@ -19,6 +19,7 @@ import LecturesPage from './Pages/LecturesPage';
 import routes from './Data/routes';
 
 import './App.module.css';
+import ProgramDetailsPage from './Pages/ProgramDetailsPage';
 
 function App() {
   const { userDataState } = useContext(UserContext);
@@ -34,6 +35,13 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.selections} roles={['Admin']}>
           <SelectionsPage />
+        </ProtectedRoute>
+        <ProtectedRoute
+          exact
+          path={routes.programDetailsPage}
+          roles={['Admin']}
+        >
+          <ProgramDetailsPage />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.programDetails} roles={['Admin']}>
           <ProgramPage />
