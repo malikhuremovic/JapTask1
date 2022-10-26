@@ -1,33 +1,16 @@
-import { useState, useEffect } from 'react';
-
-import ProgramTable from '../Components/Program/ProgramTable';
-
 import programIcon from '../Assets/programIcon.png';
 
-import programService from '../Services/programService';
-
 import classes from './ProgramPage.module.css';
+import MainProgramComponent from '../Components/Program/MainProgramComponent';
 
 const ProgramPage = () => {
-  const [programs, setPrograms] = useState([]);
-
-  useEffect(() => {
-    programService
-      .fetchAllPrograms()
-      .then(response => {
-        setPrograms(() => response.data.data);
-        console.log(response.data.data);
-      })
-      .catch(err => console.log(err));
-  }, []);
-
   return (
     <div className={classes.container}>
       <div className={classes.top}>
         <img src={programIcon} alt="student" />
         <span className={classes.pageCaption}>Program(s)</span>
       </div>
-      <ProgramTable programs={programs} />
+      <MainProgramComponent />
     </div>
   );
 };
