@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EntityFrameworkPaginate;
 using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.Models.ProgramModel;
@@ -13,6 +14,9 @@ namespace JAPManagementSystem.AutoMapperMaps
             CreateMap<AddProgramDto, JapProgram>();
             CreateMap<JapProgram, GetProgramDto>();
             CreateMap<StudentItem, GetStudentItemDto>();
+            CreateMap<ModifyItemDto, Program>();
+            CreateMap<Page<JapProgram>, GetProgramPageDto>();
+            CreateMap<ProgramItemsOrder, ProgramItem>();
         }
     }
 }

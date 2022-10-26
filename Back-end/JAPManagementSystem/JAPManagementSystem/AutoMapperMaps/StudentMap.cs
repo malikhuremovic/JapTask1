@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EntityFrameworkPaginate;
 using JAPManagementSystem.DTOs.StudentDto;
+using JAPManagementSystem.DTOs.StudentDTOs;
 using JAPManagementSystem.Models.StudentModel;
 
 namespace JAPManagementSystem.AutoMapperMaps
@@ -13,6 +14,7 @@ namespace JAPManagementSystem.AutoMapperMaps
             CreateMap<Student, GetStudentDto>();
             CreateMap<ModifyStudentDto, Student>();
             CreateMap<Page<Student>, GetStudentPageDto>();
+            CreateMap<AddStudentItemDto, StudentItem>();
         }
     }
 }
