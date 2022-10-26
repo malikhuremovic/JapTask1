@@ -1,4 +1,5 @@
-﻿using JAPManagementSystem.Extensions;
+﻿using Hangfire;
+using JAPManagementSystem.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +7,8 @@ builder.Services.RegisterControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.RegisterDBContext(builder.Configuration);
-builder.Services.RegisterServices();
+builder.Services.RegisterServices(builder.Configuration);
+builder.Services.RegisterHangfire(builder.Configuration);
 builder.Services.RegisterAutoMapper();
 builder.Services.RegisterAuthentication(builder.Configuration);
 builder.Services.RegisterCors(builder.Configuration);
@@ -32,4 +34,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.UseHangfireDashboard();
+
+await app.StartAsync();
+
+await app.WaitForShutdownAsync();
