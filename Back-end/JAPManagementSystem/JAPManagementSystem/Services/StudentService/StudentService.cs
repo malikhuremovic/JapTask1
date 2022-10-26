@@ -3,12 +3,16 @@ using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.JapItemDTOs;
+using JAPManagementSystem.DTOs.Selection;
 using JAPManagementSystem.DTOs.StudentDto;
+using JAPManagementSystem.DTOs.StudentDTOs;
 using JAPManagementSystem.DTOs.User;
 using JAPManagementSystem.Models.Response;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Services.AuthService;
 using JAPManagementSystem.Services.EmailService;
+using JAPManagementSystem.Services.ProgramService;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,13 +25,75 @@ namespace JAPManagementSystem.Services.StudentService
         private readonly IMapper _mapper;
         private readonly IAuthService _authService;
         private readonly IEmailService _mailService;
+        private readonly IProgramService _programService;
 
-        public StudentService(IAuthService authService, DataContext context, IMapper mapper, IEmailService mailService)
+        public StudentService(IAuthService authService, DataContext context, IMapper mapper, IEmailService mailService, IProgramService programService)
         {
             _authService = authService;
             _context = context;
             _mapper = mapper;
             _mailService = mailService;
+            _programService = programService;
+        }
+
+        public List<AddStudentItemDto> CalculateStartAndEndDate(Student student, List<AddStudentItemDto> studentItemList)
+        {
+            List<AddStudentItemDto> updatedItemList = new List<AddStudentItemDto>();
+            for(int i = 0; i < studentItemList.Count; i++)
+            {
+                var studentItem = studentItemList.ElementAt(i);
+                DateTime previousEndDate;
+                if(i == 0)
+                {
+                    previousEndDate = student.Selection.DateStart;
+                }
+                else
+                {
+                    previousEndDate = studentItemList.ElementAt(i - 1).EndDate;
+                }
+                studentItem.StartDate = previousEndDate;
+                studentItem.EndDate = previousEndDate.AddHours(studentItem.ExpectedHours);
+                updatedItemList.Add(studentItem);
+            }
+            return updatedItemList;
+        }
+
+        public async Task PopulateStudentItems(string studentId)
+        {
+            var existingStudentItems = await _context.StudentItems.Where(st => st.StudentId.Equals(studentId)).ToListAsync();
+            _context.RemoveRange(existingStudentItems);
+            await _context.SaveChangesAsync();
+            var student = await _context.Students
+                .Where(s => s.Id.Equals(studentId))
+                .Include(s => s.Selection)
+                .ThenInclude(s => s.JapProgram)
+                .FirstAsync();
+            var orderedProgramItems = await _context.ProgramItems
+                .Where(pt => pt.ProgramId == student.Selection.JapProgramId)
+                .OrderBy(pt => pt.Order)
+                .Include(pt => pt.Item)
+                .ToListAsync();
+            var items = orderedProgramItems.Select(pt => pt.Item).ToList(); 
+            var studentItemList = new List<AddStudentItemDto>();
+            items.ForEach(item =>
+            {
+                var studentItem = new AddStudentItemDto
+                {
+                    StudentId = studentId,
+                    ItemId = item.Id,
+                    Done = 0,
+                    Status = StudentItemStatus.NotStarted,
+                    ExpectedHours = item.ExpectedHours
+                };
+                studentItemList.Add(studentItem);
+            });
+
+            var updatedItemList = CalculateStartAndEndDate(student, studentItemList);
+            List<StudentItem> studentItemsList = updatedItemList.Select(item => _mapper.Map<StudentItem>(item)).ToList();
+      
+                _context.StudentItems.UpdateRange(studentItemsList);
+                _context.StudentItems.AddRange(studentItemsList);
+                await _context.SaveChangesAsync();
         }
 
         public async Task<ServiceResponse<GetStudentDto>> AddStudent(AddStudentDto newStudent)
@@ -54,6 +120,7 @@ namespace JAPManagementSystem.Services.StudentService
                     throw new Exception(exc.Message);
                 }
                 await _context.SaveChangesAsync();
+                await PopulateStudentItems(student.Id);
                 var fetchedStudent = await _context.Students
                     .Include(s => s.Selection)
                     .ThenInclude(s => s.JapProgram)
@@ -68,6 +135,7 @@ namespace JAPManagementSystem.Services.StudentService
                 response.Message = exc.Message;
                 response.Success = false;
             }
+
             return response;
         }
 
@@ -88,6 +156,30 @@ namespace JAPManagementSystem.Services.StudentService
             {
                 response.Message = exc.Message;
                 response.Success = false;
+            }
+            return response;
+        }
+
+        public async Task<ServiceResponse<StudentPersonalProgram>> GetStudentPersonalProgram(string studentId)
+        {
+            ServiceResponse<StudentPersonalProgram> response = new ServiceResponse<StudentPersonalProgram>();
+            try
+            {
+                var student = await _context.Students.Where(s => s.Id.Equals(studentId)).Include(s => s.Selection).FirstAsync();
+                var programItems = await _programService.GetProgramItems(student.Selection.JapProgramId);
+                var studentItems = await _context.StudentItems.Where(st => st.StudentId.Equals(student.Id)).ToListAsync();
+                var personalProgram = new StudentPersonalProgram
+                {
+                    Student = student,
+                    ProgramItems = programItems.Data,
+                    StudentItems = studentItems
+                };
+                response.Data = personalProgram;
+                response.Message = "You have successfully fetched personal student program for student: " + student.UserName;
+            }catch(Exception exc)
+            {
+                response.Success = false;
+                response.Message = exc.Message;
             }
             return response;
         }
@@ -120,6 +212,7 @@ namespace JAPManagementSystem.Services.StudentService
                     throw new Exception("Student with the ID of: " + modifiedStudent.Id + " does not exist.");
                 }
                 await _context.SaveChangesAsync();
+                await PopulateStudentItems(student.Id);
                 var fetchedStudent = await _context.Students
                     .Include(s => s.Selection).ThenInclude(s => s.JapProgram)
                     .FirstOrDefaultAsync(s => s.Id
@@ -158,7 +251,7 @@ namespace JAPManagementSystem.Services.StudentService
             return response;
         }
 
-public async Task<ServiceResponse<GetStudentItemDto>> ModifyStudentItem(string studentId, ModifyStudentItemDto modifiedItem)
+        public async Task<ServiceResponse<GetStudentItemDto>> ModifyStudentItem(string studentId, ModifyStudentItemDto modifiedItem)
         {
             ServiceResponse<GetStudentItemDto> response = new ServiceResponse<GetStudentItemDto>();
             try
