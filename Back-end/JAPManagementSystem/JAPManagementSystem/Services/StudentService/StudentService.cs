@@ -9,6 +9,7 @@ using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.DTOs.StudentDTOs;
 using JAPManagementSystem.DTOs.User;
 using JAPManagementSystem.Models.Response;
+using JAPManagementSystem.Models.SelectionModel;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Services.AuthService;
 using JAPManagementSystem.Services.EmailService;
@@ -172,6 +173,7 @@ namespace JAPManagementSystem.Services.StudentService
                     .Equals("nameid"))
                     .Select(claim => claim.Value)
                     .SingleOrDefault();
+                await PopulateStudentItems(id);
                 var student = await _context.Students.Where(s => s.Id.Equals(id)).Include(s => s.Selection).FirstAsync();
                 var studentItems = await _context.StudentItems.Where(st => st.StudentId.Equals(id)).Include(s => s.Item).ToListAsync();
                 var programItems = await _context.ProgramItems.Where(p => p.ProgramId == student.Selection.JapProgramId).OrderBy(pt => pt.Order).ToListAsync();

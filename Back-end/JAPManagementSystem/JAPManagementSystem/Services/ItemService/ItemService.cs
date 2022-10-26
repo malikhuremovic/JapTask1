@@ -4,6 +4,7 @@ using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.Models.ProgramModel;
 using JAPManagementSystem.Models.Response;
+using JAPManagementSystem.Services.StudentService;
 using Microsoft.EntityFrameworkCore;
 
 namespace JAPManagementSystem.Services.LectureService
@@ -12,10 +13,12 @@ namespace JAPManagementSystem.Services.LectureService
     {
         private readonly IMapper _mapper;
         private readonly DataContext _context;
-        public ItemService(IMapper mapper, DataContext context)
+        private readonly IStudentService _studentService;
+        public ItemService(IMapper mapper, DataContext context, IStudentService studentService)
         {
             _mapper = mapper;
             _context = context;
+            _studentService = studentService;
         }
 
         public async Task<ServiceResponse<GetItemDto>> AddLecture(AddItemDto newLecture)

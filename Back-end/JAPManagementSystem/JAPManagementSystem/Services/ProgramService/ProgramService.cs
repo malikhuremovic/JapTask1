@@ -5,10 +5,7 @@ using JAPManagementSystem.DTOs.JapItemDTOs;
 using JAPManagementSystem.DTOs.Program;
 using JAPManagementSystem.Models.ProgramModel;
 using JAPManagementSystem.Models.Response;
-using JAPManagementSystem.Models.StudentModel;
-using JAPManagementSystem.Services.StudentService;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace JAPManagementSystem.Services.ProgramService
