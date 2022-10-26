@@ -1,22 +1,18 @@
 ﻿using AutoMapper;
+using DateCalculation;
 using EntityFrameworkPaginate;
 using JAPManagementSystem.Data;
 using JAPManagementSystem.DTOs.Comment;
 using JAPManagementSystem.DTOs.JapItemDTOs;
-using JAPManagementSystem.DTOs.Program;
-using JAPManagementSystem.DTOs.Selection;
 using JAPManagementSystem.DTOs.StudentDto;
 using JAPManagementSystem.DTOs.StudentDTOs;
 using JAPManagementSystem.DTOs.User;
 using JAPManagementSystem.Models.Response;
-using JAPManagementSystem.Models.SelectionModel;
 using JAPManagementSystem.Models.StudentModel;
 using JAPManagementSystem.Services.AuthService;
 using JAPManagementSystem.Services.EmailService;
 using JAPManagementSystem.Services.ProgramService;
-using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace JAPManagementSystem.Services.StudentService
@@ -28,6 +24,7 @@ namespace JAPManagementSystem.Services.StudentService
         private readonly IAuthService _authService;
         private readonly IEmailService _mailService;
         private readonly IProgramService _programService;
+        private readonly DateCalculator _dateCalculation;
 
         public StudentService(IAuthService authService, DataContext context, IMapper mapper, IEmailService mailService, IProgramService programService)
         {
@@ -53,8 +50,9 @@ namespace JAPManagementSystem.Services.StudentService
                 {
                     previousEndDate = studentItemList.ElementAt(i - 1).EndDate;
                 }
-                studentItem.StartDate = previousEndDate;
-                studentItem.EndDate = previousEndDate.AddHours(studentItem.ExpectedHours);
+                _dateCalculation.CalculateTimeDifference(previousEndDate, studentItem.ExpectedHours, out DateTime newStartDate, out DateTime newEndDate);
+                studentItem.StartDate = newStartDate;
+                studentItem.EndDate = newEndDate;
                 updatedItemList.Add(studentItem);
             }
             return updatedItemList;
