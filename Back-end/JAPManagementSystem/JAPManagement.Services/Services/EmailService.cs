@@ -17,6 +17,20 @@ namespace JAPManagement.Services.Services
             _config = config;
         }
 
+        public void SendEmail(MimeMessage email)
+        {
+            using var smtp = new SmtpClient();
+            smtp.Connect(
+                _config.GetSection("EmailConfirmation:EmailHost").Value,
+                int.Parse(_config.GetSection("EmailConfirmation:EmailHostPort").Value),
+                SecureSocketOptions.StartTls);
+            smtp.Authenticate(
+                _config.GetSection("EmailConfirmation:EmailHostUserName").Value,
+                _config.GetSection("EmailConfirmation:EmailHostPassword").Value);
+            smtp.Send(email);
+            smtp.Disconnect(true);
+        }
+
 
         public void SendConfirmationEmail(StudentUserCreatedDto student)
         {
@@ -32,17 +46,7 @@ namespace JAPManagement.Services.Services
                     "\" style=\"text-decoration:underline; color: #689ed1; font-weight:bold;\">here</a>.<br/><br/>Thank you for choosing Mistral!<br/><br/>All the best,<br/>Malik Huremović</p></div><div style=\"width: 70%; height: 4vh; text-align:center; border-radius: 5px; font-family:sans-serif; color:#fff; font-weight: 700; padding: 8px; margin: 0px auto; margin-top: 20px; display: flex; align-items: center; justify-content: center; align-content: center; background-color:#689ed1;\"><a style=\"color: #fff; text-decoration:none; font-weight: bold;\" href=\"" + _config.GetSection("EmailConfirmation:EmailCompanyURL").Value +
                     "\">Learn more about company culture</a></div>";
                 email.Body = new TextPart(TextFormat.Html) { Text = EmailText };
-
-                using var smtp = new SmtpClient();
-                smtp.Connect(
-                    _config.GetSection("EmailConfirmation:EmailHost").Value,
-                    int.Parse(_config.GetSection("EmailConfirmation:EmailHostPort").Value),
-                    SecureSocketOptions.StartTls);
-                smtp.Authenticate(
-                    _config.GetSection("EmailConfirmation:EmailHostUserName").Value,
-                    _config.GetSection("EmailConfirmation:EmailHostPassword").Value);
-                smtp.Send(email);
-                smtp.Disconnect(true);
+                SendEmail(email);
             }
             catch (Exception exc)
             {
@@ -63,17 +67,7 @@ namespace JAPManagement.Services.Services
                     "\" /></div><div style=\"width: 100%\"><h4>Hello " + admin.FirstName + ", you have been added as an Admin on JAP Management Platform :)</h4>Please, find your credentials below &darr;<br/><br/>Username: <strong>" + admin.UserName + "</strong><br/>Password: <strong>" + admin.Password + "</strong><br/><br/>You can access the platform by clicking <a href=\"" + _config.GetSection("EmailConfirmation:EmailJAPPlatformURL").Value +
                     "\" style=\"text-decoration:underline; color: #689ed1; font-weight:bold;\">here</a>.<br/><br/>Have a nice work hours!!<br/><br/>All the best,<br/>Malik Huremović</p></div>";
                 email.Body = new TextPart(TextFormat.Html) { Text = EmailText };
-
-                using var smtp = new SmtpClient();
-                smtp.Connect(
-                    _config.GetSection("EmailConfirmation:EmailHost").Value,
-                    int.Parse(_config.GetSection("EmailConfirmation:EmailHostPort").Value),
-                    SecureSocketOptions.StartTls);
-                smtp.Authenticate(
-                    _config.GetSection("EmailConfirmation:EmailHostUserName").Value,
-                    _config.GetSection("EmailConfirmation:EmailHostPassword").Value);
-                smtp.Send(email);
-                smtp.Disconnect(true);
+                SendEmail(email);
             }
             catch (Exception exc)
             {
@@ -94,17 +88,7 @@ namespace JAPManagement.Services.Services
                     "\" /></div><br/><br/><p style=\font-size: 20px;\"><span style=\"font-size:25px;\">Hello Dear Program Coordinator!</span><br/><br/>Good news knocking on the door yet again!<br/>Today, on " + dateTime.Day.ToString() + "th of " + dateTime.ToString("MMMM") + ", the selection <strong>" + report.SelectionName + "</strong> has come to an end.</p> <h4>You can check the statistics below &darr;</h4><br /> <div style=\"display:inline-block; min-width: 90%; padding: 25px; background-color: #5c9af8; color: #fff; font-size: 20px\">The selection success rate is: " + report.SelectionSuccessRate
                     + "%</div> <div style=\"display:inline-block; min-width: 90%; padding: 25px; background-color: #64ac8b; color: #fff; font-size: 20px\">The overall success rate is: " + report.OverallSuccessRate + "%</div><div><br/>All the best, <br /><br />Malik Huremović<br/><em>JAP Platform Admin</em></div>";
                 email.Body = new TextPart(TextFormat.Html) { Text = EmailText };
-
-                using var smtp = new SmtpClient();
-                smtp.Connect(
-                    _config.GetSection("EmailConfirmation:EmailHost").Value,
-                    int.Parse(_config.GetSection("EmailConfirmation:EmailHostPort").Value),
-                    SecureSocketOptions.StartTls);
-                smtp.Authenticate(
-                    _config.GetSection("EmailConfirmation:EmailHostUserName").Value,
-                    _config.GetSection("EmailConfirmation:EmailHostPassword").Value);
-                smtp.Send(email);
-                smtp.Disconnect(true);
+                SendEmail(email);
             }
             catch (Exception exc)
             {
