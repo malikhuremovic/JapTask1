@@ -22,8 +22,10 @@ const FormModal = ({
   formData,
   handleState,
   handleDelete,
-  availableItems
+  availableItems,
+  preSelection
 }) => {
+  console.log(preSelection);
   return (
     <React.Fragment>
       <div className={classes.backdrop}></div>
@@ -53,6 +55,7 @@ const FormModal = ({
                   handleStudentFormInput={handleFormInput}
                   studentFormData={formData}
                   availableSelections={availableItems}
+                  preSelection={preSelection}
                 />
               )}
               {formType === 'delete' && (

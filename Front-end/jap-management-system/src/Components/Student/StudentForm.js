@@ -6,7 +6,8 @@ const StudentForm = ({
   handleStudentFormInput,
   studentFormData,
   availableSelections,
-  disabled
+  disabled,
+  preSelection
 }) => {
   return (
     <Form onSubmit={handleFormSubmission}>
@@ -93,7 +94,11 @@ const StudentForm = ({
             name="selection"
             className="form-select"
             defaultValue={
-              studentFormData?.selection ? studentFormData.selection.id : 'none'
+              preSelection
+                ? preSelection.id
+                : studentFormData?.selection
+                ? studentFormData.selection.id
+                : 'none'
             }
             aria-label="Default select example"
             required
@@ -103,14 +108,18 @@ const StudentForm = ({
             {!studentFormData?.selection && (
               <option value="none">Selections</option>
             )}
-            {availableSelections.map(s => {
-              return (
-                <option key={s.id} value={s.id}>
-                  {' '}
-                  {s.name}
-                </option>
-              );
-            })}
+            {preSelection && (
+              <option value={preSelection.id}>{preSelection.name}</option>
+            )}
+            {!preSelection &&
+              availableSelections.map(s => {
+                return (
+                  <option key={s.id} value={s.id}>
+                    {' '}
+                    {s.name}
+                  </option>
+                );
+              })}
           </Form.Select>
         </Col>
       </Form.Group>

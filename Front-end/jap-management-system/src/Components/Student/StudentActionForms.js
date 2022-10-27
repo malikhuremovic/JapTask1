@@ -13,13 +13,15 @@ const StudentActionForms = ({
   handleDeleteState,
   actionState,
   studentFormData,
-  availableSelections
+  availableSelections,
+  preSelection
 }) => {
+  console.log(preSelection);
   return (
     <div className={classes.action_form}>
       {actionState.action === 'add' && actionState.show && (
         <FormModal
-          title="Add student"
+          title={!preSelection ? 'Add student' : 'Add to ' + preSelection.name}
           formType="add"
           formModel={formModel}
           handleState={handleAddState}
@@ -27,6 +29,7 @@ const StudentActionForms = ({
           handleFormInput={handleStudentFormInput}
           formData={studentFormData}
           availableItems={availableSelections}
+          preSelection={preSelection}
         />
       )}
       {actionState.action === 'edit' && actionState.show && (

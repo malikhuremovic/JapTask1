@@ -15,6 +15,8 @@ import config from '../../Data/config';
 const MainLandingComponent = () => {
   const query = useQuery();
   const [availableSelections, setAvailableSelections] = useState([]);
+  const [preSelection, setPreSelection] = useState(null);
+
   const INITIAL_STUDENT_FORM_DATA = {
     firstName: '',
     lastName: '',
@@ -97,6 +99,12 @@ const MainLandingComponent = () => {
     const selectionName = query.get('selection');
     if (selectionName) {
       search.selectionName = selectionName;
+      selectionService.fetchAllSelections().then(response => {
+        let selection = response.data.data.filter(
+          el => el.name === selectionName
+        );
+        handleSetPreSelection(selection[0]);
+      });
     }
 
     let params = {
@@ -106,6 +114,11 @@ const MainLandingComponent = () => {
     };
     fetchStudents(params);
   }, [query, pageState, sortState, searchState, fetchStudents]);
+
+  const handleSetPreSelection = selection => {
+    console.log(selection);
+    setPreSelection(() => selection);
+  };
 
   const handleSortAction = ev => {
     const sort = ev.target.parentNode.getAttribute('name');
@@ -330,6 +343,7 @@ const MainLandingComponent = () => {
         actionState={actionState}
         studentFormData={studentFormData}
         availableSelections={availableSelections}
+        preSelection={preSelection}
       />
       <StudentTable
         handlePageState={handlePageState}
