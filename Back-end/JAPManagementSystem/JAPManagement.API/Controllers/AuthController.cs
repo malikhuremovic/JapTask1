@@ -1,6 +1,6 @@
 ﻿using JAPManagement.Core.DTOs.User;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.Response;
-using JAPManagement.Services.Services.AuthService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

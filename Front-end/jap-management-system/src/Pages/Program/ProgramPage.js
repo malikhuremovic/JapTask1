@@ -1,7 +1,7 @@
-import programIcon from '../Assets/programIcon.png';
+import MainProgramComponent from '../../Components/Program/MainProgramComponent';
+import programIcon from '../../Assets/programIcon.png';
 
-import classes from './ProgramPage.module.css';
-import MainProgramComponent from '../Components/Program/MainProgramComponent';
+import classes from '../Style/ProgramPage.module.css';
 
 const ProgramPage = () => {
   return (

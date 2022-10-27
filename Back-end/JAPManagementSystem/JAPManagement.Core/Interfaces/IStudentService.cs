@@ -4,7 +4,7 @@ using JAPManagement.Core.DTOs.StudentDTOs;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.StudentModel;
 
-namespace JAPManagement.Services.Services.StudentService
+namespace JAPManagement.Core.Interfaces
 {
     public interface IStudentService
     {

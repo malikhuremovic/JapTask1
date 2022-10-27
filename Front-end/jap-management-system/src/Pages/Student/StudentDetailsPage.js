@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
-import studentService from '../Services/studentService';
+import studentService from '../../Services/studentService';
 
-import studentIcon from '../Assets/studentIcon.png';
+import studentIcon from '../../Assets/studentIcon.png';
 
-import classes from './DetailsPage.module.css';
-import routes from '../Data/routes';
+import classes from '../Style/DetailsPage.module.css';
+import routes from '../../Data/routes';
 import { Link } from 'react-router-dom';
 
 const StudentDetailsPage = () => {

@@ -2,13 +2,13 @@
 using EntityFrameworkPaginate;
 using JAPManagement.Common;
 using JAPManagement.Core.DTOs.JapItemDTOs;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Database.Data;
-using JAPManagement.Services.Services.StudentService;
 using Microsoft.EntityFrameworkCore;
 
-namespace JAPManagement.Services.Services.ItemService
+namespace JAPManagement.Services.Services
 {
     public class ItemService : IItemService
     {

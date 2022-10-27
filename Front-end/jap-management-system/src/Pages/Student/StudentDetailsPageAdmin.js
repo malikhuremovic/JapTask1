@@ -1,22 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
 
-import useQuery from '../Hooks/useQuery';
+import useQuery from '../../Hooks/useQuery';
 
-import StudentForm from '../Components/Student/StudentForm';
+import StudentForm from '../../Components/Student/StudentForm';
 
-import studentIcon from '../Assets/studentIcon.png';
+import studentIcon from '../../Assets/studentIcon.png';
 
-import studentService from '../Services/studentService';
-import selectionService from '../Services/selectionService';
+import studentService from '../../Services/studentService';
+import selectionService from '../../Services/selectionService';
 
-import classes from './DetailsPage.module.css';
-import routes from '../Data/routes';
+import classes from '../Style/DetailsPage.module.css';
 
 const StudentDetailsPageAdmin = () => {
-  const history = useHistory();
-
   const [student, setStudent] = useState({});
   const [studentEdit, setStudentEdit] = useState({});
   const INITIAL_COMMENT_STATE = {
@@ -46,6 +42,9 @@ const StudentDetailsPageAdmin = () => {
 
   useEffect(() => {
     const id = query.get('id');
+    if (!id) {
+      window.location.replace('/');
+    }
     fetchStudents(id);
   }, [fetchStudents, query]);
 
@@ -55,7 +54,6 @@ const StudentDetailsPageAdmin = () => {
       .modifyStudent(studentEdit)
       .then(response => {
         setStudent(response.data.data);
-        history.push('/');
       })
       .catch(err => {
         console.log(err);
@@ -115,7 +113,6 @@ const StudentDetailsPageAdmin = () => {
 
   const handleEditFormSubmission = () => {
     handleEditStudent();
-    window.location.replace(routes.index);
   };
 
   return (

@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using JAPManagement.Core.DTOs.SelectionDTOs;
+﻿using JAPManagement.Core.DTOs.SelectionDTOs;
 using JAPManagement.Core.Models.SelectionModel;
 using JAPManagement.Core.Models.Response;
 
-namespace JAPManagement.Services.Services.SelectionService
+namespace JAPManagement.Core.Interfaces
 {
     public interface ISelectionService
     {

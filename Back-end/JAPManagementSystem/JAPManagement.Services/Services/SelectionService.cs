@@ -2,13 +2,13 @@
 using EntityFrameworkPaginate;
 using JAPManagement.Common;
 using JAPManagement.Core.DTOs.SelectionDTOs;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.SelectionModel;
 using JAPManagement.Database.Data;
-using JAPManagement.Services.Services.StudentService;
 using Microsoft.EntityFrameworkCore;
 
-namespace JAPManagement.Services.Services.SelectionService
+namespace JAPManagement.Services.Services
 {
     public class SelectionService : ISelectionService
     {

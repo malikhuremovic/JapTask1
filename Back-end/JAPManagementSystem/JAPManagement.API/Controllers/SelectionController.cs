@@ -1,10 +1,9 @@
 ﻿using JAPManagement.Core.DTOs.SelectionDTOs;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.SelectionModel;
-using JAPManagement.Services.Services.SelectionService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace JAPManagement.API.Controllers
 {

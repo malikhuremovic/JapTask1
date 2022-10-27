@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JAPManagement.Common\JAPManagement.Common.csproj" />
+    <ProjectReference Include="..\JAPManagement.Core\JAPManagement.Core.csproj" />
     <ProjectReference Include="..\JAPManagement.Database\JAPManagement.Database.csproj" />
     <ProjectReference Include="..\JAPManagement.Utils\JAPManagement.Utils.csproj" />
   </ItemGroup>

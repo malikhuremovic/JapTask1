@@ -3,7 +3,7 @@ import ReportTable from '../Components/Report/ReportTable';
 import reportIcon from '../Assets/reportIcon.png';
 import selectionService from '../Services/selectionService';
 
-import classes from './ProgramPage.module.css';
+import classes from './Style/ProgramPage.module.css';
 const ReportPage = () => {
   const [selections, setSelections] = useState([]);
 

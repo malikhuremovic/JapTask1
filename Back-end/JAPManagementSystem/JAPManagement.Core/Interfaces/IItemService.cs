@@ -1,7 +1,7 @@
 ﻿using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.Models.Response;
 
-namespace JAPManagement.Services.Services.ItemService
+namespace JAPManagement.Core.Interfaces
 {
     public interface IItemService
     {

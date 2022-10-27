@@ -5,17 +5,15 @@ using JAPManagement.Core.DTOs.Comment;
 using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.DTOs.StudentDTOs;
 using JAPManagement.Core.DTOs.User;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.StudentModel;
 using JAPManagement.Database.Data;
-using JAPManagement.Services.Services.AuthService;
-using JAPManagement.Services.Services.EmailService;
-using JAPManagement.Services.Services.ProgramService;
 using JAPManagenent.Utils.Util;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace JAPManagement.Services.Services.StudentService
+namespace JAPManagement.Services.Services
 {
     public class StudentService : IStudentService
     {

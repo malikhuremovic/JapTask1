@@ -1,11 +1,7 @@
 ﻿using JAPManagenent.Utils.Util;
-using JAPManagement.Services.Services.ProgramService;
-using JAPManagement.Services.Services.SelectionService;
-using JAPManagement.Services.Services.ItemService;
 using JAPManagement.Services.Services.HangfireServices;
-using JAPManagement.Services.Services.AuthService;
-using JAPManagement.Services.Services.StudentService;
-using JAPManagement.Services.Services.EmailService;
+using JAPManagement.Services.Services;
+using JAPManagement.Core.Interfaces;
 
 namespace JAPManagement.API.Extensions
 {

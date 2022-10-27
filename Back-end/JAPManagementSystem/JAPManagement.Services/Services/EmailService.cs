@@ -1,4 +1,5 @@
 ﻿using JAPManagement.Core.DTOs.User;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.SelectionModel;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
 
-namespace JAPManagement.Services.Services.EmailService
+namespace JAPManagement.Services.Services
 {
     public class EmailService : IEmailService
     {

@@ -1,7 +1,7 @@
 ﻿using JAPManagement.Core.DTOs.User;
 using JAPManagement.Core.Models.SelectionModel;
 
-namespace JAPManagement.Services.Services.EmailService
+namespace JAPManagement.Core.Interfaces
 {
     public interface IEmailService
     {

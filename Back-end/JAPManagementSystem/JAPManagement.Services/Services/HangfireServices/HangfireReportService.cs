@@ -1,6 +1,5 @@
-﻿using JAPManagement.Database.Data;
-using JAPManagement.Services.Services.EmailService;
-using JAPManagement.Services.Services.SelectionService;
+﻿using JAPManagement.Core.Interfaces;
+using JAPManagement.Database.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace JAPManagement.Services.Services.HangfireServices

@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import classes from '../Components/Style/Table.module.css';
-import useQuery from '../Hooks/useQuery';
+import classes from '../../Components/Style/Table.module.css';
+import useQuery from '../../Hooks/useQuery';
 
-import iconMove from '../Assets/iconMove.png';
+import iconMove from '../../Assets/iconMove.png';
 
-import programService from '../Services/programService';
-import FormModal from '../Components/FormModal';
+import programService from '../../Services/programService';
+import FormModal from '../../Components/FormModal';
 
 const ProgramDetailsPage = () => {
   const [programItems, setProgramItems] = useState([]);

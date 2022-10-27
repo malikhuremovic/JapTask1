@@ -1,4 +1,4 @@
-﻿namespace JAPManagement.Services.Services.HangfireServices
+﻿namespace JAPManagement.Core.Interfaces
 {
     public interface IHangfireReportService
     {

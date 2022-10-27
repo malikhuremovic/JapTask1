@@ -1,11 +1,10 @@
 ﻿using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.DTOs.Program;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Core.Models.Response;
-using JAPManagement.Services.Services.ProgramService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace JAPManagement.API.Controllers
 {

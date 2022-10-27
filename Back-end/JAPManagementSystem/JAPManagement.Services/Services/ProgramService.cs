@@ -3,13 +3,14 @@ using EntityFrameworkPaginate;
 using JAPManagement.Common;
 using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.DTOs.Program;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Database.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 
-namespace JAPManagement.Services.Services.ProgramService
+namespace JAPManagement.Services.Services
 {
     public class ProgramService : IProgramService
     {

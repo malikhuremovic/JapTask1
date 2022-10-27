@@ -1,7 +1,7 @@
 ﻿using EntityFrameworkPaginate;
 using JAPManagement.Core.DTOs.JapItemDTOs;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.Response;
-using JAPManagement.Services.Services.ItemService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,9 +1,9 @@
 ﻿using JAPManagement.Core.DTOs.Comment;
 using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.DTOs.StudentDTOs;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.StudentModel;
-using JAPManagement.Services.Services.StudentService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

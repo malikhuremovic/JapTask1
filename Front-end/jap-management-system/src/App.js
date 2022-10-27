@@ -4,13 +4,13 @@ import React, { useContext } from 'react';
 
 import UserContext from './Store/userContext';
 
-import LoginPage from './Pages/LoginPage';
 import LandingPage from './Pages/LandingPage';
-import StudentDetailsPageAdmin from './Pages/StudentDetailsPageAdmin';
-import ProgramPage from './Pages/ProgramPage';
+import StudentDetailsPageAdmin from './Pages/Student/StudentDetailsPageAdmin';
+import ProgramPage from './Pages/Program/ProgramPage';
 import ReportPage from './Pages/ReportPage';
-import LogoutPage from './Pages/LogoutPage';
-import PageLayoutWrapper from './Pages/PageLayoutWrapper';
+import LoginPage from './Pages/Authentication/LoginPage';
+import LogoutPage from './Pages/Authentication/LoginPage';
+import PageLayoutWrapper from './Components/PageLayoutWrapper';
 import ProtectedRoute from './Pages/ProtectedRoute';
 
 import SelectionsPage from './Pages/SelectionsPage';
@@ -19,7 +19,7 @@ import LecturesPage from './Pages/LecturesPage';
 import routes from './Data/routes';
 
 import './App.module.css';
-import ProgramDetailsPage from './Pages/ProgramDetailsPage';
+import ProgramDetailsPage from './Pages/Program/ProgramDetailsPage';
 import PersonalReportComponent from './Components/PersonalReport/PersonalReportComponent';
 
 function App() {

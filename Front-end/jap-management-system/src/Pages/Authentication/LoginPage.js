@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 
-import userService from '../Services/userService';
-import tokenUtil from '../Util/tokenUtil';
+import userService from '../../Services/userService';
+import tokenUtil from '../../Util/tokenUtil';
 
-import classes from './LoginPage.module.css';
+import classes from '../Style/LoginPage.module.css';
 
 const LoginPage = () => {
   const [userName, setUserName] = useState('');

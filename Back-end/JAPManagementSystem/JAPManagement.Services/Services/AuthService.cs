@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using JAPManagement.Core.DTOs.StudentDTOs;
 using JAPManagement.Core.DTOs.User;
+using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.StudentModel;
 using JAPManagement.Core.Models.UserModel;
 using JAPManagement.Database.Data;
-using JAPManagement.Services.Services.EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace JAPManagement.Services.Services.AuthService
+namespace JAPManagement.Services.Services
 {
     public class AuthService : IAuthService
     {
