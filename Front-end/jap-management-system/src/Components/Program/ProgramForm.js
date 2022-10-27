@@ -163,7 +163,7 @@ const ProgramForm = ({
               as="textarea"
               rows={3}
               name="content"
-              placeholder="Enter the program content"
+              placeholder="Enter the program topics separated by a comma"
               onChange={handleProgramFormInput}
               value={programFormData.content}
               required

@@ -177,8 +177,11 @@ const StudentDetailsPage = () => {
           <Button variant="primary">See your program track</Button>
         </Link>
       </div>
+
       <div className={classes.student__comments}>
-        <h5 style={{ marginTop: 20, marginBottom: 35 }}>Comments</h5>
+        {student?.comments?.length > 0 && (
+          <h5 style={{ marginTop: 20, marginBottom: 35 }}>Comments</h5>
+        )}
         {student.comments &&
           student.comments.map(comment => {
             return (

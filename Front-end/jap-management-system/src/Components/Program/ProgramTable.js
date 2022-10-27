@@ -155,7 +155,16 @@ const ProgramTable = ({
                     </Button>
                   </th>
                   <td>{s.name}</td>
-                  <td>{s.content}</td>
+                  <td>
+                    {s.content.split(',').map(el => (
+                      <Button
+                        style={{ marginLeft: 15 }}
+                        variant="outline-primary"
+                      >
+                        {el}
+                      </Button>
+                    ))}
+                  </td>
                   <td>
                     <Link
                       to={

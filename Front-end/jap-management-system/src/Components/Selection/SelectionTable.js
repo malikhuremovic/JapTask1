@@ -253,9 +253,21 @@ const SelectionTable = ({
                     </Button>
                   </th>
                   <td>{s.name}</td>
-                  <td>{s.dateStart.split('T')[0]}</td>
-                  <td>{s.dateEnd.split('T')[0]}</td>
-                  <td>{s.status}</td>
+                  <td>
+                    <Button disabled variant="primary">
+                      <strong>{s.dateStart.split('T')[0]}</strong>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button disabled variant="warning">
+                      <strong>{s.dateEnd.split('T')[0]}</strong>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button disabled style={{ minWidth: 115 }} variant="info">
+                      <strong>{s.status}</strong>
+                    </Button>
+                  </td>
                   <td>
                     {!s.japProgram ? <b>Not allocated</b> : s.japProgram.name}
                   </td>

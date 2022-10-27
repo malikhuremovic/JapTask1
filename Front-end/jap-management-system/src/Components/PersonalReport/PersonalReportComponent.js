@@ -24,7 +24,7 @@ const PersonalReportComponent = () => {
   return (
     <div className={classes.table__container}>
       <div style={{ marginLeft: 20, padding: 15 }}>
-        <h3>Personal program track &darr;</h3>
+        <h4>Personal program track &darr;</h4>
       </div>
       <PersonalReportTable personalReport={personalReport} />
     </div>
