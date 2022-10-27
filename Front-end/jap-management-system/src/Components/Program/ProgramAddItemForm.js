@@ -21,11 +21,9 @@ const ProgramAddItemForm = ({
       .then(response => {
         const filteredAvailableItems = [];
         const fetchedItems = response.data.data;
-        let el;
         fetchedItems.map(element => {
           let exists = false;
           availableItems.map(existingElement => {
-            el = existingElement;
             if (element.id === existingElement.id) {
               exists = true;
             }
@@ -38,7 +36,7 @@ const ProgramAddItemForm = ({
         setLectures(filteredAvailableItems);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [availableItems]);
 
   useEffect(() => {
     fetchAllLectures();

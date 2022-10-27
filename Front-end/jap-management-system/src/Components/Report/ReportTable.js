@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 
 import searchIcon from '../../Assets/searchIcon.png';
-import sortIconDesc from '../../Assets/sortIconAsc.png';
 
 import classes from './ReportTable.module.css';
 
