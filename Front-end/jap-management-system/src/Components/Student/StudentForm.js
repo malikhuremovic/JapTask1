@@ -69,15 +69,13 @@ const StudentForm = ({
           <Form.Select
             name="status"
             className="form-select"
-            defaultValue={
-              studentFormData?.status ? studentFormData.status : 'none'
-            }
+            defaultValue={studentFormData ? studentFormData.status : 'none'}
             aria-label="Default select example"
             required
             onChange={handleStudentFormInput}
             disabled={disabled ? true : false}
           >
-            {!studentFormData?.status && <option value="none">Status</option>}
+            {!studentFormData && <option value="none">Status</option>}
             <option value="InProgram">InProgram</option>
             <option value="Success">Success</option>
             <option value="Failed">Failed</option>

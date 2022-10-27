@@ -116,7 +116,6 @@ const MainLandingComponent = () => {
   }, [query, pageState, sortState, searchState, fetchStudents]);
 
   const handleSetPreSelection = selection => {
-    console.log(selection);
     setPreSelection(() => selection);
   };
 

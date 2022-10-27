@@ -29,6 +29,7 @@ const StudentDetailsPageAdmin = () => {
       .fetchStudentById(id)
       .then(response => {
         setStudent(response.data.data);
+        setStudentEdit(response.data.data);
       })
       .catch(err => console.log(err));
 
@@ -54,6 +55,7 @@ const StudentDetailsPageAdmin = () => {
       .modifyStudent(studentEdit)
       .then(response => {
         setStudent(response.data.data);
+        window.location.replace('/');
       })
       .catch(err => {
         console.log(err);
@@ -64,21 +66,21 @@ const StudentDetailsPageAdmin = () => {
     const inputName = ev.target.name;
     const value = ev.target.value;
     setStudentEdit(prevState => {
-      let student = {
+      let UPDATED_STATE = {
         ...prevState
       };
       if (inputName === 'firstName') {
-        student.firstName = value;
+        UPDATED_STATE.firstName = value;
       } else if (inputName === 'lastName') {
-        student.lastName = value;
+        UPDATED_STATE.lastName = value;
       } else if (inputName === 'email') {
-        student.email = value;
+        UPDATED_STATE.email = value;
       } else if (inputName === 'status') {
-        student.status = value;
+        UPDATED_STATE.status = value;
       } else if (inputName === 'selection') {
-        student.selectionId = value;
+        UPDATED_STATE.selectionId = value;
       }
-      return student;
+      return UPDATED_STATE;
     });
   };
 
@@ -99,6 +101,10 @@ const StudentDetailsPageAdmin = () => {
       .catch(err => console.log(err));
   };
 
+  const handleSubmit = ev => {
+    handleEditStudent(ev);
+  };
+
   const handleCommentInput = ev => {
     const value = ev.target.value;
     const id = query.get('id');
@@ -109,10 +115,6 @@ const StudentDetailsPageAdmin = () => {
         createdAt: new Date().toISOString().slice(0, 19)
       };
     });
-  };
-
-  const handleEditFormSubmission = () => {
-    handleEditStudent();
   };
 
   return (
@@ -126,9 +128,9 @@ const StudentDetailsPageAdmin = () => {
         <StudentForm
           formType={'edit'}
           availableSelections={availableSelections}
-          handleFormSubmission={handleEditFormSubmission}
+          handleFormSubmission={handleSubmit}
           handleStudentFormInput={handleStudentFormInput}
-          studentFormData={student}
+          studentFormData={studentEdit}
         />
       </div>
       <div className={classes.student__comments}>
