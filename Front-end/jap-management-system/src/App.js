@@ -9,7 +9,7 @@ import StudentDetailsPageAdmin from './Pages/Student/StudentDetailsPageAdmin';
 import ProgramPage from './Pages/Program/ProgramPage';
 import ReportPage from './Pages/ReportPage';
 import LoginPage from './Pages/Authentication/LoginPage';
-import LogoutPage from './Pages/Authentication/LoginPage';
+import LogoutPage from './Pages/Authentication/LogoutPage';
 import PageLayoutWrapper from './Components/PageLayoutWrapper';
 import ProtectedRoute from './Pages/ProtectedRoute';
 
