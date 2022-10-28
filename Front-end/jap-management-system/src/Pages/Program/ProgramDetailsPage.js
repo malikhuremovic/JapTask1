@@ -96,7 +96,7 @@ const ProgramDetailsPage = () => {
     };
     programService
       .editProgram(editObj)
-      .then(response => setProgramItems(response.data.data.items))
+      .then(response => fetchItems(+query.get('id')))
       .catch(err => console.log(err));
   };
 
@@ -114,11 +114,12 @@ const ProgramDetailsPage = () => {
     };
     programService
       .editProgram(editObj)
-      .then(response => {
-        setProgramItems(response.data.data.items);
-        handleAddItem();
+      .then(() => {
+        fetchItems(+query.get('id'));
       })
       .catch(err => console.log(err));
+
+    handleAddItem();
   };
 
   return (
