@@ -1,4 +1,4 @@
-﻿namespace JAPManagement.Core.DTOs.JapItemDTOs
+﻿namespace JAPManagement.Core.DTOs.ProgramDTOs
 {
     public class DeleteProgramItemsDto
     {

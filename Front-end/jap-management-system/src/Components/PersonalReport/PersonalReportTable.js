@@ -77,11 +77,7 @@ const PersonalReportTable = ({ personalReport }) => {
                   return (
                     <tr key={index}>
                       <th scope="row">
-                        <Button
-                          style={{ minWidth: 40 }}
-                          variant="success"
-                          disabled
-                        >
+                        <Button style={{ minWidth: 40 }} variant="success" disabled>
                           <span style={{ fontSize: 16 }}>{index + 1}</span>
                         </Button>
                       </th>
@@ -103,47 +99,27 @@ const PersonalReportTable = ({ personalReport }) => {
                         })}
                       </td>
                       <td>
-                        <Button
-                          style={{ minWidth: 50 }}
-                          disabled
-                          variant="outline-success"
-                        >
+                        <Button style={{ minWidth: 50 }} disabled variant="outline-success">
                           {s.expectedHours}h
                         </Button>
                       </td>
                       <td>
-                        <Button
-                          style={{ minWidth: 100 }}
-                          variant="success"
-                          disabled
-                        >
+                        <Button style={{ minWidth: 100 }} variant="success" disabled>
                           {s.dateStart.split('T')[0]}{' '}
                         </Button>
                       </td>
                       <td>
-                        <Button
-                          style={{ minWidth: 100 }}
-                          variant="warning"
-                          disabled
-                        >
+                        <Button style={{ minWidth: 100 }} variant="warning" disabled>
                           {s.dateEnd.split('T')[0]}{' '}
                         </Button>
                       </td>
                       <td>
-                        <Button
-                          style={{ minWidth: 100 }}
-                          variant="danger"
-                          disabled
-                        >
+                        <Button style={{ minWidth: 100 }} variant="danger" disabled>
                           {s.status}{' '}
                         </Button>
                       </td>
                       <td>
-                        <Button
-                          style={{ minWidth: 100 }}
-                          variant="danger"
-                          disabled
-                        >
+                        <Button style={{ minWidth: 100 }} variant="danger" disabled>
                           {s.done}{' '}
                         </Button>
                       </td>

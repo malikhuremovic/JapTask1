@@ -6,6 +6,7 @@ using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Database.Data;
+using JAPManagement.ExceptionHandler.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace JAPManagement.Services.Services
@@ -22,136 +23,98 @@ namespace JAPManagement.Services.Services
             _studentService = studentService;
         }
 
-        public async Task<ServiceResponse<GetItemDto>> AddLecture(AddItemDto newLecture)
+        public async Task<ServiceResponse<GetItemDto>> AddItem(AddItemDto newItem)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
-            try
-            {
-                var lecture = _mapper.Map<JapItem>(newLecture);
-                _context.Items.Add(lecture);
-                await _context.SaveChangesAsync();
-                response.Data = _mapper.Map<GetItemDto>(lecture);
-                response.Message = "You have successfully added a new " + (newLecture.IsEvent ? "event " : "lecture ") + newLecture.Name;
-            }
-            catch (Exception exc)
-            {
-                response.Success = false;
-                response.Message = exc.Message;
-            }
+            var Item = _mapper.Map<JapItem>(newItem);
+            _context.Items.Add(Item);
+            await _context.SaveChangesAsync();
+            response.Data = _mapper.Map<GetItemDto>(Item);
+            response.Message = "You have successfully added a new " + (newItem.IsEvent ? "event " : "Item ") + newItem.Name;
             return response;
         }
 
-        public async Task<ServiceResponse<GetItemDto>> GetLecture(int id)
+        public async Task<ServiceResponse<GetItemDto>> GetItem(int id)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
-            try
+
+            var Item = await _context.Items.FirstOrDefaultAsync(l => l.Id == id);
+            if (Item == null)
             {
-                var lecture = await _context.Items.FirstOrDefaultAsync(l => l.Id == id);
-                if (lecture == null)
-                {
-                    throw new Exception("No lecture with the id of: " + id);
-                }
-                response.Data = _mapper.Map<GetItemDto>(lecture);
-                response.Message = "You have successfully fetched a lecture";
+                throw new EntityNotFoundException("Item was not found");
             }
-            catch (Exception exc)
-            {
-                response.Success = false;
-                response.Message = exc.Message;
-            }
+            response.Data = _mapper.Map<GetItemDto>(Item);
+            response.Message = "You have successfully fetched a Item";
+
             return response;
         }
 
-        public async Task<ServiceResponse<List<GetItemDto>>> GetAllLectures()
+        public async Task<ServiceResponse<List<GetItemDto>>> GetAllItems()
         {
             ServiceResponse<List<GetItemDto>> response = new ServiceResponse<List<GetItemDto>>();
-            try
-            {
-                var lectures = await _context.Items.ToListAsync();
-                response.Data = lectures.Select(lecture => _mapper.Map<GetItemDto>(lecture)).ToList();
-                response.Message = "You have successfully fetched all items";
-            }
-            catch (Exception exc)
-            {
-                response.Success = false;
-                response.Message = exc.Message;
-            }
+
+            var Items = await _context.Items.ToListAsync();
+            response.Data = Items.Select(Item => _mapper.Map<GetItemDto>(Item)).ToList();
+            response.Message = "You have successfully fetched all items";
+
             return response;
         }
 
 
-        public async Task<ServiceResponse<GetItemDto>> DeleteLecture(int id)
+        public async Task<ServiceResponse<GetItemDto>> DeleteItem(int id)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
-            try
+
+            var Item = await _context.Items.FirstOrDefaultAsync(l => l.Id == id);
+            if (Item == null)
             {
-                var lecture = await _context.Items.FirstOrDefaultAsync(l => l.Id == id);
-                if (lecture == null)
-                {
-                    throw new Exception("There is no lecture with the id of: " + id);
-                }
-                _context.Items.Remove(lecture);
-                await _context.SaveChangesAsync();
-                response.Data = _mapper.Map<GetItemDto>(lecture);
-                response.Message = "You have deleted a lecture " + lecture.Name;
+                throw new EntityNotFoundException("Item was not found");
             }
-            catch (Exception exc)
-            {
-                response.Success = false;
-                response.Message = exc.Message;
-            }
+            _context.Items.Remove(Item);
+            await _context.SaveChangesAsync();
+            response.Data = _mapper.Map<GetItemDto>(Item);
+            response.Message = "You have deleted a Item " + Item.Name;
+
             return response;
         }
 
-        public async Task<ServiceResponse<GetItemDto>> ModifyLecture(ModifyItemDto modifiedLecture)
+        public async Task<ServiceResponse<GetItemDto>> ModifyItem(ModifyItemDto modifiedItem)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
-            try
+
+            var Item = await _context.Items
+                .FirstOrDefaultAsync(l => l.Id == modifiedItem.Id);
+            if (Item == null)
             {
-                var lecture = await _context.Items
-                    .FirstOrDefaultAsync(l => l.Id == modifiedLecture.Id);
-                if (lecture == null)
-                {
-                    throw new Exception("There is no lecture " + modifiedLecture.Name + " with the id of: " + modifiedLecture.Id + ".");
-                }
-                lecture.Name = modifiedLecture.Name;
-                lecture.URL = modifiedLecture.URL;
-                lecture.Description = modifiedLecture.Description;
-                lecture.ExpectedHours = modifiedLecture.ExpectedHours;
-                lecture.IsEvent = modifiedLecture.IsEvent;
-                await _context.SaveChangesAsync();
-                response.Data = _mapper.Map<GetItemDto>(lecture);
-                response.Message = "You have successfully modified a lecture: " + lecture.Name + ".";
+                throw new EntityNotFoundException("Item was not found");
             }
-            catch (Exception exc)
-            {
-                response.Message = exc.Message;
-                response.Success = false;
-            }
+            Item.Name = modifiedItem.Name;
+            Item.URL = modifiedItem.URL;
+            Item.Description = modifiedItem.Description;
+            Item.ExpectedHours = modifiedItem.ExpectedHours;
+            Item.IsEvent = modifiedItem.IsEvent;
+            await _context.SaveChangesAsync();
+            response.Data = _mapper.Map<GetItemDto>(Item);
+            response.Message = "You have successfully modified a Item: " + Item.Name + ".";
+
             return response;
         }
 
-        public ServiceResponse<GetItemPageDto> GetLecturesWithParams(int pageNumber, int pageSize, string? name, string? description, string? URL, int? expectedHours, string? isEvent, string sort, bool descending)
+        public ServiceResponse<GetItemPageDto> GetItemsWithParams(int pageNumber, int pageSize, string? name, string? description, string? URL, int? expectedHours, string? isEvent, string sort, bool descending)
         {
 
             ServiceResponse<GetItemPageDto> response = new ServiceResponse<GetItemPageDto>();
             ItemFetchConfig.Initialize(name, description, URL, expectedHours, isEvent, sort, descending);
-            try
-            {
-                var lectures = _context.Items
-                    .Paginate(
-                    pageNumber,
-                    pageSize,
-                    ItemFetchConfig.sorts,
-                    ItemFetchConfig.filters);
-                response.Data = _mapper.Map<GetItemPageDto>(lectures);
-                response.Message = "You have fetched a page no. " + pageNumber + " with " + lectures.Results.Count() + " lecture(s).";
-            }
-            catch (Exception exc)
-            {
-                response.Message = exc.Message;
-                response.Success = false;
-            }
+
+            var Items = _context.Items
+                .Paginate(
+                pageNumber,
+                pageSize,
+                ItemFetchConfig.sorts,
+                ItemFetchConfig.filters);
+            response.Data = _mapper.Map<GetItemPageDto>(Items);
+            response.Message = "You have fetched a page no. " + pageNumber + " with " + Items.Results.Count() + " Item(s).";
+
             return response;
         }
     }

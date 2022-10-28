@@ -23,10 +23,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetSelectionDto> response = new ServiceResponse<GetSelectionDto>();
             response = await _selectionService.AddSelection(newSelection);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
             return StatusCode(201, response);
         }
 
@@ -34,10 +30,6 @@ namespace JAPManagement.API.Controllers
         public async Task<ActionResult<ServiceResponse<List<AdminReport>>>> GetSelectionsReport()
         {
             var response = await _selectionService.GetSelectionsReport();
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -46,10 +38,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<List<GetSelectionDto>> response = new ServiceResponse<List<GetSelectionDto>>();
             response = await _selectionService.GetAllSelections();
-            if (response.Success == false)
-            {
-                return StatusCode(500, response);
-            }
             return Ok(response);
         }
 
@@ -58,10 +46,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetSelectionPageDto> response = new ServiceResponse<GetSelectionPageDto>();
             response = _selectionService.GetSelectionsWithParams(page, pageSize, name, japProgramName, dateStart, dateEnd, status, sort, descending);
-            if (!response.Success)
-            {
-                return StatusCode(500, response);
-            }
             return Ok(response);
         }
 
@@ -70,10 +54,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetSelectionDto> response = new ServiceResponse<GetSelectionDto>();
             response = await _selectionService.GetSelectionById(selectionId);
-            if (response.Success == false)
-            {
-                return NotFound(response);
-            }
             return Ok(response);
         }
 
@@ -82,10 +62,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetSelectionDto> response = new ServiceResponse<GetSelectionDto>();
             response = await _selectionService.ModifySelection(modifiedSelection);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -94,10 +70,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
             response = await _selectionService.DeleteSelectionById(id);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
     }

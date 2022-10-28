@@ -24,9 +24,7 @@ const MainLandingComponent = () => {
     status: '',
     selectionId: null
   };
-  const [studentFormData, setStudentFormData] = useState(
-    INITIAL_STUDENT_FORM_DATA
-  );
+  const [studentFormData, setStudentFormData] = useState(INITIAL_STUDENT_FORM_DATA);
   const [students, setStudents] = useState([]);
   const INITIAL_SEARCH_STATE = {
     firstName: '',
@@ -58,18 +56,13 @@ const MainLandingComponent = () => {
     pageSize: 0,
     recordCount: 0
   };
-  const [paginationInfo, setPaginationInfoState] = useState(
-    INITIAL_PAGINATION_INFO_STATE
-  );
+  const [paginationInfo, setPaginationInfoState] = useState(INITIAL_PAGINATION_INFO_STATE);
 
   const fetchStudents = useCallback(params => {
     studentService.fetchAllStudents(params).then(response => {
       setStudents(response.data.data.results);
       setPaginationInfoState(prevState => {
-        if (
-          prevState.recordCount > response.data.data.recordCount &&
-          response.data.data.recordCount % 2 === 0
-        ) {
+        if (prevState.recordCount > response.data.data.recordCount && response.data.data.recordCount % 2 === 0) {
           setPageState(prevState => {
             const UPDATED_PAGE_STATE = {
               ...prevState
@@ -100,9 +93,7 @@ const MainLandingComponent = () => {
     if (selectionName) {
       search.selectionName = selectionName;
       selectionService.fetchAllSelections().then(response => {
-        let selection = response.data.data.filter(
-          el => el.name === selectionName
-        );
+        let selection = response.data.data.filter(el => el.name === selectionName);
         handleSetPreSelection(selection[0]);
       });
     }
@@ -221,10 +212,7 @@ const MainLandingComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      (actionState.action === 'add' || actionState.action === 'edit') &&
-      actionState.show
-    )
+    if ((actionState.action === 'add' || actionState.action === 'edit') && actionState.show)
       handleFetchAvailableSelections();
   }, [actionState, handleFetchAvailableSelections]);
 

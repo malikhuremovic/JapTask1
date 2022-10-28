@@ -50,11 +50,7 @@ const SelectionTable = ({
             <th scope="col">#</th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="name"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="name" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'name' && sortState.descending
@@ -71,17 +67,12 @@ const SelectionTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="dateStart"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="dateStart" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'dateStart' && sortState.descending
                         ? sortIconDesc
-                        : sortState.sort === 'dateStart' &&
-                          !sortState.descending
+                        : sortState.sort === 'dateStart' && !sortState.descending
                         ? sortIconAsc
                         : sortIconDesc
                     }
@@ -93,11 +84,7 @@ const SelectionTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="dateEnd"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="dateEnd" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'dateEnd' && sortState.descending
@@ -114,11 +101,7 @@ const SelectionTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="status"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="status" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'status' && sortState.descending
@@ -135,11 +118,7 @@ const SelectionTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="program"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="program" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'program' && sortState.descending
@@ -161,11 +140,7 @@ const SelectionTable = ({
           </tr>
           <tr>
             <th scope="col">
-              <img
-                className={classes.searchIcon}
-                src={searchIcon}
-                alt="search"
-              />
+              <img className={classes.searchIcon} src={searchIcon} alt="search" />
             </th>
             <th scope="col">
               <input
@@ -245,9 +220,7 @@ const SelectionTable = ({
                         {index +
                           1 +
                           (paginationInfo.currentPage > 1
-                            ? paginationInfo.currentPage *
-                                paginationInfo.pageSize -
-                              paginationInfo.pageSize
+                            ? paginationInfo.currentPage * paginationInfo.pageSize - paginationInfo.pageSize
                             : 0)}
                       </span>
                     </Button>
@@ -268,32 +241,19 @@ const SelectionTable = ({
                       <strong>{s.status}</strong>
                     </Button>
                   </td>
-                  <td>
-                    {!s.japProgram ? <b>Not allocated</b> : s.japProgram.name}
-                  </td>
+                  <td>{!s.japProgram ? <b>Not allocated</b> : s.japProgram.name}</td>
                   <td style={{ display: 'flex' }}>
                     <Link to={`/?selection=${s.name}`}>
-                      <Button
-                        className={classes.action__button}
-                        variant="primary"
-                      >
+                      <Button className={classes.action__button} variant="primary">
                         Students
                       </Button>
                     </Link>
                     <div>
-                      <Button
-                        className={classes.action__button}
-                        variant="success"
-                        onClick={handleEditState}
-                      >
+                      <Button className={classes.action__button} variant="success" onClick={handleEditState}>
                         <input id={s.id} type="hidden" />
                         Edit
                       </Button>
-                      <Button
-                        className={classes.action__button}
-                        variant="danger"
-                        onClick={handleDeleteState}
-                      >
+                      <Button className={classes.action__button} variant="danger" onClick={handleDeleteState}>
                         <input id={s.id} type="hidden" />
                         Delete
                       </Button>

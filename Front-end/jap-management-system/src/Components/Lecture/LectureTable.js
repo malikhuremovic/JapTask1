@@ -49,11 +49,7 @@ const LectureTable = ({
             <th scope="col">#</th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="name"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="name" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'name' && sortState.descending
@@ -70,17 +66,12 @@ const LectureTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="description"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="description" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'description' && sortState.descending
                         ? sortIconDesc
-                        : sortState.sort === 'description' &&
-                          !sortState.descending
+                        : sortState.sort === 'description' && !sortState.descending
                         ? sortIconAsc
                         : sortIconDesc
                     }
@@ -92,11 +83,7 @@ const LectureTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="URL"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="URL" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'URL' && sortState.descending
@@ -113,17 +100,12 @@ const LectureTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="expectedHours"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="expectedHours" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'expectedHours' && sortState.descending
                         ? sortIconDesc
-                        : sortState.sort === 'expectedHours' &&
-                          !sortState.descending
+                        : sortState.sort === 'expectedHours' && !sortState.descending
                         ? sortIconAsc
                         : sortIconDesc
                     }
@@ -135,11 +117,7 @@ const LectureTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="isEvent"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="isEvent" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'isEvent' && sortState.descending
@@ -161,11 +139,7 @@ const LectureTable = ({
           </tr>
           <tr>
             <th scope="col">
-              <img
-                className={classes.searchIcon}
-                src={searchIcon}
-                alt="search"
-              />
+              <img className={classes.searchIcon} src={searchIcon} alt="search" />
             </th>
             <th scope="col">
               <input
@@ -208,11 +182,7 @@ const LectureTable = ({
               />
             </th>
             <th scope="col">
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formHorizontalFirstName"
-              >
+              <Form.Group as={Row} className="mb-3" controlId="formHorizontalFirstName">
                 <Col sm={10}>
                   <Form.Check
                     className={classes.checboxFilter}
@@ -249,9 +219,7 @@ const LectureTable = ({
                         {index +
                           1 +
                           (paginationInfo.currentPage > 1
-                            ? paginationInfo.currentPage *
-                                paginationInfo.pageSize -
-                              paginationInfo.pageSize
+                            ? paginationInfo.currentPage * paginationInfo.pageSize - paginationInfo.pageSize
                             : 0)}
                       </span>
                     </Button>
@@ -261,10 +229,7 @@ const LectureTable = ({
                   <td>
                     {s.url.split(',').map(url => {
                       return (
-                        <a
-                          style={{ textDecoration: 'none', marginRight: 10 }}
-                          href={url.trim()}
-                        >
+                        <a style={{ textDecoration: 'none', marginRight: 10 }} href={url.trim()}>
                           <Button variant="outline-primary">Link</Button>
                         </a>
                       );
@@ -272,47 +237,27 @@ const LectureTable = ({
                   </td>
                   <td>
                     {' '}
-                    <Button
-                      style={{ minWidth: 50 }}
-                      disabled
-                      variant="outline-success"
-                    >
+                    <Button style={{ minWidth: 50 }} disabled variant="outline-success">
                       {s.expectedHours}h
                     </Button>
                   </td>
                   <td>
                     {!s.isEvent ? (
-                      <Button
-                        style={{ minWidth: 100 }}
-                        variant="warning"
-                        disabled
-                      >
+                      <Button style={{ minWidth: 100 }} variant="warning" disabled>
                         <strong>Lecture</strong>
                       </Button>
                     ) : (
-                      <Button
-                        style={{ minWidth: 100 }}
-                        variant="danger"
-                        disabled
-                      >
+                      <Button style={{ minWidth: 100 }} variant="danger" disabled>
                         <strong>Event</strong>
                       </Button>
                     )}
                   </td>
                   <td>
-                    <Button
-                      className={classes.action__button}
-                      variant="success"
-                      onClick={handleEditState}
-                    >
+                    <Button className={classes.action__button} variant="success" onClick={handleEditState}>
                       <input id={s.id} type="hidden" />
                       Edit
                     </Button>
-                    <Button
-                      className={classes.action__button}
-                      variant="danger"
-                      onClick={handleDeleteState}
-                    >
+                    <Button className={classes.action__button} variant="danger" onClick={handleDeleteState}>
                       <input id={s.id} type="hidden" />
                       Delete
                     </Button>

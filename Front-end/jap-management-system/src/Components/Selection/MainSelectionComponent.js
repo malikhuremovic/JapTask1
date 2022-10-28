@@ -20,9 +20,7 @@ const MainSelectionComponent = () => {
     status: '',
     japProgramId: ''
   };
-  const [selectionFormData, setSelectionFormData] = useState(
-    INITIAL_SELECTION_FORM_DATA
-  );
+  const [selectionFormData, setSelectionFormData] = useState(INITIAL_SELECTION_FORM_DATA);
   const [selections, setSelections] = useState([]);
 
   const INITIAL_SEARCH_STATE = {
@@ -54,9 +52,7 @@ const MainSelectionComponent = () => {
     pageSize: 0,
     recordCount: 0
   };
-  const [paginationInfo, setPaginationInfoState] = useState(
-    INITIAL_PAGINATION_INFO_STATE
-  );
+  const [paginationInfo, setPaginationInfoState] = useState(INITIAL_PAGINATION_INFO_STATE);
 
   const handleFetchAvailablePrograms = useCallback(() => {
     programService
@@ -68,10 +64,7 @@ const MainSelectionComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      (actionState.action === 'add' || actionState.action === 'edit') &&
-      actionState.show
-    )
+    if ((actionState.action === 'add' || actionState.action === 'edit') && actionState.show)
       handleFetchAvailablePrograms();
   }, [actionState, handleFetchAvailablePrograms]);
 
@@ -104,8 +97,7 @@ const MainSelectionComponent = () => {
     setSortState(previousSort => {
       const UPDATED_SORT = {
         sort,
-        descending:
-          sort === previousSort.sort ? !previousSort.descending : false
+        descending: sort === previousSort.sort ? !previousSort.descending : false
       };
       return UPDATED_SORT;
     });
@@ -227,9 +219,7 @@ const MainSelectionComponent = () => {
           };
         });
         setSelections(prevState => {
-          let selection = prevState.findIndex(
-            s => s.id === selectionFormData.id
-          );
+          let selection = prevState.findIndex(s => s.id === selectionFormData.id);
           prevState[selection] = response.data.data;
           return prevState;
         });
@@ -291,11 +281,7 @@ const MainSelectionComponent = () => {
   return (
     <div className={classes.table__container}>
       <div className={classes.student_table_actions}>
-        <Button
-          style={{ marginLeft: 20, minWidth: 170 }}
-          variant="primary"
-          onClick={handleAddState}
-        >
+        <Button style={{ marginLeft: 20, minWidth: 170 }} variant="primary" onClick={handleAddState}>
           Add new selection
         </Button>
       </div>

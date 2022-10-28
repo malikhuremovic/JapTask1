@@ -21,10 +21,6 @@ namespace JAPManagement.API.Controllers
         public async Task<ActionResult<ServiceResponse<string>>> Login(UserLoginDto user)
         {
             var response = await _authService.Login(user);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -33,10 +29,6 @@ namespace JAPManagement.API.Controllers
         public async Task<ActionResult<GetUserDto>> CreateAdmin(AddAdminDto admin)
         {
             var response = await _authService.RegisterAdminUser(admin);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -50,10 +42,6 @@ namespace JAPManagement.API.Controllers
                 .Split(" ")
                 .ElementAt(1);
             var response = await _authService.GetUserByToken(tokenValue);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
     }

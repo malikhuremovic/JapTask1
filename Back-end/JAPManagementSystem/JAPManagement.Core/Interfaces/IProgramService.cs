@@ -2,6 +2,7 @@
 using JAPManagement.Core.DTOs.Program;
 using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.Models.Response;
+using JAPManagement.Core.DTOs.ProgramDTOs;
 
 namespace JAPManagement.Core.Interfaces
 {

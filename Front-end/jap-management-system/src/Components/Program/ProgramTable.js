@@ -51,11 +51,7 @@ const ProgramTable = ({
             <th scope="col">#</th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="name"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="name" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'name' && sortState.descending
@@ -72,11 +68,7 @@ const ProgramTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="content"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="content" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'content' && sortState.descending
@@ -97,11 +89,7 @@ const ProgramTable = ({
           </tr>
           <tr>
             <th scope="col">
-              <img
-                className={classes.searchIcon}
-                src={searchIcon}
-                alt="search"
-              />
+              <img className={classes.searchIcon} src={searchIcon} alt="search" />
             </th>
             <th scope="col">
               <input
@@ -147,9 +135,7 @@ const ProgramTable = ({
                         {index +
                           1 +
                           (paginationInfo.currentPage > 1
-                            ? paginationInfo.currentPage *
-                                paginationInfo.pageSize -
-                              paginationInfo.pageSize
+                            ? paginationInfo.currentPage * paginationInfo.pageSize - paginationInfo.pageSize
                             : 0)}
                       </span>
                     </Button>
@@ -157,46 +143,23 @@ const ProgramTable = ({
                   <td>{s.name}</td>
                   <td>
                     {s.content.split(',').map(el => (
-                      <Button
-                        style={{ marginLeft: 15 }}
-                        variant="outline-primary"
-                      >
+                      <Button style={{ marginLeft: 15 }} variant="outline-primary">
                         {el}
                       </Button>
                     ))}
                   </td>
                   <td>
-                    <Link
-                      to={
-                        '/program/details?id=' +
-                        s.id +
-                        '&name=' +
-                        s.name +
-                        '&content=' +
-                        s.content
-                      }
-                    >
-                      <Button
-                        className={classes.action__button}
-                        variant="outline-success"
-                      >
+                    <Link to={'/program/details?id=' + s.id + '&name=' + s.name + '&content=' + s.content}>
+                      <Button className={classes.action__button} variant="outline-success">
                         <input id={s.id} type="hidden" />
                         Details
                       </Button>
                     </Link>
-                    <Button
-                      className={classes.action__button}
-                      variant="success"
-                      onClick={handleEditState}
-                    >
+                    <Button className={classes.action__button} variant="success" onClick={handleEditState}>
                       <input id={s.id} type="hidden" />
                       Edit
                     </Button>
-                    <Button
-                      className={classes.action__button}
-                      variant="danger"
-                      onClick={handleDeleteState}
-                    >
+                    <Button className={classes.action__button} variant="danger" onClick={handleDeleteState}>
                       <input id={s.id} type="hidden" />
                       Delete
                     </Button>

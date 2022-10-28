@@ -12,13 +12,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Database", "J
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Services", "JAPManagement.Services\JAPManagement.Services.csproj", "{AB9CC546-D4D9-4DEF-B8D4-B2D61A790EFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JAPManagement.Common", "JAPManagement.Common\JAPManagement.Common.csproj", "{B914AD60-3429-4D0B-AB28-248B797EB7DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Common", "JAPManagement.Common\JAPManagement.Common.csproj", "{B914AD60-3429-4D0B-AB28-248B797EB7DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JAPManagement.API", "JAPManagement.API\JAPManagement.API.csproj", "{1B357784-765E-4ABE-8197-DEF60841E99A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.API", "JAPManagement.API\JAPManagement.API.csproj", "{1B357784-765E-4ABE-8197-DEF60841E99A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JAPManagement.Tests", "JAPManagement.Tests\JAPManagement.Tests.csproj", "{84BB8CF2-13BE-4D5B-A01E-DEB0A1FA6D95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Tests", "JAPManagement.Tests\JAPManagement.Tests.csproj", "{84BB8CF2-13BE-4D5B-A01E-DEB0A1FA6D95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JAPManagement.Utils", "JAPManagement.Utils\JAPManagement.Utils.csproj", "{BD2B4F29-4D26-47A7-A837-09797D9437B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Utils", "JAPManagement.Utils\JAPManagement.Utils.csproj", "{BD2B4F29-4D26-47A7-A837-09797D9437B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JAPManagement.ExceptionHandler", "JAPManagement.ExceptionHandler\JAPManagement.ExceptionHandler.csproj", "{2C543ACF-1FB1-408C-9161-69A05EC5BD84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{BD2B4F29-4D26-47A7-A837-09797D9437B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD2B4F29-4D26-47A7-A837-09797D9437B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD2B4F29-4D26-47A7-A837-09797D9437B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C543ACF-1FB1-408C-9161-69A05EC5BD84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C543ACF-1FB1-408C-9161-69A05EC5BD84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C543ACF-1FB1-408C-9161-69A05EC5BD84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C543ACF-1FB1-408C-9161-69A05EC5BD84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

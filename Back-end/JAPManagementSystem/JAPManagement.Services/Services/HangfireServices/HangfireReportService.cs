@@ -22,16 +22,8 @@ namespace JAPManagement.Services.Services.HangfireServices
             var reportResponse = await _selectionService.GetSelectionsReport();
             selections.ForEach(selection =>
             {
-                try
-                {
-                    var currentSelectionReport = reportResponse.Data.First(sel => sel.SelectionName.Equals(selection.Name));
-                    _emailService.SendConfirmationEmail(currentSelectionReport);
-                }
-                catch (Exception exc)
-                {
-                    Console.WriteLine(exc.Message);
-                }
-                Console.WriteLine("Success");
+                var currentSelectionReport = reportResponse.Data.First(sel => sel.SelectionName.Equals(selection.Name));
+                _emailService.SendConfirmationEmail(currentSelectionReport);
             });
             return "The length is: " + selections.Count();
         }

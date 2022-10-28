@@ -1,5 +1,6 @@
 ﻿using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.DTOs.Program;
+using JAPManagement.Core.DTOs.ProgramDTOs;
 using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Core.Models.Response;
@@ -24,10 +25,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
             response = await _programService.AddProgram(newProgram);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
             return StatusCode(201, response);
         }
 
@@ -36,10 +33,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
             response = await _programService.AddProgramItem(newProgramLectures);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
             return StatusCode(201, response);
         }
 
@@ -48,10 +41,7 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetProgramPageDto> response = new ServiceResponse<GetProgramPageDto>();
             response = _programService.GetProgramsWithParams(page, pageSize, name, content, sort, descending);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
+
             return StatusCode(201, response);
         }
 
@@ -60,10 +50,7 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<List<GetProgramDto>> response = new ServiceResponse<List<GetProgramDto>>();
             response = await _programService.GetAllPrograms();
-            if (response.Success == false)
-            {
-                return StatusCode(500, response);
-            }
+
             return StatusCode(201, response);
         }
 
@@ -72,10 +59,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
             response = await _programService.GetProgramById(id);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -84,10 +67,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<List<GetItemDto>> response = new ServiceResponse<List<GetItemDto>>();
             response = await _programService.GetProgramItems(id);
-            if (response.Success == false)
-            {
-                return StatusCode(500, response);
-            }
             return StatusCode(201, response);
         }
 
@@ -96,10 +75,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
             response = await _programService.ModifyProgram(modifiedProgram);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
             return StatusCode(201, response);
         }
 
@@ -108,10 +83,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<List<ProgramItem>> response = new ServiceResponse<List<ProgramItem>>();
             response = await _programService.ModifyProgramItemsOrder(programItemsOrder);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
             return StatusCode(201, response);
         }
 
@@ -120,10 +91,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
             response = await _programService.DeleteProgram(id);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
             return StatusCode(201, response);
         }
 
@@ -132,10 +99,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
             response = await _programService.RemoveProgramItem(programLectures);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
             return StatusCode(201, response);
         }
     }

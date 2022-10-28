@@ -37,11 +37,7 @@ function App() {
         <ProtectedRoute exact path={routes.selections} roles={['Admin']}>
           <SelectionsPage />
         </ProtectedRoute>
-        <ProtectedRoute
-          exact
-          path={routes.programDetailsPage}
-          roles={['Admin']}
-        >
+        <ProtectedRoute exact path={routes.programDetailsPage} roles={['Admin']}>
           <ProgramDetailsPage />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.programDetails} roles={['Admin']}>
@@ -50,11 +46,7 @@ function App() {
         <ProtectedRoute exact path={routes.lectures} roles={['Admin']}>
           <LecturesPage />
         </ProtectedRoute>
-        <ProtectedRoute
-          exact
-          path={routes.studentReport}
-          roles={['Student', 'Admin']}
-        >
+        <ProtectedRoute exact path={routes.studentReport} roles={['Student', 'Admin']}>
           <PersonalReportComponent />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.report} roles={['Admin']}>

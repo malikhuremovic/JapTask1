@@ -77,7 +77,6 @@ const ProgramDetailsPage = () => {
     programService
       .modifyProgramItemsOrder(patchData)
       .then(response => {
-        console.log(response);
         handleEditState();
       })
       .catch(() => {
@@ -136,9 +135,7 @@ const ProgramDetailsPage = () => {
       )}
       <div
         style={{
-          backgroundColor: `${
-            isEditing ? '#fff' : 'rgba(255, 255, 255, 0.911)'
-          }`,
+          backgroundColor: `${isEditing ? '#fff' : 'rgba(255, 255, 255, 0.911)'}`,
           borderRadius: '20px',
           padding: '20px',
           margin: '20px'
@@ -166,24 +163,13 @@ const ProgramDetailsPage = () => {
                 <h3>Edit mode</h3>
 
                 <div>
-                  <Button
-                    onClick={() => handleSendPostRequest()}
-                    variant="outline-success"
-                  >
+                  <Button onClick={() => handleSendPostRequest()} variant="outline-success">
                     Save changes
                   </Button>
-                  <Button
-                    onClick={handleAddItem}
-                    style={{ marginLeft: 20 }}
-                    variant="outline-primary"
-                  >
+                  <Button onClick={handleAddItem} style={{ marginLeft: 20 }} variant="outline-primary">
                     Add item
                   </Button>
-                  <Button
-                    style={{ marginLeft: 20 }}
-                    onClick={handleEditState}
-                    variant="outline-danger"
-                  >
+                  <Button style={{ marginLeft: 20 }} onClick={handleEditState} variant="outline-danger">
                     Cancel
                   </Button>
                 </div>
@@ -231,9 +217,7 @@ const ProgramDetailsPage = () => {
               {programItems &&
                 programItems.map((s, index) => {
                   let boldClass = s.isEvent ? classes.bold : '';
-                  let rowClasses = `${classes.dragCard} ${
-                    isEditing ? classes.drag : ''
-                  }`;
+                  let rowClasses = `${classes.dragCard} ${isEditing ? classes.drag : ''}`;
                   return (
                     <tr
                       key={index}
@@ -246,19 +230,11 @@ const ProgramDetailsPage = () => {
                     >
                       <th scope="row">
                         {isEditing ? (
-                          <Button
-                            style={{ minWidth: 40 }}
-                            variant="outline-secondary"
-                            disabled
-                          >
+                          <Button style={{ minWidth: 40 }} variant="outline-secondary" disabled>
                             <img src={iconMove} alt="icon move" />
                           </Button>
                         ) : (
-                          <Button
-                            style={{ minWidth: 40 }}
-                            variant="success"
-                            disabled
-                          >
+                          <Button style={{ minWidth: 40 }} variant="success" disabled>
                             <span style={{ fontSize: 16 }}>{index + 1}</span>
                           </Button>
                         )}
@@ -281,39 +257,23 @@ const ProgramDetailsPage = () => {
                         })}
                       </td>
                       <td>
-                        <Button
-                          style={{ minWidth: 50 }}
-                          disabled
-                          variant="outline-success"
-                        >
+                        <Button style={{ minWidth: 50 }} disabled variant="outline-success">
                           {s.expectedHours}h
                         </Button>
                       </td>
                       <td>
                         {!s.isEvent ? (
-                          <Button
-                            style={{ minWidth: 100 }}
-                            variant="warning"
-                            disabled
-                          >
+                          <Button style={{ minWidth: 100 }} variant="warning" disabled>
                             <strong>Lecture</strong>
                           </Button>
                         ) : (
-                          <Button
-                            style={{ minWidth: 100 }}
-                            variant="danger"
-                            disabled
-                          >
+                          <Button style={{ minWidth: 100 }} variant="danger" disabled>
                             <strong>Event</strong>
                           </Button>
                         )}
                       </td>
                       <td>
-                        <Button
-                          onClick={handleEditItems}
-                          id={s.id}
-                          variant="outline-danger"
-                        >
+                        <Button onClick={handleEditItems} id={s.id} variant="outline-danger">
                           Remove
                         </Button>
                       </td>

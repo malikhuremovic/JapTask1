@@ -57,11 +57,7 @@ const StudentForm = ({
         </Col>
       </Form.Group>
 
-      <Form.Group
-        as={Row}
-        className="mb-3"
-        controlId="formHorizontalStudentStatus"
-      >
+      <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentStatus">
         <Form.Label column sm={2}>
           Student status
         </Form.Label>
@@ -92,23 +88,15 @@ const StudentForm = ({
             name="selection"
             className="form-select"
             defaultValue={
-              preSelection
-                ? preSelection.id
-                : studentFormData?.selection
-                ? studentFormData.selection.id
-                : 'none'
+              preSelection ? preSelection.id : studentFormData?.selection ? studentFormData.selection.id : 'none'
             }
             aria-label="Default select example"
             required
             onChange={handleStudentFormInput}
             disabled={disabled ? true : false}
           >
-            {!studentFormData?.selection && (
-              <option value="none">Selections</option>
-            )}
-            {preSelection && (
-              <option value={preSelection.id}>{preSelection.name}</option>
-            )}
+            {!studentFormData?.selection && <option value="none">Selections</option>}
+            {preSelection && <option value={preSelection.id}>{preSelection.name}</option>}
             {!preSelection &&
               availableSelections.map(s => {
                 return (
@@ -125,19 +113,12 @@ const StudentForm = ({
       <Form.Group as={Row} className="mb-3">
         <Col sm={{ span: 10, offset: 2 }}>
           {formType === 'add' && (
-            <Button
-              style={{ position: 'relative', left: '-20%' }}
-              type="submit"
-            >
+            <Button style={{ position: 'relative', left: '-20%' }} type="submit">
               Add new student
             </Button>
           )}
           {formType === 'edit' && (
-            <Button
-              style={{ position: 'relative', left: '-20%' }}
-              type="submit"
-              variant="success"
-            >
+            <Button style={{ position: 'relative', left: '-20%' }} type="submit" variant="success">
               Edit student
             </Button>
           )}

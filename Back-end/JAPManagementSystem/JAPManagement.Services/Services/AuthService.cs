@@ -6,6 +6,7 @@ using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.StudentModel;
 using JAPManagement.Core.Models.UserModel;
 using JAPManagement.Database.Data;
+using JAPManagement.ExceptionHandler.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,14 +20,13 @@ namespace JAPManagement.Services.Services
     public class AuthService : IAuthService
     {
         private readonly IMapper _mapper;
-        private readonly DataContext _context;
         private readonly IConfiguration _configuration;
         private readonly IEmailService _mailService;
-
+        private readonly DataContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AuthService(IMapper mapper, DataContext context, IConfiguration configuration, IEmailService mailService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AuthService(DataContext context, IMapper mapper, IConfiguration configuration, IEmailService mailService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _mapper = mapper;
             _context = context;
@@ -39,93 +39,67 @@ namespace JAPManagement.Services.Services
         public async Task<ServiceResponse<GetUserDto>> RegisterStudentUser(Student student, string password)
         {
             ServiceResponse<GetUserDto> response = new ServiceResponse<GetUserDto>();
-            try
+            var result = await _userManager.CreateAsync(student, password);
+            StringBuilder stringBuilder = new StringBuilder();
+            if (!result.Succeeded)
             {
-                var result = await _userManager.CreateAsync(student, password);
-                StringBuilder stringBuilder = new StringBuilder();
-                if (!result.Succeeded)
+                foreach (IdentityError error in result.Errors)
                 {
-                    foreach (IdentityError error in result.Errors)
-                    {
-                        stringBuilder.Append(error.Description);
-                        Console.WriteLine(error.Description);
-                    }
-                    throw new Exception(stringBuilder.ToString());
+                    stringBuilder.Append(error.Description);
                 }
-                response.Data = _mapper.Map<GetUserDto>(student);
-                response.Message = "User successfully created";
+                throw new BadRequestException(stringBuilder.ToString());
             }
-            catch (Exception exc)
-            {
-                response.Success = false;
-                response.Message = exc.Message;
-            }
+            response.Data = _mapper.Map<GetUserDto>(student);
+            response.Message = "User successfully created";
             return response;
         }
 
         public async Task<ServiceResponse<GetUserDto>> RegisterAdminUser(AddAdminDto admin)
         {
             ServiceResponse<GetUserDto> response = new ServiceResponse<GetUserDto>();
-            try
+            var adminUser = _mapper.Map<Admin>(admin);
+            adminUser.FirstName = admin.FirstName.Trim();
+            adminUser.LastName = admin.LastName.Trim();
+            adminUser.Role = UserRole.Admin;
+            adminUser.UserName = admin.FirstName.Trim().ToLower() + admin.LastName.Trim().ToLower();
+            var password = RandomCreatePassword(10);
+            var result = await _userManager.CreateAsync(adminUser, password);
+            StringBuilder stringBuilder = new StringBuilder();
+            if (!result.Succeeded)
             {
-                var adminUser = _mapper.Map<Admin>(admin);
-                adminUser.FirstName = admin.FirstName.Trim();
-                adminUser.LastName = admin.LastName.Trim();
-                adminUser.Role = UserRole.Admin;
-                adminUser.UserName = admin.FirstName.Trim().ToLower() + admin.LastName.Trim().ToLower();
-                var password = RandomCreatePassword(10);
-                var result = await _userManager.CreateAsync(adminUser, password);
-                StringBuilder stringBuilder = new StringBuilder();
-                if (!result.Succeeded)
+                foreach (IdentityError error in result.Errors)
                 {
-                    foreach (IdentityError error in result.Errors)
-                    {
-                        stringBuilder.Append(error.Description);
-                        Console.WriteLine(error.Description);
-                    }
-                    throw new Exception(stringBuilder.ToString());
+                    stringBuilder.Append(error.Description);
                 }
-                var adminCreated = _mapper.Map<AdminUserCreatedDto>(adminUser);
-                adminCreated.Password = password;
-                _mailService.SendConfirmationEmail(adminCreated);
-                response.Message = "Admin successfully added.";
-                response.Data = _mapper.Map<GetUserDto>(adminUser);
+                throw new BadRequestException(stringBuilder.ToString());
             }
-            catch (Exception exc)
-            {
-                response.Message = exc.Message;
-                response.Success = false;
-            }
+            var adminCreated = _mapper.Map<AdminUserCreatedDto>(adminUser);
+            adminCreated.Password = password;
+            _mailService.SendConfirmationEmail(adminCreated);
+            response.Message = "Admin successfully added.";
+            response.Data = _mapper.Map<GetUserDto>(adminUser);
             return response;
         }
 
         public async Task<ServiceResponse<GetUserDto>> Login(UserLoginDto user)
         {
             ServiceResponse<GetUserDto> response = new ServiceResponse<GetUserDto>();
-            try
+            var fetchedUser = await _userManager.FindByNameAsync(user.UserName);
+            if (fetchedUser == null)
             {
-                var fetchedUser = await _userManager.FindByNameAsync(user.UserName);
-                if (fetchedUser == null)
-                {
-                    throw new Exception("Wrong credentials");
-                }
-                else
-                {
-                    var result = await _signInManager.CheckPasswordSignInAsync(fetchedUser, user.Password, false);
-                    if (!result.Succeeded)
-                    {
-                        throw new Exception("Wrong credentials");
-                    }
-                    var getUserDto = _mapper.Map<GetUserDto>(fetchedUser);
-                    getUserDto.Token = CreateToken((User)fetchedUser);
-                    response.Data = getUserDto;
-                    response.Message = "User " + user.UserName + " has successfully logged in.";
-                }
+                throw new BadRequestException("Wrong credentials");
             }
-            catch (Exception exc)
+            else
             {
-                response.Message = exc.Message;
-                response.Success = false;
+                var result = await _signInManager.CheckPasswordSignInAsync(fetchedUser, user.Password, false);
+                if (!result.Succeeded)
+                {
+                    throw new BadRequestException("Wrong credentials");
+                }
+                var getUserDto = _mapper.Map<GetUserDto>(fetchedUser);
+                getUserDto.Token = CreateToken((User)fetchedUser);
+                response.Data = getUserDto;
+                response.Message = "User " + user.UserName + " has successfully logged in.";
             }
             return response;
         }
@@ -147,25 +121,15 @@ namespace JAPManagement.Services.Services
         public async Task<ServiceResponse<GetUserDto>> GetUserByToken(string token)
         {
             ServiceResponse<GetUserDto> response = new ServiceResponse<GetUserDto>();
-            try
-            {
-                var decodedToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-                var id = decodedToken.Claims
-                    .Where(claim => claim.Type
-                    .Equals("nameid"))
-                    .Select(claim => claim.Value)
-                    .SingleOrDefault();
-                var user = await _context.Users
-                    .FirstOrDefaultAsync(u => u.Id
-                    .Equals(id));
-                response.Data = _mapper.Map<GetUserDto>(user);
-                response.Message = "You have fetched user " + user.UserName;
-            }
-            catch (Exception exc)
-            {
-                response.Message = exc.Message;
-                response.Success = false;
-            }
+            var decodedToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            var id = decodedToken.Claims
+                .Where(claim => claim.Type
+                .Equals("nameid"))
+                .Select(claim => claim.Value)
+                .SingleOrDefault();
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
+            response.Data = _mapper.Map<GetUserDto>(user);
+            response.Message = "You have fetched user " + user.UserName;
             return response;
         }
 

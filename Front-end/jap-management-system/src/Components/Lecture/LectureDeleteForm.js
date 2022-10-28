@@ -6,8 +6,7 @@ const LectureDeleteForm = ({ handleDeleteSelection }) => {
       <Row className="align-items-center">
         <Col xs="auto">
           <Form.Label>
-            Are you aware that by performing this action, a lecture will be
-            removed from the JAP platform?
+            Are you aware that by performing this action, a lecture will be removed from the JAP platform?
           </Form.Label>
         </Col>
         <Col xs="auto">

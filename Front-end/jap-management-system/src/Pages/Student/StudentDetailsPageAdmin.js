@@ -139,9 +139,7 @@ const StudentDetailsPageAdmin = () => {
           student.comments.map(comment => {
             return (
               <div key={comment.createdAt} className={classes.comment_box}>
-                <span>
-                  Created: {comment.createdAt.split('T').join(' at ')}
-                </span>
+                <span>Created: {comment.createdAt.split('T').join(' at ')}</span>
                 <p>{comment.text}</p>
               </div>
             );
@@ -149,17 +147,9 @@ const StudentDetailsPageAdmin = () => {
 
         <div className={classes.add__comment}>
           <Form onSubmit={handleAddComment}>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label>Write a comment:</Form.Label>
-              <Form.Control
-                value={comment.text}
-                onChange={handleCommentInput}
-                as="textarea"
-                rows={3}
-              />
+              <Form.Control value={comment.text} onChange={handleCommentInput} as="textarea" rows={3} />
             </Form.Group>
             <Form.Group className="mb-3">
               <Button type="submit" variant="primary">

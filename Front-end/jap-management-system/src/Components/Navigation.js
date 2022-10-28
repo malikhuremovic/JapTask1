@@ -59,20 +59,13 @@ const Navigation = () => {
                       My Profile
                     </Link>
                   )}
-                  <Link
-                    onClick={closeNav}
-                    to="/logout"
-                    className={classes.logout}
-                  >
+                  <Link onClick={closeNav} to="/logout" className={classes.logout}>
                     Log out
                   </Link>
                 </div>
               </div>
               <div id="pg-content">
-                <div
-                  style={{ fontSize: 50, cursor: 'pointer', color: 'black' }}
-                  onClick={openNav}
-                >
+                <div style={{ fontSize: 50, cursor: 'pointer', color: 'black' }} onClick={openNav}>
                   &#9776;
                 </div>
               </div>

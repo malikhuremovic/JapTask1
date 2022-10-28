@@ -26,10 +26,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             response = await _studentService.AddStudent(newStudent);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -39,10 +35,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<List<GetCommentDto>> response = new ServiceResponse<List<GetCommentDto>>();
             response = await _studentService.AddComment(newComment);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -52,10 +44,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<List<GetStudentDto>> response = new ServiceResponse<List<GetStudentDto>>();
             response = await _studentService.GetAllStudents();
-            if (!response.Success)
-            {
-                return StatusCode(500, response);
-            }
             return Ok(response);
         }
 
@@ -70,10 +58,6 @@ namespace JAPManagement.API.Controllers
                 .Split(" ")
                 .ElementAt(1);
             response = await _studentService.GetStudentPersonalProgram(tokenValue);
-            if (!response.Success)
-            {
-                return StatusCode(500, response);
-            }
             return Ok(response);
         }
 
@@ -89,10 +73,6 @@ namespace JAPManagement.API.Controllers
                 .Split(" ")
                 .ElementAt(1);
             response = await _studentService.GetStudentByToken(tokenValue);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -102,10 +82,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             response = await _studentService.GetStudentById(id);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -115,10 +91,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetStudentPageDto> response = new ServiceResponse<GetStudentPageDto>();
             response = _studentService.GetStudentsWithParams(page, pageSize, firstName, lastName, email, selectionName, japProgramName, status, sort, descending);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -128,10 +100,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             response = await _studentService.ModifyStudent(modifiedStudent);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -146,10 +114,6 @@ namespace JAPManagement.API.Controllers
                 .Split(" ")
                 .ElementAt(1);
             response = await _studentService.ModifyStudentItem(tokenValue, modifiedItem);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
 
@@ -159,10 +123,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
             response = await _studentService.DeleteStudent(id);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
             return Ok(response);
         }
     }

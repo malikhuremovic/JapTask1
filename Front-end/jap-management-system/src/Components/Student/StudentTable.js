@@ -51,17 +51,12 @@ const StudentTable = ({
             <th scope="col">#</th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="firstName"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="firstName" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'firstName' && sortState.descending
                         ? sortIconDesc
-                        : sortState.sort === 'firstName' &&
-                          !sortState.descending
+                        : sortState.sort === 'firstName' && !sortState.descending
                         ? sortIconAsc
                         : sortIconDesc
                     }
@@ -73,11 +68,7 @@ const StudentTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="lastName"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="lastName" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'lastName' && sortState.descending
@@ -94,11 +85,7 @@ const StudentTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="email"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="email" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'email' && sortState.descending
@@ -115,17 +102,12 @@ const StudentTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="selection"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="selection" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'selection' && sortState.descending
                         ? sortIconDesc
-                        : sortState.sort === 'selection' &&
-                          !sortState.descending
+                        : sortState.sort === 'selection' && !sortState.descending
                         ? sortIconAsc
                         : sortIconDesc
                     }
@@ -137,11 +119,7 @@ const StudentTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="program"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="program" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'program' && sortState.descending
@@ -158,11 +136,7 @@ const StudentTable = ({
             </th>
             <th scope="col">
               <div className={classes.column__Title__Sort}>
-                <div
-                  name="status"
-                  className={classes.sortBlock}
-                  onClick={handleSortAction}
-                >
+                <div name="status" className={classes.sortBlock} onClick={handleSortAction}>
                   <img
                     src={
                       sortState.sort === 'status' && sortState.descending
@@ -183,11 +157,7 @@ const StudentTable = ({
           </tr>
           <tr>
             <th scope="col">
-              <img
-                className={classes.searchIcon}
-                src={searchIcon}
-                alt="search"
-              />
+              <img className={classes.searchIcon} src={searchIcon} alt="search" />
             </th>
             <th scope="col">
               <input
@@ -278,9 +248,7 @@ const StudentTable = ({
                       {index +
                         1 +
                         (paginationInfo.currentPage > 1
-                          ? paginationInfo.currentPage *
-                              paginationInfo.pageSize -
-                            paginationInfo.pageSize
+                          ? paginationInfo.currentPage * paginationInfo.pageSize - paginationInfo.pageSize
                           : 0)}
                     </span>
                   </Button>
@@ -328,26 +296,15 @@ const StudentTable = ({
                 </td>
                 <td>
                   <Link to={`/student?id=${s.id}`}>
-                    <Button
-                      className={classes.action__button}
-                      variant="primary"
-                    >
+                    <Button className={classes.action__button} variant="primary">
                       Details
                     </Button>
                   </Link>
-                  <Button
-                    className={classes.action__button}
-                    variant="success"
-                    onClick={handleEditState}
-                  >
+                  <Button className={classes.action__button} variant="success" onClick={handleEditState}>
                     <input id={s.id} type="hidden" />
                     Edit
                   </Button>
-                  <Button
-                    className={classes.action__button}
-                    variant="danger"
-                    onClick={handleDeleteState}
-                  >
+                  <Button className={classes.action__button} variant="danger" onClick={handleDeleteState}>
                     <input id={s.id} type="hidden" />
                     Delete
                   </Button>

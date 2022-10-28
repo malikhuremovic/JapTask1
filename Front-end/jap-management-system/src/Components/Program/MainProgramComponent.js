@@ -15,9 +15,7 @@ const MainProgramComponent = () => {
     content: ''
   };
 
-  const [programFormData, setProgramFormData] = useState(
-    INITIAL_PROGRAM_FORM_DATA
-  );
+  const [programFormData, setProgramFormData] = useState(INITIAL_PROGRAM_FORM_DATA);
 
   const [programs, setPrograms] = useState([]);
 
@@ -47,9 +45,7 @@ const MainProgramComponent = () => {
     pageSize: 0,
     recordCount: 0
   };
-  const [paginationInfo, setPaginationInfoState] = useState(
-    INITIAL_PAGINATION_INFO_STATE
-  );
+  const [paginationInfo, setPaginationInfoState] = useState(INITIAL_PAGINATION_INFO_STATE);
 
   const fetchAllPrograms = useCallback(params => {
     programService.fetchAllProgramsWithParams(params).then(response => {
@@ -80,8 +76,7 @@ const MainProgramComponent = () => {
     setSortState(previousSort => {
       const UPDATED_SORT = {
         sort,
-        descending:
-          sort === previousSort.sort ? !previousSort.descending : false
+        descending: sort === previousSort.sort ? !previousSort.descending : false
       };
       return UPDATED_SORT;
     });
@@ -263,11 +258,7 @@ const MainProgramComponent = () => {
   return (
     <div className={classes.table__container}>
       <div className={classes.student_table_actions}>
-        <Button
-          style={{ marginLeft: 20, minWidth: 170 }}
-          variant="primary"
-          onClick={handleAddState}
-        >
+        <Button style={{ marginLeft: 20, minWidth: 170 }} variant="primary" onClick={handleAddState}>
           Add new program
         </Button>
       </div>

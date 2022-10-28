@@ -58,43 +58,21 @@ const LoginPage = () => {
       <div className="modal d-flex justify-content-center align-items-center">
         <div className={classes.floatingModal}>
           <h3>Login</h3>
-          <Form
-            className={classes.floatingModalForm}
-            onSubmit={handleFormSubmit}
-          >
+          <Form className={classes.floatingModalForm} onSubmit={handleFormSubmit}>
             <Form.Group className="mb-3" controlId="userName">
               <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Username"
-                onInput={handleUsernameInput}
-              />
+              <Form.Control type="text" placeholder="Username" onInput={handleUsernameInput} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control
-                className="w-100"
-                type="password"
-                placeholder="Password"
-                onInput={handlePasswordInput}
-              />
+              <Form.Control className="w-100" type="password" placeholder="Password" onInput={handlePasswordInput} />
             </Form.Group>
-            <Button
-              className={
-                (loginInfo.show ? 'mb-3' : '') + ' ' + classes.loginBtn
-              }
-              variant="primary"
-              type="submit"
-            >
+            <Button className={(loginInfo.show ? 'mb-3' : '') + ' ' + classes.loginBtn} variant="primary" type="submit">
               Submit
             </Button>
             {loginInfo.show && (
-              <Button
-                className={classes.errorMessageBtn}
-                variant={loginInfo.success ? 'success' : 'danger'}
-                disabled
-              >
+              <Button className={classes.errorMessageBtn} variant={loginInfo.success ? 'success' : 'danger'} disabled>
                 &nbsp; &nbsp;&nbsp;&nbsp;
                 {loginInfo.success ? 'Success!' : 'Please, try again'}
                 &nbsp;&nbsp;&nbsp;&nbsp;

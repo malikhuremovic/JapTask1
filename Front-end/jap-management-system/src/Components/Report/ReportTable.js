@@ -57,11 +57,7 @@ const ReportTable = ({ selections }) => {
           </tr>
           <tr>
             <th scope="col">
-              <img
-                className={classes.searchIcon}
-                src={searchIcon}
-                alt="search"
-              />
+              <img className={classes.searchIcon} src={searchIcon} alt="search" />
             </th>
             <th scope="col">
               <input
@@ -73,22 +69,10 @@ const ReportTable = ({ selections }) => {
               />
             </th>
             <th scope="col">
-              <input
-                name="programName"
-                className="form-control"
-                type="text"
-                placeholder="Program name: "
-                disabled
-              />
+              <input name="programName" className="form-control" type="text" placeholder="Program name: " disabled />
             </th>
             <th scope="col">
-              <input
-                name="successRate"
-                className="form-control"
-                type="number"
-                placeholder="Success rate: "
-                disabled
-              />
+              <input name="successRate" className="form-control" type="number" placeholder="Success rate: " disabled />
             </th>
           </tr>
         </thead>
@@ -99,23 +83,14 @@ const ReportTable = ({ selections }) => {
                 <tr key={s.selectionName}>
                   <th scope="row">
                     {' '}
-                    <Button
-                      style={{ minWidth: 40 }}
-                      variant="secondary"
-                      disabled
-                    >
+                    <Button style={{ minWidth: 40 }} variant="secondary" disabled>
                       <span style={{ fontSize: 16 }}>{index + 1}</span>
                     </Button>
                   </th>
                   <td>{s.selectionName}</td>
                   <td>{s.programName}</td>
                   <td>
-                    <Button
-                      variant={
-                        s.selectionSuccessRate >= 50 ? 'success' : 'danger'
-                      }
-                      disabled
-                    >
+                    <Button variant={s.selectionSuccessRate >= 50 ? 'success' : 'danger'} disabled>
                       {s.selectionSuccessRate}%
                     </Button>
                   </td>

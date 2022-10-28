@@ -25,15 +25,10 @@ const FormModal = ({
   availableItems,
   preSelection
 }) => {
-  console.log(preSelection);
   return (
     <React.Fragment>
       <div className={classes.backdrop}></div>
-      <div
-        className={
-          formModel === 'program' ? classes.programModal : classes.modal
-        }
-      >
+      <div className={formModel === 'program' ? classes.programModal : classes.modal}>
         <div className={classes.formTitle}>
           <h4>{title}</h4>
           <img src={closeIcon} alt="close button" onClick={handleState} />
@@ -58,9 +53,7 @@ const FormModal = ({
                   preSelection={preSelection}
                 />
               )}
-              {formType === 'delete' && (
-                <StudentDeleteForm handleDeleteStudent={handleDelete} />
-              )}
+              {formType === 'delete' && <StudentDeleteForm handleDeleteStudent={handleDelete} />}
             </React.Fragment>
           )}
           {formModel === 'selection' && (
@@ -74,9 +67,7 @@ const FormModal = ({
                   availablePrograms={availableItems}
                 />
               )}
-              {formType === 'delete' && (
-                <SelectionDeleteForm handleDeleteSelection={handleDelete} />
-              )}
+              {formType === 'delete' && <SelectionDeleteForm handleDeleteSelection={handleDelete} />}
             </React.Fragment>
           )}
           {formModel === 'lecture' && (
@@ -89,9 +80,7 @@ const FormModal = ({
                   lectureFormData={formData}
                 />
               )}
-              {formType === 'delete' && (
-                <LectureDeleteForm handleDeleteSelection={handleDelete} />
-              )}
+              {formType === 'delete' && <LectureDeleteForm handleDeleteSelection={handleDelete} />}
             </React.Fragment>
           )}
           {formModel === 'program' && (
@@ -104,9 +93,7 @@ const FormModal = ({
                   programFormData={formData}
                 />
               )}
-              {formType === 'delete' && (
-                <ProgramDeleteForm handleDeleteProgram={handleDelete} />
-              )}
+              {formType === 'delete' && <ProgramDeleteForm handleDeleteProgram={handleDelete} />}
             </React.Fragment>
           )}
         </div>

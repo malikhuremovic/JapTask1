@@ -15,12 +15,10 @@ const MainLectureComponent = () => {
     description: '',
     url: '',
     expectedHours: '',
-    isEvent: ''
+    isEvent: false
   };
 
-  const [lectureFormData, setLectureFormData] = useState(
-    INITIAL_LECTURE_FORM_DATA
-  );
+  const [lectureFormData, setLectureFormData] = useState(INITIAL_LECTURE_FORM_DATA);
   const [lectures, setLectures] = useState([]);
 
   const INITIAL_SEARCH_STATE = {
@@ -52,9 +50,7 @@ const MainLectureComponent = () => {
     pageSize: 0,
     recordCount: 0
   };
-  const [paginationInfo, setPaginationInfoState] = useState(
-    INITIAL_PAGINATION_INFO_STATE
-  );
+  const [paginationInfo, setPaginationInfoState] = useState(INITIAL_PAGINATION_INFO_STATE);
 
   const fetchAllLectures = useCallback(params => {
     lectureService.fetchAllLectures(params).then(response => {
@@ -85,8 +81,7 @@ const MainLectureComponent = () => {
     setSortState(previousSort => {
       const UPDATED_SORT = {
         sort,
-        descending:
-          sort === previousSort.sort ? !previousSort.descending : false
+        descending: sort === previousSort.sort ? !previousSort.descending : false
       };
       return UPDATED_SORT;
     });
@@ -275,11 +270,7 @@ const MainLectureComponent = () => {
   return (
     <div className={classes.table__container}>
       <div className={classes.student_table_actions}>
-        <Button
-          style={{ marginLeft: 20, minWidth: 170 }}
-          variant="primary"
-          onClick={handleAddState}
-        >
+        <Button style={{ marginLeft: 20, minWidth: 170 }} variant="primary" onClick={handleAddState}>
           Add new lecture
         </Button>
       </div>

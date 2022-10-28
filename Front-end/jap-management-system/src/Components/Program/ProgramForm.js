@@ -2,12 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import lectureService from '../../Services/lectureService';
 
-const ProgramForm = ({
-  formType,
-  handleFormSubmission,
-  handleProgramFormInput,
-  programFormData
-}) => {
+const ProgramForm = ({ formType, handleFormSubmission, handleProgramFormInput, programFormData }) => {
   const [lectures, setLectures] = useState([]);
   const [selectedLectures, setSelectedLectures] = useState([]);
   const [selectedEvents, setSelectedEvents] = useState([]);
@@ -44,9 +39,7 @@ const ProgramForm = ({
       });
       setLectures(prevState => {
         if (prevState.length >= 1) {
-          const UPDATED_STATE = prevState.filter(
-            el => el.id !== currentSelectedLecture.id
-          );
+          const UPDATED_STATE = prevState.filter(el => el.id !== currentSelectedLecture.id);
           return UPDATED_STATE;
         }
         return prevState;
@@ -87,9 +80,7 @@ const ProgramForm = ({
       });
       setLectures(prevState => {
         if (prevState.length >= 1) {
-          const UPDATED_STATE = prevState.filter(
-            el => el.id !== currentSelectedEvent.id
-          );
+          const UPDATED_STATE = prevState.filter(el => el.id !== currentSelectedEvent.id);
           return UPDATED_STATE;
         }
         return prevState;
@@ -131,11 +122,7 @@ const ProgramForm = ({
   return (
     <React.Fragment>
       <Form onSubmit={handleSubmit}>
-        <Form.Group
-          as={Row}
-          className="mb-3"
-          controlId="formHorizontalFirstName"
-        >
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalFirstName">
           <Form.Label column sm={2}>
             Name
           </Form.Label>
@@ -150,11 +137,7 @@ const ProgramForm = ({
             />
           </Col>
         </Form.Group>
-        <Form.Group
-          as={Row}
-          className="mb-3"
-          controlId="formHorizontalLastName"
-        >
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalLastName">
           <Form.Label column sm={2}>
             Content
           </Form.Label>
@@ -175,11 +158,7 @@ const ProgramForm = ({
             {selectedLectures.length >= 1 && (
               <React.Fragment>
                 <h6>Selected lectures</h6>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formHorizontalStudentStatus"
-                >
+                <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentStatus">
                   <Col sm={10}>
                     {selectedLectures.map(lecture => {
                       return (
@@ -188,16 +167,12 @@ const ProgramForm = ({
                             name="program"
                             type="text"
                             disabled
-                            value={`${lecture.name} ${
-                              lecture.isEvent ? '| EVENT ' : ''
-                            }(${lecture.expectedHours} hours)`}
+                            value={`${lecture.name} ${lecture.isEvent ? '| EVENT ' : ''}(${
+                              lecture.expectedHours
+                            } hours)`}
                           />
                           <input type="hidden" value={lecture.id} />
-                          <Button
-                            style={{ margin: 5, marginLeft: 0 }}
-                            variant="danger"
-                            onClick={removeSelectedLecture}
-                          >
+                          <Button style={{ margin: 5, marginLeft: 0 }} variant="danger" onClick={removeSelectedLecture}>
                             Remove
                           </Button>
                         </React.Fragment>
@@ -209,11 +184,7 @@ const ProgramForm = ({
             )}
             {showLectureSelectForm && (
               <React.Fragment>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formHorizontalStudentStatus"
-                >
+                <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentStatus">
                   <Form.Label column sm={2}>
                     Available Lectures
                   </Form.Label>
@@ -230,55 +201,34 @@ const ProgramForm = ({
                       {lectures.map(lecture => {
                         if (!lecture.isEvent)
                           return (
-                            <option
-                              key={lecture.id}
-                              value={JSON.stringify(lecture)}
-                            >
-                              {`${lecture.name} ${
-                                lecture.isEvent ? '| EVENT ' : ''
-                              }(${lecture.expectedHours} hours)`}
+                            <option key={lecture.id} value={JSON.stringify(lecture)}>
+                              {`${lecture.name} ${lecture.isEvent ? '| EVENT ' : ''}(${lecture.expectedHours} hours)`}
                             </option>
                           );
                       })}
                     </Form.Select>
-                    <Button
-                      style={{ marginTop: 5 }}
-                      variant="success"
-                      onClick={addCurrentLecture}
-                    >
+                    <Button style={{ marginTop: 5 }} variant="success" onClick={addCurrentLecture}>
                       Add lecture
                     </Button>
                   </Col>
                 </Form.Group>
               </React.Fragment>
             )}
-            <Form.Group
-              as={Row}
-              className="mb-3"
-              controlId="formHorizontalLastName"
-            >
+            <Form.Group as={Row} className="mb-3" controlId="formHorizontalLastName">
               <Col sm={10}>
                 <Button
                   style={{ width: '18%' }}
-                  variant={
-                    showLectureSelectForm === false ? 'primary' : 'danger'
-                  }
+                  variant={showLectureSelectForm === false ? 'primary' : 'danger'}
                   onClick={handleShowSelectLectureForm}
                 >
-                  {showLectureSelectForm === false
-                    ? 'Add lectures'
-                    : 'Hide lectures'}
+                  {showLectureSelectForm === false ? 'Add lectures' : 'Hide lectures'}
                 </Button>
               </Col>
             </Form.Group>
             {selectedEvents.length >= 1 && (
               <React.Fragment>
                 <h6>Selected events</h6>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formHorizontalStudentStatus"
-                >
+                <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentStatus">
                   <Col sm={10}>
                     {selectedEvents.map(lecture => {
                       return (
@@ -287,16 +237,12 @@ const ProgramForm = ({
                             name="program"
                             type="text"
                             disabled
-                            value={`${lecture.name} ${
-                              lecture.isEvent ? '| EVENT ' : ''
-                            }(${lecture.expectedHours} hours)`}
+                            value={`${lecture.name} ${lecture.isEvent ? '| EVENT ' : ''}(${
+                              lecture.expectedHours
+                            } hours)`}
                           />
                           <input type="hidden" value={lecture.id} />
-                          <Button
-                            style={{ margin: 5, marginLeft: 0 }}
-                            variant="danger"
-                            onClick={removeSelectedEvent}
-                          >
+                          <Button style={{ margin: 5, marginLeft: 0 }} variant="danger" onClick={removeSelectedEvent}>
                             Remove
                           </Button>
                         </React.Fragment>
@@ -308,11 +254,7 @@ const ProgramForm = ({
             )}
             {showEventSelectForm && (
               <React.Fragment>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formHorizontalStudentStatus"
-                >
+                <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentStatus">
                   <Form.Label column sm={2}>
                     Available Events
                   </Form.Label>
@@ -329,41 +271,24 @@ const ProgramForm = ({
                       {lectures.map(lecture => {
                         if (lecture.isEvent)
                           return (
-                            <option
-                              key={lecture.id}
-                              value={JSON.stringify(lecture)}
-                            >
-                              {`${lecture.name} ${
-                                lecture.isEvent ? '| EVENT ' : ''
-                              }(${lecture.expectedHours} hours)`}
+                            <option key={lecture.id} value={JSON.stringify(lecture)}>
+                              {`${lecture.name} ${lecture.isEvent ? '| EVENT ' : ''}(${lecture.expectedHours} hours)`}
                             </option>
                           );
                       })}
                     </Form.Select>
-                    <Button
-                      style={{ marginTop: 5 }}
-                      variant="success"
-                      onClick={addCurrentEvent}
-                    >
+                    <Button style={{ marginTop: 5 }} variant="success" onClick={addCurrentEvent}>
                       Add event
                     </Button>
                   </Col>
                 </Form.Group>
               </React.Fragment>
             )}
-            <Form.Group
-              as={Row}
-              className="mb-3"
-              controlId="formHorizontalLastName"
-            >
+            <Form.Group as={Row} className="mb-3" controlId="formHorizontalLastName">
               <Col sm={10}>
                 <Button
                   style={{ width: '18%' }}
-                  variant={
-                    showEventSelectForm === false
-                      ? 'outline-success'
-                      : 'outline-danger'
-                  }
+                  variant={showEventSelectForm === false ? 'outline-success' : 'outline-danger'}
                   onClick={handleShowSelectEventForm}
                 >
                   {showEventSelectForm === false ? 'Add events' : 'Hide events'}
@@ -375,19 +300,12 @@ const ProgramForm = ({
         <Form.Group as={Row} className="mb-3">
           <Col sm={{ span: 10, offset: 2 }}>
             {formType === 'add' && (
-              <Button
-                style={{ width: '15%', position: 'absolute', left: 0 }}
-                type="submit"
-              >
+              <Button style={{ width: '15%', position: 'absolute', left: 0 }} type="submit">
                 Add new program
               </Button>
             )}
             {formType === 'edit' && (
-              <Button
-                style={{ width: 70, position: 'absolute', left: 0 }}
-                type="submit"
-                variant="success"
-              >
+              <Button style={{ width: 70, position: 'absolute', left: 0 }} type="submit" variant="success">
                 Edit
               </Button>
             )}

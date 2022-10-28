@@ -34,11 +34,7 @@ const StudentDetailsPage = () => {
       <div className={classes.student__data}>
         <h5 style={{ marginTop: 20, marginBottom: 35 }}>Personal data</h5>
         <Form>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalFirstName"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalFirstName">
             <Form.Label column sm={2}>
               First name
             </Form.Label>
@@ -52,11 +48,7 @@ const StudentDetailsPage = () => {
               />
             </Col>
           </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalLastName"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalLastName">
             <Form.Label column sm={2}>
               Last name
             </Form.Label>
@@ -75,21 +67,11 @@ const StudentDetailsPage = () => {
               Email
             </Form.Label>
             <Col sm={10}>
-              <Form.Control
-                name="email"
-                type="email"
-                placeholder="Enter email"
-                value={student.email}
-                disabled={true}
-              />
+              <Form.Control name="email" type="email" placeholder="Enter email" value={student.email} disabled={true} />
             </Col>
           </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalStudentStatus"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentStatus">
             <Form.Label column sm={2}>
               Student status
             </Form.Label>
@@ -110,11 +92,7 @@ const StudentDetailsPage = () => {
               </Form.Select>
             </Col>
           </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalSelection"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalSelection">
             <Form.Label column sm={2}>
               Selection
             </Form.Label>
@@ -122,29 +100,17 @@ const StudentDetailsPage = () => {
               <Form.Select
                 name="selection"
                 className="form-select"
-                defaultValue={
-                  student.selection ? student.selection.name : 'none'
-                }
+                defaultValue={student.selection ? student.selection.name : 'none'}
                 aria-label="Default select example"
                 required
                 disabled={true}
               >
-                {!student.selection && (
-                  <option value="none">Not Allocated</option>
-                )}
-                {student.selection && (
-                  <option value={student.selection.name}>
-                    {student.selection.name}
-                  </option>
-                )}
+                {!student.selection && <option value="none">Not Allocated</option>}
+                {student.selection && <option value={student.selection.name}>{student.selection.name}</option>}
               </Form.Select>
             </Col>
           </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalSelection"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalSelection">
             <Form.Label column sm={2}>
               Program
             </Form.Label>
@@ -152,20 +118,14 @@ const StudentDetailsPage = () => {
               <Form.Select
                 name="selection"
                 className="form-select"
-                defaultValue={
-                  student.selection ? student.selection.japProgram.name : 'none'
-                }
+                defaultValue={student.selection ? student.selection.japProgram.name : 'none'}
                 aria-label="Default select example"
                 required
                 disabled={true}
               >
-                {!student.selection && (
-                  <option value="none">Not Allocated</option>
-                )}
+                {!student.selection && <option value="none">Not Allocated</option>}
                 {student.selection && (
-                  <option value={student.selection.japProgram.name}>
-                    {student.selection.japProgram.name}
-                  </option>
+                  <option value={student.selection.japProgram.name}>{student.selection.japProgram.name}</option>
                 )}
               </Form.Select>
             </Col>
@@ -179,16 +139,12 @@ const StudentDetailsPage = () => {
       </div>
 
       <div className={classes.student__comments}>
-        {student?.comments?.length > 0 && (
-          <h5 style={{ marginTop: 20, marginBottom: 35 }}>Comments</h5>
-        )}
+        {student?.comments?.length > 0 && <h5 style={{ marginTop: 20, marginBottom: 35 }}>Comments</h5>}
         {student.comments &&
           student.comments.map(comment => {
             return (
               <div className={classes.comment_box}>
-                <span>
-                  Created: {comment.createdAt.split('T').join(' at ')}
-                </span>
+                <span>Created: {comment.createdAt.split('T').join(' at ')}</span>
                 <p>{comment.text}</p>
               </div>
             );

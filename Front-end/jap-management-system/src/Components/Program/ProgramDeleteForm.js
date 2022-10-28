@@ -6,8 +6,8 @@ const ProgramDeleteForm = ({ handleDeleteProgram }) => {
       <Row className="align-items-center">
         <Col xs="auto">
           <Form.Label>
-            Are you aware that by performing this action, the program, and all
-            selections associated with it will be removed from the JAP platform?
+            Are you aware that by performing this action, the program, and all selections associated with it will be
+            removed from the JAP platform?
           </Form.Label>
         </Col>
         <Col xs="auto">

@@ -12,12 +12,14 @@
     <PackageReference Include="Hangfire" Version="1.7.31" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
+    <PackageReference Include="NLog" Version="5.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JAPManagement.Core\JAPManagement.Core.csproj" />
     <ProjectReference Include="..\JAPManagement.Database\JAPManagement.Database.csproj" />
+    <ProjectReference Include="..\JAPManagement.ExceptionHandler\JAPManagement.ExceptionHandler.csproj" />
     <ProjectReference Include="..\JAPManagement.Services\JAPManagement.Services.csproj" />
   </ItemGroup>
 

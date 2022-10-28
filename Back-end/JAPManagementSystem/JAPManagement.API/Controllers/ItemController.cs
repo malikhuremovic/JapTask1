@@ -1,5 +1,4 @@
-﻿using EntityFrameworkPaginate;
-using JAPManagement.Core.DTOs.JapItemDTOs;
+﻿using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.Interfaces;
 using JAPManagement.Core.Models.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -12,83 +11,59 @@ namespace JAPManagement.API.Controllers
     [Route("/api/[controller]")]
     public class ItemController : ControllerBase
     {
-        private readonly IItemService _lectureService;
-        public ItemController(IItemService lectureService)
+        private readonly IItemService _itemService;
+        public ItemController(IItemService itemService)
         {
-            _lectureService = lectureService;
+            _itemService = itemService;
         }
 
         [HttpPost("add")]
-        public async Task<ActionResult<ServiceResponse<GetItemDto>>> AddLecture(AddItemDto newLecture)
+        public async Task<ActionResult<ServiceResponse<GetItemDto>>> AddItem(AddItemDto newItem)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
-            response = await _lectureService.AddLecture(newLecture);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
+            response = await _itemService.AddItem(newItem);
             return StatusCode(201, response);
         }
 
         [HttpGet("get")]
-        public async Task<ActionResult<ServiceResponse<GetItemDto>>> GetLecture(int id)
+        public async Task<ActionResult<ServiceResponse<GetItemDto>>> GetItem(int id)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
-            response = await _lectureService.GetLecture(id);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
-            return StatusCode(201, response);
+            response = await _itemService.GetItem(id);
+            return StatusCode(200, response);
         }
 
         [HttpGet("get/all")]
-        public async Task<ActionResult<ServiceResponse<List<GetItemDto>>>> GetAllLectures()
+        public async Task<ActionResult<ServiceResponse<List<GetItemDto>>>> GetAllItems()
         {
             ServiceResponse<List<GetItemDto>> response = new ServiceResponse<List<GetItemDto>>();
-            response = await _lectureService.GetAllLectures();
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
-            return StatusCode(201, response);
+            response = await _itemService.GetAllItems();
+            return StatusCode(200, response);
         }
 
 
         [HttpGet("get/all/params")]
-        public ActionResult<ServiceResponse<GetItemPageDto>> GetLectureWithParams(string? name, string? description, string? URL, int? expectedHours, string? isEvent, string sort = "name", int page = 1, int pageSize = 10, bool descending = true)
+        public ActionResult<ServiceResponse<GetItemPageDto>> GetItemWithParams(string? name, string? description, string? URL, int? expectedHours, string? isEvent, string sort = "name", int page = 1, int pageSize = 10, bool descending = true)
         {
             ServiceResponse<GetItemPageDto> response = new ServiceResponse<GetItemPageDto>();
-            response = _lectureService.GetLecturesWithParams(page, pageSize, name, description, URL, expectedHours, isEvent, sort, descending);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
-            return StatusCode(201, response);
+            response = _itemService.GetItemsWithParams(page, pageSize, name, description, URL, expectedHours, isEvent, sort, descending);
+            return StatusCode(200, response);
         }
 
         [HttpPut("modify")]
-        public async Task<ActionResult<ServiceResponse<GetItemDto>>> ModifyLecture(ModifyItemDto modifiedLecture)
+        public async Task<ActionResult<ServiceResponse<GetItemDto>>> ModifyItem(ModifyItemDto modifiedItem)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
-            response = await _lectureService.ModifyLecture(modifiedLecture);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
-            return StatusCode(201, response);
+            response = await _itemService.ModifyItem(modifiedItem);
+            return StatusCode(200, response);
         }
 
         [HttpDelete("delete")]
-        public async Task<ActionResult<ServiceResponse<GetItemDto>>> DeleteLecture(int id)
+        public async Task<ActionResult<ServiceResponse<GetItemDto>>> DeleteItem(int id)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
-            response = await _lectureService.DeleteLecture(id);
-            if (response.Success == false)
-            {
-                return BadRequest(response);
-            }
-            return StatusCode(201, response);
+            response = await _itemService.DeleteItem(id);
+            return StatusCode(200, response);
         }
     }
 }
