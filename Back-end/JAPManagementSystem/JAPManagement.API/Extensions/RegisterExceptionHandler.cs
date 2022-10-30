@@ -1,5 +1,5 @@
-﻿using JAPManagement.ExceptionHandler;
-using JAPManagement.ExceptionHandler.Exceptions;
+﻿using JAPManagement.Exceptions;
+using JAPManagement.Exceptions.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using NLog.Fluent;
 using System.Text;

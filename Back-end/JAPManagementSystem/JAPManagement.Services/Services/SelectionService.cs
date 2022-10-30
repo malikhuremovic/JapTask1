@@ -5,7 +5,7 @@ using JAPManagement.Core.Interfaces.Repositories;
 using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.SelectionModel;
-using JAPManagement.ExceptionHandler.Exceptions;
+using JAPManagement.Exceptions.Exceptions;
 
 namespace JAPManagement.Services.Services
 {

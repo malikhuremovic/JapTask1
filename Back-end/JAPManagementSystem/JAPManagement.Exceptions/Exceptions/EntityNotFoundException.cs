@@ -1,4 +1,4 @@
-﻿namespace JAPManagement.ExceptionHandler.Exceptions
+﻿namespace JAPManagement.Exceptions.Exceptions
 {
     public class EntityNotFoundException : Exception
     {

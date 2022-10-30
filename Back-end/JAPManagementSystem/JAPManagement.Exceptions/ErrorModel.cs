@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace JAPManagement.ExceptionHandler
+namespace JAPManagement.Exceptions
 {
     public class ErrorModel
     {

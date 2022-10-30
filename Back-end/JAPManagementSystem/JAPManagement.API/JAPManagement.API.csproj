@@ -19,7 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\JAPManagement.Core\JAPManagement.Core.csproj" />
     <ProjectReference Include="..\JAPManagement.Database\JAPManagement.Database.csproj" />
-    <ProjectReference Include="..\JAPManagement.ExceptionHandler\JAPManagement.Exceptions.csproj" />
     <ProjectReference Include="..\JAPManagement.Repositories\JAPManagement.Repositories.csproj" />
     <ProjectReference Include="..\JAPManagement.Services\JAPManagement.Services.csproj" />
   </ItemGroup>

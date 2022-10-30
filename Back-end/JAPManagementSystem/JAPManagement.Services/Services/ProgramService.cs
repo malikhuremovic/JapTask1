@@ -8,7 +8,7 @@ using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Database.Data;
-using JAPManagement.ExceptionHandler.Exceptions;
+using JAPManagement.Exceptions.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 
