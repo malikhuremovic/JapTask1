@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JAPManagement.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("/api/[controller]")]
     public class ItemController : ControllerBase

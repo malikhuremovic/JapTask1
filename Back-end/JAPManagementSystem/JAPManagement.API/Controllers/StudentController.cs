@@ -47,7 +47,7 @@ namespace JAPManagement.API.Controllers
             return Ok(response);
         }
 
-        [Authorize(Roles = "Admin,Student")]
+        [Authorize(Roles = "Admin, Student")]
         [HttpGet("get/report")]
         public async Task<ActionResult<ServiceResponse<List<StudentPersonalProgram>>>> GetStudentPersonalProgram()
         {

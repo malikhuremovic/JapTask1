@@ -28,14 +28,6 @@ namespace JAPManagement.API.Controllers
             return StatusCode(201, response);
         }
 
-        [HttpPatch("add/items")]
-        public async Task<ActionResult<ServiceResponse<GetProgramDto>>> AddProgramLecture(AddProgramItemsDto newProgramLectures)
-        {
-            ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
-            response = await _programService.AddProgramItem(newProgramLectures);
-            return StatusCode(201, response);
-        }
-
         [HttpGet("get/all/params")]
         public ActionResult<ServiceResponse<GetProgramPageDto>> GetProgramsWithParams(string? name, string? content, string sort = "name", int page = 1, int pageSize = 10, bool descending = true)
         {
@@ -85,11 +77,11 @@ namespace JAPManagement.API.Controllers
             return StatusCode(201, response);
         }
 
-        [HttpDelete("delete")]
-        public async Task<ActionResult<ServiceResponse<GetProgramDto>>> DeleteProgram(int id)
+        [HttpPatch("add/items")]
+        public async Task<ActionResult<ServiceResponse<GetProgramDto>>> AddProgramLecture(AddProgramItemsDto newProgramLectures)
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
-            response = await _programService.DeleteProgram(id);
+            response = await _programService.AddProgramItem(newProgramLectures);
             return StatusCode(201, response);
         }
 
@@ -98,6 +90,14 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
             response = await _programService.RemoveProgramItem(programLectures);
+            return StatusCode(201, response);
+        }
+
+        [HttpDelete("delete")]
+        public async Task<ActionResult<ServiceResponse<GetProgramDto>>> DeleteProgram(int id)
+        {
+            ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
+            response = await _programService.DeleteProgram(id);
             return StatusCode(201, response);
         }
     }
