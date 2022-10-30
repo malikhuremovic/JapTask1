@@ -1,4 +1,4 @@
-﻿using JAPManagement.Core.Interfaces;
+﻿using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Database.Data;
 using Microsoft.EntityFrameworkCore;
 

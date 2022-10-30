@@ -2,7 +2,8 @@
 using EntityFrameworkPaginate;
 using JAPManagement.Common;
 using JAPManagement.Core.DTOs.JapItemDTOs;
-using JAPManagement.Core.Interfaces;
+using JAPManagement.Core.Interfaces.Repositories;
+using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Database.Data;
@@ -14,23 +15,22 @@ namespace JAPManagement.Services.Services
     public class ItemService : IItemService
     {
         private readonly IMapper _mapper;
-        private readonly DataContext _context;
+        private readonly IItemRepository _items;
         private readonly IStudentService _studentService;
-        public ItemService(IMapper mapper, DataContext context, IStudentService studentService)
+        public ItemService(IMapper mapper, IItemRepository items, IStudentService studentService)
         {
             _mapper = mapper;
-            _context = context;
+            _items = items;
             _studentService = studentService;
         }
 
         public async Task<ServiceResponse<GetItemDto>> AddItem(AddItemDto newItem)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
-            var Item = _mapper.Map<JapItem>(newItem);
-            _context.Items.Add(Item);
-            await _context.SaveChangesAsync();
-            response.Data = _mapper.Map<GetItemDto>(Item);
-            response.Message = "You have successfully added a new " + (newItem.IsEvent ? "event " : "Item ") + newItem.Name;
+            var item = _mapper.Map<JapItem>(newItem);
+            await _items.Add(item);
+            response.Data = _mapper.Map<GetItemDto>(item);
+            response.Message = "You have successfully added a new " + (item.IsEvent ? "event " : "Item ") + item.Name;
             return response;
         }
 
@@ -38,13 +38,13 @@ namespace JAPManagement.Services.Services
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
 
-            var Item = await _context.Items.FirstOrDefaultAsync(l => l.Id == id);
-            if (Item == null)
+            var item = await _items.GetByIdAsync(id);
+            if (item == null)
             {
                 throw new EntityNotFoundException("Item was not found");
             }
-            response.Data = _mapper.Map<GetItemDto>(Item);
-            response.Message = "You have successfully fetched a Item";
+            response.Data = _mapper.Map<GetItemDto>(item);
+            response.Message = "You have successfully fetched an item";
 
             return response;
         }
@@ -53,27 +53,24 @@ namespace JAPManagement.Services.Services
         {
             ServiceResponse<List<GetItemDto>> response = new ServiceResponse<List<GetItemDto>>();
 
-            var Items = await _context.Items.ToListAsync();
-            response.Data = Items.Select(Item => _mapper.Map<GetItemDto>(Item)).ToList();
+            var items = await _items.GetAllAsync();
+            response.Data = items.Select(Item => _mapper.Map<GetItemDto>(Item)).ToList();
             response.Message = "You have successfully fetched all items";
 
             return response;
         }
-
-
         public async Task<ServiceResponse<GetItemDto>> DeleteItem(int id)
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
 
-            var Item = await _context.Items.FirstOrDefaultAsync(l => l.Id == id);
-            if (Item == null)
+            var item = await _items.GetByIdAsync(id);
+            if (item == null)
             {
                 throw new EntityNotFoundException("Item was not found");
             }
-            _context.Items.Remove(Item);
-            await _context.SaveChangesAsync();
-            response.Data = _mapper.Map<GetItemDto>(Item);
-            response.Message = "You have deleted a Item " + Item.Name;
+            await _items.Delete(id);
+            response.Data = _mapper.Map<GetItemDto>(item);
+            response.Message = "You have deleted a Item " + item.Name;
 
             return response;
         }
@@ -82,20 +79,14 @@ namespace JAPManagement.Services.Services
         {
             ServiceResponse<GetItemDto> response = new ServiceResponse<GetItemDto>();
 
-            var Item = await _context.Items
-                .FirstOrDefaultAsync(l => l.Id == modifiedItem.Id);
-            if (Item == null)
+            var item = await _items.GetByIdAsync(modifiedItem.Id);
+            if (item == null)
             {
                 throw new EntityNotFoundException("Item was not found");
             }
-            Item.Name = modifiedItem.Name;
-            Item.URL = modifiedItem.URL;
-            Item.Description = modifiedItem.Description;
-            Item.ExpectedHours = modifiedItem.ExpectedHours;
-            Item.IsEvent = modifiedItem.IsEvent;
-            await _context.SaveChangesAsync();
-            response.Data = _mapper.Map<GetItemDto>(Item);
-            response.Message = "You have successfully modified a Item: " + Item.Name + ".";
+            await _items.Update(_mapper.Map<JapItem>(modifiedItem));
+            response.Data = _mapper.Map<GetItemDto>(item);
+            response.Message = "You have successfully modified a Item: " + item.Name + ".";
 
             return response;
         }
@@ -106,14 +97,13 @@ namespace JAPManagement.Services.Services
             ServiceResponse<GetItemPageDto> response = new ServiceResponse<GetItemPageDto>();
             ItemFetchConfig.Initialize(name, description, URL, expectedHours, isEvent, sort, descending);
 
-            var Items = _context.Items
-                .Paginate(
+            var items = _items.GetItemsWithParams(
                 pageNumber,
                 pageSize,
                 ItemFetchConfig.sorts,
                 ItemFetchConfig.filters);
-            response.Data = _mapper.Map<GetItemPageDto>(Items);
-            response.Message = "You have fetched a page no. " + pageNumber + " with " + Items.Results.Count() + " Item(s).";
+            response.Data = _mapper.Map<GetItemPageDto>(items);
+            response.Message = "You have fetched a page no. " + pageNumber + " with " + items.Results.Count() + " Item(s).";
 
             return response;
         }

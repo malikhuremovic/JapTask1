@@ -1,5 +1,5 @@
 ﻿using JAPManagement.Core.DTOs.User;
-using JAPManagement.Core.Interfaces;
+using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Core.Models.SelectionModel;
 using MailKit.Net.Smtp;
 using MailKit.Security;

@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using EntityFrameworkPaginate;
 using JAPManagement.Common;
 using JAPManagement.Core.DTOs.Comment;
 using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.DTOs.StudentDTOs;
 using JAPManagement.Core.DTOs.User;
-using JAPManagement.Core.Interfaces;
+using JAPManagement.Core.Interfaces.Repositories;
+using JAPManagement.Core.Interfaces.Services;
+using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.StudentModel;
 using JAPManagement.Database.Data;
@@ -18,61 +19,35 @@ namespace JAPManagement.Services.Services
 {
     public class StudentService : IStudentService
     {
-        private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IAuthService _authService;
         private readonly IEmailService _mailService;
         private readonly IProgramService _programService;
         private readonly IDateCalculator _dateCalculation;
+        private readonly IStudentRepository _students;
+        private readonly ISelectionRepository _selections;
+        private readonly IProgramItemRepository _programItems;
+        private readonly IStudentItemRepository _studentItems;
 
-        public StudentService(IAuthService authService, DataContext context, IMapper mapper, IEmailService mailService, IProgramService programService, IDateCalculator dateCalculator)
+        public StudentService(IProgramItemRepository programItem, ISelectionRepository selections, IAuthService authService, IStudentRepository students, IMapper mapper, IEmailService mailService, IProgramService programService, IDateCalculator dateCalculator, IStudentItemRepository studentItems)
         {
+            _programItems = programItem;
             _authService = authService;
-            _context = context;
             _mapper = mapper;
             _mailService = mailService;
             _programService = programService;
             _dateCalculation = dateCalculator;
-        }
-
-        public List<AddStudentItemDto> CalculateStartAndEndDate(Student student, List<AddStudentItemDto> studentItemList)
-        {
-            List<AddStudentItemDto> updatedItemList = new List<AddStudentItemDto>();
-            for (int i = 0; i < studentItemList.Count; i++)
-            {
-                var studentItem = studentItemList.ElementAt(i);
-                DateTime previousEndDate;
-                if (i == 0)
-                {
-                    previousEndDate = student.Selection.DateStart;
-                }
-                else
-                {
-                    previousEndDate = studentItemList.ElementAt(i - 1).EndDate;
-                }
-                _dateCalculation.CalculateTimeDifferenceWithWorkingHours(previousEndDate, studentItem.ExpectedHours, out DateTime newStartDate, out DateTime newEndDate);
-                studentItem.StartDate = newStartDate;
-                studentItem.EndDate = newEndDate;
-                updatedItemList.Add(studentItem);
-            }
-            return updatedItemList;
+            _students = students;
+            _selections = selections;
+            _studentItems = studentItems;
         }
 
         public async Task PopulateStudentItems(string studentId)
         {
-            var existingStudentItems = await _context.StudentItems.Where(st => st.StudentId.Equals(studentId)).ToListAsync();
-            _context.RemoveRange(existingStudentItems);
-            await _context.SaveChangesAsync();
-            var student = await _context.Students
-                .Where(s => s.Id.Equals(studentId))
-                .Include(s => s.Selection)
-                .ThenInclude(s => s.JapProgram)
-                .FirstAsync();
-            var orderedProgramItems = await _context.ProgramItems
-                .Where(pt => pt.ProgramId == student.Selection.JapProgramId)
-                .OrderBy(pt => pt.Order)
-                .Include(pt => pt.Item)
-                .ToListAsync();
+            var existingStudentItems = await _studentItems.GetByStudentIdAsync(studentId);
+            await _studentItems.DeleteRange(existingStudentItems);
+            var student = await _students.GetByIdWithSelectionAndProgram(studentId);
+            var orderedProgramItems = await _programItems.GetProgramItemsAsync(student.Selection.JapProgramId);
             var items = orderedProgramItems.Select(pt => pt.Item).ToList();
             var studentItemList = new List<AddStudentItemDto>();
             items.ForEach(item =>
@@ -87,13 +62,11 @@ namespace JAPManagement.Services.Services
                 };
                 studentItemList.Add(studentItem);
             });
-
-            var updatedItemList = CalculateStartAndEndDate(student, studentItemList);
+            
+            var updatedItemList = _dateCalculation.CalculateStartAndEndDate(student, studentItemList);
             List<StudentItem> studentItemsList = updatedItemList.Select(item => _mapper.Map<StudentItem>(item)).ToList();
 
-            _context.StudentItems.UpdateRange(studentItemsList);
-            _context.StudentItems.AddRange(studentItemsList);
-            await _context.SaveChangesAsync();
+            await _studentItems.AddRange(studentItemsList);
         }
 
         public async Task<ServiceResponse<GetStudentDto>> AddStudent(AddStudentDto newStudent)
@@ -109,13 +82,8 @@ namespace JAPManagement.Services.Services
             await _authService.RegisterStudentUser(student, studentUser.Password);
             _mailService.SendConfirmationEmail(studentUser);
 
-            await _context.SaveChangesAsync();
             await PopulateStudentItems(student.Id);
-            var fetchedStudent = await _context.Students
-                .Include(s => s.Selection)
-                .ThenInclude(s => s.JapProgram)
-                .FirstOrDefaultAsync(s => s.Email
-                .Equals(newStudent.Email));
+            var fetchedStudent = await _students.GetByIdWithSelectionAndProgram(student.Id);
 
             response.Data = _mapper.Map<GetStudentDto>(fetchedStudent);
             response.Message = "You have successfully added a new student";
@@ -128,12 +96,7 @@ namespace JAPManagement.Services.Services
         {
             ServiceResponse<List<GetStudentDto>> response = new ServiceResponse<List<GetStudentDto>>();
 
-            var students = await _context.Students
-                .Include(c => c.Comments)
-                .Include(s => s.Selection)
-                .ThenInclude(s => s.JapProgram)
-                .OrderByDescending(s => s.FirstName)
-                .ToListAsync();
+            var students = await _students.GetAllWithSelectionAndProgram();
             response.Data = students.Select(s => _mapper.Map<GetStudentDto>(s)).ToList();
             response.Message = "You have fetched all the students in the database.";
 
@@ -151,9 +114,116 @@ namespace JAPManagement.Services.Services
                 .Select(claim => claim.Value)
                 .SingleOrDefault();
             await PopulateStudentItems(id);
-            var student = await _context.Students.Where(s => s.Id.Equals(id)).Include(s => s.Selection).FirstAsync();
-            var studentItems = await _context.StudentItems.Where(st => st.StudentId.Equals(id)).Include(s => s.Item).ToListAsync();
-            var programItems = await _context.ProgramItems.Where(p => p.ProgramId == student.Selection.JapProgramId).OrderBy(pt => pt.Order).ToListAsync();
+            var student = await _students.GetByIdWithSelectionAndProgram(id);
+            var studentItems = await _studentItems.GetByStudentIdAsync(id);
+            var programItems = await _programItems.GetProgramItemsAsync(student.Selection.JapProgramId);
+
+            response.Data = CreatePersonalProgram(studentItems, programItems);
+            response.Message = "You have successfully fetched personal student program for student: " + student.UserName;
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetStudentDto>> ModifyStudent(ModifyStudentDto modifiedStudent)
+        {
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+
+            var student = await _students.GetByIdAsync(modifiedStudent.Id);
+            if (student == null)
+            {
+                throw new EntityNotFoundException("Student was not found");
+            }
+            var selection = await _selections.GetByIdWithProgramAsync(modifiedStudent.SelectionId);
+            if (selection == null)
+            {
+                throw new EntityNotFoundException("Selection was not found");
+            }
+            var updatedStudent = await _students.Update(_mapper.Map<Student>(modifiedStudent));
+            updatedStudent.Selection = selection;
+            await PopulateStudentItems(updatedStudent.Id);
+            response.Data = _mapper.Map<GetStudentDto>(updatedStudent);
+            response.Message = "You have successfully modified a student " + student.FirstName + " " + student.LastName + ".";
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetStudentDto>> GetStudentById(string id)
+        {
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+
+            var student = await _students.GetByIdWithCommentAndSelectionAndProgram(id);
+
+            if (student == null)
+            {
+                throw new EntityNotFoundException("Student was not found");
+            }
+            response.Data = _mapper.Map<GetStudentDto>(student);
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<string>> DeleteStudent(string studentId)
+        {
+            ServiceResponse<string> response = new ServiceResponse<string>();
+
+            var student = await _students.Delete(studentId);
+            response.Message = "You have deleted a student: " + student.FirstName + " " + student.LastName + ".";
+
+            return response;
+        }
+
+        public ServiceResponse<GetStudentPageDto> GetStudentsWithParams(int pageNumber, int pageSize, string firstName, string lastName, string email, string selectionName, string japProgramName, StudentStatus? status, string sort, bool descending)
+        {
+            ServiceResponse<GetStudentPageDto> response = new ServiceResponse<GetStudentPageDto>();
+            StudentFetchConfig.Initialize(
+                firstName,
+                lastName,
+                email,
+                status,
+                selectionName,
+                japProgramName,
+                sort,
+                descending);
+
+            var students = _students.GetStudentsWithParams(pageNumber, pageSize, StudentFetchConfig.sorts, StudentFetchConfig.filters);
+            response.Data = _mapper.Map<GetStudentPageDto>(students);
+            response.Message = "You have fetched a page no. " + pageNumber + " with " + students.Results.Count() + " student(s).";
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetStudentDto>> GetStudentByToken(string token)
+        {
+            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
+
+            var decodedToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            var id = decodedToken.Claims
+                .Where(claim => claim.Type
+                .Equals("nameid"))
+                .Select(claim => claim.Value)
+                .SingleOrDefault();
+            var student = await _students.GetByIdWithCommentAndSelectionAndProgram(id);
+
+            if (student == null)
+            {
+                throw new EntityNotFoundException("Student was not found");
+            }
+            response.Data = _mapper.Map<GetStudentDto>(student);
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<GetCommentDto>>> AddComment(AddCommentDto newComment)
+        {
+            ServiceResponse<List<GetCommentDto>> response = new ServiceResponse<List<GetCommentDto>>();
+
+            var fetchedComments = await _students.AddStudentComment(_mapper.Map<Comment>(newComment));
+            response.Data = fetchedComments.Select(c => _mapper.Map<GetCommentDto>(c)).ToList();
+
+            return response;
+        }
+
+        private List<StudentPersonalProgram> CreatePersonalProgram(List<StudentItem> studentItems, List<ProgramItem> programItems) {
             var personalProgram = new List<StudentPersonalProgram>();
             studentItems.ForEach(studentItem =>
             {
@@ -179,174 +249,12 @@ namespace JAPManagement.Services.Services
                 }
             });
             personalProgram.Sort(
-                delegate (StudentPersonalProgram p1, StudentPersonalProgram p2)
-                {
-                    return p1.Order.CompareTo(p2.Order);
-                }
-            );
-            response.Data = personalProgram;
-            response.Message = "You have successfully fetched personal student program for student: " + student.UserName;
-
-            return response;
-        }
-
-        public async Task<ServiceResponse<GetStudentDto>> ModifyStudent(ModifyStudentDto modifiedStudent)
-        {
-            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
-
-            var student = await _context.Students.FirstOrDefaultAsync(s => s.Id.Equals(modifiedStudent.Id));
-            if (student != null && modifiedStudent != null)
-            {
-                student.FirstName = modifiedStudent.FirstName;
-                student.LastName = modifiedStudent.LastName;
-                student.Email = modifiedStudent.Email;
-                student.Status = modifiedStudent.Status;
-                if (student.SelectionId != modifiedStudent.SelectionId)
-                {
-                    var selection = await _context.Selections
-                        .FirstOrDefaultAsync(s => s.Id == modifiedStudent.SelectionId);
-                    if (selection != null)
+                    delegate (StudentPersonalProgram sp1, StudentPersonalProgram sp2)
                     {
-                        student.Selection = selection;
-                        student.SelectionId = modifiedStudent.SelectionId;
+                        return sp1.Order.CompareTo(sp2.Order);
                     }
-                }
-            }
-            else
-            {
-                throw new EntityNotFoundException("Student was not found");
-            }
-            await _context.SaveChangesAsync();
-            await PopulateStudentItems(student.Id);
-            var fetchedStudent = await _context.Students
-                .Include(s => s.Selection).ThenInclude(s => s.JapProgram)
-                .FirstOrDefaultAsync(s => s.Id
-                .Equals(modifiedStudent.Id));
-            response.Data = _mapper.Map<GetStudentDto>(fetchedStudent);
-            response.Message = "You have successfully modified a student " + student.FirstName + " " + student.LastName + ".";
-
-            return response;
-        }
-
-        public async Task<ServiceResponse<GetStudentDto>> GetStudentById(string id)
-        {
-            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
-
-            var student = await _context.Students
-                    .Include(s => s.Comments)
-                    .Include(s => s.Selection)
-                    .ThenInclude(s => s.JapProgram)
-                    .FirstOrDefaultAsync(s => s.Id
-                    .Equals(id));
-
-            if (student == null)
-            {
-                throw new EntityNotFoundException("Student was not found");
-            }
-            response.Data = _mapper.Map<GetStudentDto>(student);
-
-            return response;
-        }
-
-        public async Task<ServiceResponse<GetStudentItemDto>> ModifyStudentItem(string studentId, ModifyStudentItemDto modifiedItem)
-        {
-            ServiceResponse<GetStudentItemDto> response = new ServiceResponse<GetStudentItemDto>();
-
-            var item = await _context.StudentItems.FirstOrDefaultAsync(st => st.StudentId == studentId && st.ItemId == modifiedItem.ItemId);
-            if (item == null)
-            {
-                throw new EntityNotFoundException("Item was not found");
-            }
-            item.Status = modifiedItem.Status;
-            item.Done = modifiedItem.Done;
-            await _context.SaveChangesAsync();
-            response.Data = _mapper.Map<GetStudentItemDto>(item);
-            response.Message = "You have successfully modified a student program item (lecture, event).";
-
-            return response;
-        }
-
-        public async Task<ServiceResponse<string>> DeleteStudent(string studentId)
-        {
-            ServiceResponse<string> response = new ServiceResponse<string>();
-
-            var student = await _context.Students
-                    .FirstOrDefaultAsync(s => s.Id
-                    .Equals(studentId));
-            _context.Students.Remove(student);
-            await _context.SaveChangesAsync();
-            response.Message = "You have deleted a student: " + student.FirstName + " " + student.LastName + ".";
-
-            return response;
-        }
-
-        public ServiceResponse<GetStudentPageDto> GetStudentsWithParams(int pageNumber, int pageSize, string firstName, string lastName, string email, string selectionName, string japProgramName, StudentStatus? status, string sort, bool descending)
-        {
-            ServiceResponse<GetStudentPageDto> response = new ServiceResponse<GetStudentPageDto>();
-            StudentFetchConfig.Initialize(
-                firstName,
-                lastName,
-                email,
-                status,
-                selectionName,
-                japProgramName,
-                sort,
-                descending);
-
-            var students = _context.Students
-                .Include(s => s.Selection)
-                .ThenInclude(s => s.JapProgram)
-                .Paginate(
-                pageNumber,
-                pageSize,
-                StudentFetchConfig.sorts,
-                StudentFetchConfig.filters);
-            response.Data = _mapper.Map<GetStudentPageDto>(students);
-            response.Message = "You have fetched a page no. " + pageNumber + " with " + students.Results.Count() + " student(s).";
-
-            return response;
-        }
-
-        public async Task<ServiceResponse<GetStudentDto>> GetStudentByToken(string token)
-        {
-            ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
-
-            var decodedToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            var id = decodedToken.Claims
-                .Where(claim => claim.Type
-                .Equals("nameid"))
-                .Select(claim => claim.Value)
-                .SingleOrDefault();
-            var student = await _context.Students
-                .Include(s => s.Comments)
-                .Include(s => s.Selection)
-                .ThenInclude(s => s.JapProgram)
-                .FirstOrDefaultAsync(s => s.Id
-                .Equals(id));
-
-            if (student == null)
-            {
-                throw new EntityNotFoundException("Student was not found");
-            }
-            response.Data = _mapper.Map<GetStudentDto>(student);
-
-            return response;
-        }
-        public async Task<ServiceResponse<List<GetCommentDto>>> AddComment(AddCommentDto newComment)
-        {
-            ServiceResponse<List<GetCommentDto>> response = new ServiceResponse<List<GetCommentDto>>();
-
-            var comment = _mapper.Map<Comment>(newComment);
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
-            var fetchedComments = await _context.Comments
-                .Where(c => c.SId
-                .Equals(newComment.SId))
-                .OrderBy(c => c.CreatedAt)
-                .ToListAsync();
-            response.Data = fetchedComments.Select(c => _mapper.Map<GetCommentDto>(c)).ToList();
-
-            return response;
+                );
+            return personalProgram;
         }
     }
 }

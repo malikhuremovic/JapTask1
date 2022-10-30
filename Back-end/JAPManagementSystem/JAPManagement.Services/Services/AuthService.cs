@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using JAPManagement.Core.DTOs.StudentDTOs;
 using JAPManagement.Core.DTOs.User;
-using JAPManagement.Core.Interfaces;
+using JAPManagement.Core.Interfaces.Repositories;
+using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.StudentModel;
 using JAPManagement.Core.Models.UserModel;
@@ -22,14 +23,14 @@ namespace JAPManagement.Services.Services
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly IEmailService _mailService;
-        private readonly DataContext _context;
+        private readonly IAuthRepository _users;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AuthService(DataContext context, IMapper mapper, IConfiguration configuration, IEmailService mailService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AuthService(IAuthRepository users, IMapper mapper, IConfiguration configuration, IEmailService mailService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _mapper = mapper;
-            _context = context;
+            _users = users;
             _configuration = configuration;
             _mailService = mailService;
             _userManager = userManager;
@@ -127,7 +128,7 @@ namespace JAPManagement.Services.Services
                 .Equals("nameid"))
                 .Select(claim => claim.Value)
                 .SingleOrDefault();
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
+            var user = await _users.GetByIdAsync(id);
             response.Data = _mapper.Map<GetUserDto>(user);
             response.Message = "You have fetched user " + user.UserName;
             return response;
