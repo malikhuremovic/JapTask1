@@ -9,7 +9,7 @@ namespace JAPManagement.Core.DTOs.SelectionDTOs
         public DateTime DateEnd { get; set; }
         public SelectionStatus Status { get; set; } = SelectionStatus.Active;
 
-        public int? JapProgramId { get; set; }
+        public int JapProgramId { get; set; }
         public List<string>? StudentIds { get; set; } = new List<string>();
     }
 }

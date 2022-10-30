@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EntityFrameworkPaginate;
 using JAPManagement.Core.DTOs.StudentDTOs;
+using JAPManagement.Core.Models.SelectionModel;
 using JAPManagement.Core.Models.StudentModel;
 
 namespace JAPManagement.Core.AutoMapperMaps
@@ -15,6 +16,7 @@ namespace JAPManagement.Core.AutoMapperMaps
             CreateMap<Page<Student>, GetStudentPageDto>();
             CreateMap<AddStudentItemDto, StudentItem>();
             CreateMap<StudentItem, StudentItemDto>();
+            CreateMap<Selection, Student>();
             CreateMap<StudentItem, StudentPersonalProgram>();
         }
     }

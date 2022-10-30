@@ -15,6 +15,7 @@ namespace JAPManagement.Core.AutoMapperMaps
             CreateMap<IdentityUser, User>();
             CreateMap<User, Student>();
             CreateMap<User, Admin>();
+            CreateMap<User, User>();
             CreateMap<AddAdminDto, Admin>();
             CreateMap<Admin, GetUserDto>();
             CreateMap<Student, GetUserDto>();

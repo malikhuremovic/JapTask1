@@ -10,6 +10,7 @@ namespace JAPManagement.Core.AutoMapperMaps
         public SelectionMap()
         {
             CreateMap<AddSelectionDto, Selection>();
+            CreateMap<Selection, Selection>();
             CreateMap<Selection, GetSelectionDto>();
             CreateMap<Page<Selection>, GetSelectionPageDto>();
             CreateMap<ModifySelectionDto, Selection>().ForMember(dest => dest.Students, act => act.Ignore());

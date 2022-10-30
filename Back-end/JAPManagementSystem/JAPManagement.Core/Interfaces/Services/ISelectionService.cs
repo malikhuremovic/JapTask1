@@ -2,7 +2,7 @@
 using JAPManagement.Core.Models.SelectionModel;
 using JAPManagement.Core.Models.Response;
 
-namespace JAPManagement.Core.Interfaces
+namespace JAPManagement.Core.Interfaces.Services
 {
     public interface ISelectionService
     {

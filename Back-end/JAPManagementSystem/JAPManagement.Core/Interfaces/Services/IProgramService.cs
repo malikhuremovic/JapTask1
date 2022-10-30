@@ -4,7 +4,7 @@ using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.DTOs.ProgramDTOs;
 
-namespace JAPManagement.Core.Interfaces
+namespace JAPManagement.Core.Interfaces.Services
 {
     public interface IProgramService
     {

@@ -14,6 +14,7 @@ namespace JAPManagement.Core.AutoMapperMaps
         {
             CreateMap<AddProgramDto, JapProgram>();
             CreateMap<JapProgram, GetProgramDto>();
+            CreateMap<JapProgram, JapProgram>();
             CreateMap<StudentItem, GetStudentItemDto>();
             CreateMap<ModifyItemDto, JapProgram>();
             CreateMap<Page<JapProgram>, GetProgramPageDto>();

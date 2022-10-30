@@ -4,7 +4,7 @@ using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.StudentModel;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
-namespace JAPManagement.Core.Interfaces
+namespace JAPManagement.Core.Interfaces.Services
 {
     public interface IAuthService
     {
