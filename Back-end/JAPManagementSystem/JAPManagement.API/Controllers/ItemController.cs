@@ -1,5 +1,5 @@
 ﻿using JAPManagement.Core.DTOs.JapItemDTOs;
-using JAPManagement.Core.Interfaces;
+using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Core.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

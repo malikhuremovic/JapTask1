@@ -20,7 +20,7 @@ namespace JAPManagement.API.Extensions
                         {
                         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                         context.Response.ContentType = "application/json";
-                        message.Append("Internal Server Error. Please try again later.");
+                        message.Append(contextFeature.Error.Message);
                     }
                     else if(contextFeature?.Error is BadRequestException)
                     {

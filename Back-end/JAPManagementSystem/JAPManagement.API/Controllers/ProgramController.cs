@@ -1,7 +1,7 @@
 ﻿using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.DTOs.Program;
 using JAPManagement.Core.DTOs.ProgramDTOs;
-using JAPManagement.Core.Interfaces;
+using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Core.Models.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +28,7 @@ namespace JAPManagement.API.Controllers
             return StatusCode(201, response);
         }
 
-        [HttpPost("add/items")]
+        [HttpPatch("add/items")]
         public async Task<ActionResult<ServiceResponse<GetProgramDto>>> AddProgramLecture(AddProgramItemsDto newProgramLectures)
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();
@@ -41,7 +41,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetProgramPageDto> response = new ServiceResponse<GetProgramPageDto>();
             response = _programService.GetProgramsWithParams(page, pageSize, name, content, sort, descending);
-
             return StatusCode(201, response);
         }
 
@@ -94,7 +93,7 @@ namespace JAPManagement.API.Controllers
             return StatusCode(201, response);
         }
 
-        [HttpDelete("remove/items")]
+        [HttpPatch("remove/items")]
         public async Task<ActionResult<ServiceResponse<GetProgramDto>>> RemoveProgramLectures(DeleteProgramItemsDto programLectures)
         {
             ServiceResponse<GetProgramDto> response = new ServiceResponse<GetProgramDto>();

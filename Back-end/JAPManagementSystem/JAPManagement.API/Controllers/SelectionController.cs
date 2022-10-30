@@ -1,5 +1,5 @@
 ﻿using JAPManagement.Core.DTOs.SelectionDTOs;
-using JAPManagement.Core.Interfaces;
+using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.SelectionModel;
 using Microsoft.AspNetCore.Authorization;

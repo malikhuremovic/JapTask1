@@ -1,7 +1,7 @@
 ﻿using JAPManagenent.Utils.Util;
 using JAPManagement.Services.Services.HangfireServices;
 using JAPManagement.Services.Services;
-using JAPManagement.Core.Interfaces;
+using JAPManagement.Core.Interfaces.Services;
 
 namespace JAPManagement.API.Extensions
 {
@@ -12,10 +12,10 @@ namespace JAPManagement.API.Extensions
             service.AddTransient<ISelectionService, SelectionService>();
             service.AddTransient<IProgramService, ProgramService>();
             service.AddTransient<IStudentService, StudentService>();
-            service.AddScoped<IAuthService, AuthService>();
-            service.AddScoped<IItemService, ItemService>();
-            service.AddScoped<IHangfireReportService, HangfireReportService>();
-            service.AddScoped<IDateCalculator, DateCalculator>();
+            service.AddTransient<IAuthService, AuthService>();
+            service.AddTransient<IItemService, ItemService>();
+            service.AddTransient<IHangfireReportService, HangfireReportService>();
+            service.AddTransient<IDateCalculator, DateCalculator>();
             service.AddSingleton<IEmailService, EmailService>();
         }
     }

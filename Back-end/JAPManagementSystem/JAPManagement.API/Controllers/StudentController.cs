@@ -1,7 +1,7 @@
 ﻿using JAPManagement.Core.DTOs.Comment;
 using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.DTOs.StudentDTOs;
-using JAPManagement.Core.Interfaces;
+using JAPManagement.Core.Interfaces.Services;
 using JAPManagement.Core.Models.Response;
 using JAPManagement.Core.Models.StudentModel;
 using Microsoft.AspNetCore.Authorization;
@@ -100,20 +100,6 @@ namespace JAPManagement.API.Controllers
         {
             ServiceResponse<GetStudentDto> response = new ServiceResponse<GetStudentDto>();
             response = await _studentService.ModifyStudent(modifiedStudent);
-            return Ok(response);
-        }
-
-        [Authorize(Roles = "Admin, Student")]
-        [HttpPatch("/item/modify")]
-        public async Task<ActionResult<ServiceResponse<GetStudentItemDto>>> ModifyStudentItem(ModifyStudentItemDto modifiedItem)
-        {
-            ServiceResponse<GetStudentItemDto> response = new ServiceResponse<GetStudentItemDto>();
-            Request.Headers.TryGetValue("Authorization", out var token);
-            string tokenValue = token
-                .ToString()
-                .Split(" ")
-                .ElementAt(1);
-            response = await _studentService.ModifyStudentItem(tokenValue, modifiedItem);
             return Ok(response);
         }
 
