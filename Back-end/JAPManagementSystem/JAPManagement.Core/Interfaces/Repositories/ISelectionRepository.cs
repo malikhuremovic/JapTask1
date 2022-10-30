@@ -10,5 +10,6 @@ namespace JAPManagement.Core.Interfaces.Repositories
         Task<Selection> GetByName(string name);
         Task<Selection> GetByIdWithProgramAsync(int id);
         Task<List<AdminReport>> GetAdminReportAsync();
+        Task<List<Selection>> GetByEndMonthAndDay(int endMonth, int endDay);
     }
 }

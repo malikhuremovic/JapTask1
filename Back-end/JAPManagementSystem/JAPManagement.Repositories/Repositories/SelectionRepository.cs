@@ -3,6 +3,7 @@ using JAPManagement.Core.Interfaces.Repositories;
 using JAPManagement.Core.Models.SelectionModel;
 using JAPManagement.Database.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace JAPManagement.Repositories.Repositories
 {
@@ -40,6 +41,11 @@ namespace JAPManagement.Repositories.Repositories
         public async Task<List<Selection>> GetAllAsync()
         {
             return await _context.Selections.ToListAsync();
+        }
+
+        public async Task<List<Selection>> GetByEndMonthAndDay(int endMonth, int endDay)
+        {
+            return await _context.Selections.Where(s => s.DateEnd.Month == endMonth && s.DateEnd.Day == endDay).ToListAsync();
         }
 
         public async Task<Selection> GetByIdAsync(int id)

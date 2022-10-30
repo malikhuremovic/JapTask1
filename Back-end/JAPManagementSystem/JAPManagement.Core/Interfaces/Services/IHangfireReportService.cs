@@ -2,6 +2,6 @@
 {
     public interface IHangfireReportService
     {
-        Task<string> PerformCheck();
+        Task PerformCheck();
     }
 }
