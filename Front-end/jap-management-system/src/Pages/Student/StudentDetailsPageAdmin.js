@@ -14,7 +14,13 @@ import classes from '../Style/DetailsPage.module.css';
 
 const StudentDetailsPageAdmin = () => {
   const [student, setStudent] = useState({});
-  const [studentEdit, setStudentEdit] = useState({});
+  const [studentEdit, setStudentEdit] = useState({
+    firstName: '',
+    lastName: '',
+    status: '',
+    selection: null,
+    program: null
+  });
   const INITIAL_COMMENT_STATE = {
     text: '',
     SId: null
@@ -28,8 +34,19 @@ const StudentDetailsPageAdmin = () => {
     studentService
       .fetchStudentById(id)
       .then(response => {
-        setStudent(response.data.data);
-        setStudentEdit(response.data.data);
+        const student = response.data.data;
+        setStudent(student);
+        setStudentEdit(() => {
+          return {
+            firstName: student.firstName,
+            lastName: student.lastName,
+            email: student.email,
+            status: student.status,
+            selection: student.selection,
+            selectionId: student.selection.id,
+            program: student.selection.japProgram
+          };
+        });
       })
       .catch(err => console.log(err));
 
@@ -125,13 +142,15 @@ const StudentDetailsPageAdmin = () => {
       </div>
       <div className={classes.student__data}>
         <h5 style={{ marginTop: 20, marginBottom: 35 }}>Personal data</h5>
-        <StudentForm
-          formType={'edit'}
-          availableSelections={availableSelections}
-          handleFormSubmission={handleSubmit}
-          handleStudentFormInput={handleStudentFormInput}
-          studentFormData={studentEdit}
-        />
+        {student && (
+          <StudentForm
+            formType="edit"
+            availableSelections={availableSelections}
+            handleFormSubmission={handleSubmit}
+            handleStudentFormInput={handleStudentFormInput}
+            studentFormData={studentEdit}
+          />
+        )}
       </div>
       <div className={classes.student__comments}>
         <h5 style={{ marginTop: 20, marginBottom: 35 }}>Comments</h5>

@@ -76,6 +76,26 @@ const modifyProgramItemsOrder = data => {
   });
 };
 
+const addProgramItems = data => {
+  const token = tokenUtil.getAccessToken();
+  return axios.patch(config.API_URL + `/Program/add/items`, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
+const removeProgramItems = data => {
+  const token = tokenUtil.getAccessToken();
+  return axios.patch(config.API_URL + `/Program/remove/items`, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+
 const services = {
   addProgram,
   editProgram,
@@ -83,7 +103,9 @@ const services = {
   fetchAllPrograms,
   fetchAllProgramsWithParams,
   fetchOrderedProgramItems,
-  modifyProgramItemsOrder
+  modifyProgramItemsOrder,
+  addProgramItems,
+  removeProgramItems
 };
 
 export default services;

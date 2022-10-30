@@ -43,7 +43,7 @@ const LectureActionForm = ({
       )}
       {actionState.action === 'delete' && actionState.show && (
         <FormModal
-          title="Delete selection"
+          title="Delete lecture"
           formType="delete"
           formModel={formModel}
           handleState={handleDeleteState}

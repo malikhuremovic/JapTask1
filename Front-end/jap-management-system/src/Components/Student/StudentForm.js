@@ -9,6 +9,7 @@ const StudentForm = ({
   disabled,
   preSelection
 }) => {
+  console.log(studentFormData.status);
   return (
     <Form onSubmit={handleFormSubmission}>
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalFirstName">
@@ -65,13 +66,12 @@ const StudentForm = ({
           <Form.Select
             name="status"
             className="form-select"
-            defaultValue={studentFormData ? studentFormData.status : 'none'}
+            defaultValue={studentFormData?.status}
             aria-label="Default select example"
             required
             onChange={handleStudentFormInput}
             disabled={disabled ? true : false}
           >
-            {!studentFormData && <option value="none">Status</option>}
             <option value="InProgram">InProgram</option>
             <option value="Success">Success</option>
             <option value="Failed">Failed</option>
@@ -88,23 +88,38 @@ const StudentForm = ({
             name="selection"
             className="form-select"
             defaultValue={
-              preSelection ? preSelection.id : studentFormData?.selection ? studentFormData.selection.id : 'none'
+              preSelection ? +preSelection.id : studentFormData?.selection ? +studentFormData.selection.id : 'none'
             }
             aria-label="Default select example"
             required
             onChange={handleStudentFormInput}
-            disabled={disabled ? true : false}
+            disabled={disabled ? true : preSelection ? true : false}
           >
             {!studentFormData?.selection && <option value="none">Selections</option>}
+            {!preSelection && studentFormData.selection && (
+              <option key={studentFormData.selection.id} value={studentFormData.selection.id}>
+                {studentFormData.selection.name}
+              </option>
+            )}
             {preSelection && <option value={preSelection.id}>{preSelection.name}</option>}
             {!preSelection &&
               availableSelections.map(s => {
-                return (
-                  <option key={s.id} value={s.id}>
-                    {' '}
-                    {s.name}
-                  </option>
-                );
+                if (studentFormData.selection) {
+                  if (s.id !== studentFormData.selection.id)
+                    return (
+                      <option key={s.id} value={s.id}>
+                        {' '}
+                        {s.name}
+                      </option>
+                    );
+                } else {
+                  return (
+                    <option key={s.id} value={s.id}>
+                      {' '}
+                      {s.name}
+                    </option>
+                  );
+                }
               })}
           </Form.Select>
         </Col>

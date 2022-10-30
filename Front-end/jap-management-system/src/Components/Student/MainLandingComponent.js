@@ -21,7 +21,7 @@ const MainLandingComponent = () => {
     firstName: '',
     lastName: '',
     email: '',
-    status: '',
+    status: 'InProgram',
     selectionId: null
   };
   const [studentFormData, setStudentFormData] = useState(INITIAL_STUDENT_FORM_DATA);
@@ -170,7 +170,8 @@ const MainLandingComponent = () => {
           lastName: student.lastName,
           email: student.email,
           status: student.status,
-          selection: student.selection
+          selection: student.selection,
+          selectionId: student.selection.id
         };
       });
     }
@@ -220,7 +221,7 @@ const MainLandingComponent = () => {
     ev.preventDefault();
     studentService
       .addStudent(studentFormData)
-      .then(response => {
+      .then(() => {
         setActionState(() => {
           return {
             action: null,
@@ -241,6 +242,7 @@ const MainLandingComponent = () => {
 
   const handleEditStudent = ev => {
     ev.preventDefault();
+    console.log(studentFormData);
     studentService
       .modifyStudent(studentFormData)
       .then(response => {
@@ -298,7 +300,6 @@ const MainLandingComponent = () => {
       } else if (inputName === 'email') {
         student.email = value;
       } else if (inputName === 'status') {
-        console.log(value);
         student.status = value;
       } else if (inputName === 'selection') {
         student.selectionId = value;

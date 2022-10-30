@@ -16,7 +16,6 @@ const StudentActionForms = ({
   availableSelections,
   preSelection
 }) => {
-  console.log(preSelection);
   return (
     <div className={classes.action_form}>
       {actionState.action === 'add' && actionState.show && (

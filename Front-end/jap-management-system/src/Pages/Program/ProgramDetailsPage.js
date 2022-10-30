@@ -88,32 +88,26 @@ const ProgramDetailsPage = () => {
   const handleEditItems = ev => {
     const itemId = ev.target.id;
     const editObj = {
-      id: +query.get('id'),
-      name: query.get('name'),
-      content: query.get('content'),
-      addLectureIds: [],
-      removeLectureIds: [itemId]
+      programId: +query.get('id'),
+      lectureIds: [itemId]
     };
     programService
-      .editProgram(editObj)
-      .then(response => fetchItems(+query.get('id')))
+      .removeProgramItems(editObj)
+      .then(() => fetchItems(+query.get('id')))
       .catch(err => console.log(err));
   };
 
-  const handleAddItem = ev => {
+  const handleAddItem = () => {
     setIsAddingItem(prevState => !prevState);
   };
 
   const handleSubmitItems = items => {
     const editObj = {
-      id: +query.get('id'),
-      name: query.get('name'),
-      content: query.get('content'),
-      addLectureIds: [...items],
-      removeLectureIds: []
+      programId: +query.get('id'),
+      lectureIds: [...items]
     };
     programService
-      .editProgram(editObj)
+      .addProgramItems(editObj)
       .then(() => {
         fetchItems(+query.get('id'));
       })
