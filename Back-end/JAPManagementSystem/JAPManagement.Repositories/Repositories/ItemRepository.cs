@@ -4,7 +4,7 @@ using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Database.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace JAPManagement.Repositories
+namespace JAPManagement.Repositories.Repositories
 {
     public class ItemRepository : IItemRepository
     {
@@ -24,7 +24,7 @@ namespace JAPManagement.Repositories
         public async Task<JapItem> Delete(int id)
         {
             var item = await _context.Items.FirstOrDefaultAsync(item => item.Id == id);
-            if(item != null)
+            if (item != null)
             {
                 _context.Items.Remove(item);
                 await _context.SaveChangesAsync();

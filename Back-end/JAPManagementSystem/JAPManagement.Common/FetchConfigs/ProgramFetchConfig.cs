@@ -1,7 +1,7 @@
 ﻿using EntityFrameworkPaginate;
 using JAPManagement.Core.Models.ProgramModel;
 
-namespace JAPManagement.Common
+namespace JAPManagement.Common.FetchConfigs
 {
     public class ProgramFetchConfig
     {

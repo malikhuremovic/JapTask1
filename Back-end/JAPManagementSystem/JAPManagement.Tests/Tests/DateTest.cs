@@ -1,6 +1,6 @@
 using JAPManagenent.Utils.Util;
 
-namespace JAPManagement.Tests
+namespace JAPManagement.Tests.Tests
 {
     [TestFixture]
     public class Tests

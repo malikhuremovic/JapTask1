@@ -3,7 +3,7 @@ using JAPManagement.Core.Models.ProgramModel;
 using JAPManagement.Database.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace JAPManagement.Repositories
+namespace JAPManagement.Repositories.Repositories
 {
     public class ProgramItemRepository : IProgramItemRepository
     {

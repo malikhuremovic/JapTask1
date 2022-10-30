@@ -1,7 +1,7 @@
 ﻿using EntityFrameworkPaginate;
 using JAPManagement.Core.Models.SelectionModel;
 
-namespace JAPManagement.Common
+namespace JAPManagement.Common.FetchConfigs
 {
     public static class SelectionFetchConfig
     {

@@ -5,7 +5,7 @@ using JAPManagement.Core.Models.StudentModel;
 using JAPManagement.Database.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace JAPManagement.Repositories
+namespace JAPManagement.Repositories.Repositories
 {
     public class StudentRepository : IStudentRepository
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EntityFrameworkPaginate;
-using JAPManagement.Common;
+using JAPManagement.Common.FetchConfigs;
 using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.Interfaces.Repositories;
 using JAPManagement.Core.Interfaces.Services;

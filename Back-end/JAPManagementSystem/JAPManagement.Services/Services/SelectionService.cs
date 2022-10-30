@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using JAPManagement.Common;
+using JAPManagement.Common.FetchConfigs;
 using JAPManagement.Core.DTOs.SelectionDTOs;
 using JAPManagement.Core.Interfaces.Repositories;
 using JAPManagement.Core.Interfaces.Services;

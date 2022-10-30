@@ -1,5 +1,5 @@
 ﻿using JAPManagement.Core.Interfaces.Repositories;
-using JAPManagement.Repositories;
+using JAPManagement.Repositories.Repositories;
 
 namespace JAPManagement.API.Extensions
 {

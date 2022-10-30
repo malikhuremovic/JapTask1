@@ -56,7 +56,6 @@ namespace JAPManagement.Database.Data
                 });
 
             _modelBuilder.Entity<JapItem>().HasData(
-
                 new JapItem
                 {
                     Id = 1,
@@ -75,23 +74,23 @@ namespace JAPManagement.Database.Data
                     ExpectedHours = 8,
                     IsEvent = false
                 },
-                                new JapItem
-                                {
-                                    Id = 3,
-                                    Name = "Send completed assignment to mentor",
-                                    Description = "Lorem ipsum dolor sit amet",
-                                    URL = "",
-                                    ExpectedHours = 10,
-                                    IsEvent = true
-                                }, new JapItem
-                                {
-                                    Id = 4,
-                                    Name = "Postman API Testing",
-                                    Description = "Lorem ipsum dolor sit amet",
-                                    URL = "www.loremipsum.dolor",
-                                    ExpectedHours = 17,
-                                    IsEvent = false
-                                },
+                new JapItem
+                {
+                    Id = 3,
+                    Name = "Send completed assignment to mentor",
+                    Description = "Lorem ipsum dolor sit amet",
+                    URL = "",
+                    ExpectedHours = 10,
+                    IsEvent = true
+                }, new JapItem
+                {
+                    Id = 4,
+                    Name = "Postman API Testing",
+                    Description = "Lorem ipsum dolor sit amet",
+                    URL = "www.loremipsum.dolor",
+                    ExpectedHours = 17,
+                    IsEvent = false
+                },
                 new JapItem
                 {
                     Id = 5,
@@ -101,23 +100,23 @@ namespace JAPManagement.Database.Data
                     ExpectedHours = 12,
                     IsEvent = false
                 },
-                                new JapItem
-                                {
-                                    Id = 6,
-                                    Name = "Project task no.1",
-                                    Description = "Lorem ipsum dolor sit amet",
-                                    URL = "www.loremipsum.org",
-                                    ExpectedHours = 12,
-                                    IsEvent = true
-                                }, new JapItem
-                                {
-                                    Id = 7,
-                                    Name = "HTML5 & CSS3 with Animations",
-                                    Description = "Lorem ipsum dolor sit amet",
-                                    URL = "www.loremipsum.dolor",
-                                    ExpectedHours = 13,
-                                    IsEvent = false
-                                },
+                new JapItem
+                {
+                    Id = 6,
+                    Name = "Project task no.1",
+                    Description = "Lorem ipsum dolor sit amet",
+                    URL = "www.loremipsum.org",
+                    ExpectedHours = 12,
+                    IsEvent = true
+                }, new JapItem
+                {
+                    Id = 7,
+                    Name = "HTML5 & CSS3 with Animations",
+                    Description = "Lorem ipsum dolor sit amet",
+                    URL = "www.loremipsum.dolor",
+                    ExpectedHours = 13,
+                    IsEvent = false
+                },
                 new JapItem
                 {
                     Id = 8,
@@ -127,15 +126,15 @@ namespace JAPManagement.Database.Data
                     ExpectedHours = 14,
                     IsEvent = false
                 },
-                                new JapItem
-                                {
-                                    Id = 9,
-                                    Name = "Task refactor",
-                                    Description = "Lorem ipsum dolor sit amet",
-                                    URL = "",
-                                    ExpectedHours = 3,
-                                    IsEvent = true
-                                }
+                new JapItem
+                {
+                    Id = 9,
+                    Name = "Task refactor",
+                    Description = "Lorem ipsum dolor sit amet",
+                    URL = "",
+                    ExpectedHours = 3,
+                    IsEvent = true
+                }
             );
 
             _modelBuilder.Entity<JapProgram>()
@@ -157,24 +156,24 @@ namespace JAPManagement.Database.Data
         .HasNoKey();
 
             _modelBuilder.Entity<JapProgram>().HasData(
-            new JapProgram
-            {
-                Id = 1,
-                Name = "JAP DEV",
-                Content = ".NET & React.js"
-            },
-            new JapProgram
-            {
-                Id = 2,
-                Name = "JAP QA",
-                Content = "Selenium & Unit & Integration Testing"
-            },
-            new JapProgram
-            {
-                Id = 3,
-                Name = "JAP DevOps",
-                Content = "Linux & Docker"
-            });
+                new JapProgram
+                {
+                    Id = 1,
+                    Name = "JAP DEV",
+                    Content = ".NET & React.js"
+                },
+                new JapProgram
+                {
+                    Id = 2,
+                    Name = "JAP QA",
+                    Content = "Selenium & Unit & Integration Testing"
+                },
+                new JapProgram
+                {
+                    Id = 3,
+                    Name = "JAP DevOps",
+                    Content = "Linux & Docker"
+                });
 
             _modelBuilder.Entity<Selection>().HasData(
                 new Selection
@@ -198,73 +197,74 @@ namespace JAPManagement.Database.Data
              );
 
             _modelBuilder.Entity<Student>().HasData(
-    new Student
-    {
-        Id = "10b5260a0-94c9-4681-8468-945a4aa4373f",
-        FirstName = "John",
-        LastName = "Doe",
-        Email = "johndoe@hotmail.com",
-        NormalizedEmail = "JOHNDOE@HOTMAIL.COM",
-        NormalizedUserName = "JOHNDOE",
-        EmailConfirmed = false,
-        UserName = "johndoe",
-        PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
-        SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
-        ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
-        Role = UserRole.Student,
-        SelectionId = 1,
-        Status = StudentStatus.Success
-    }, new Student
-    {
-        Id = "1023b5260a0-94c9-4681-8468-945a4aa4373f",
-        FirstName = "Jane",
-        LastName = "Doe",
-        Email = "janedoe@hotmail.com",
-        NormalizedEmail = "JANEDOE@HOTMAIL.COM",
-        NormalizedUserName = "JANEDOE",
-        EmailConfirmed = false,
-        UserName = "janedoe",
-        PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
-        SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
-        ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
-        Role = UserRole.Student,
-        SelectionId = 2,
-        Status = StudentStatus.Failed
-    },
-        new Student
-        {
-            Id = "1230b5260a0-94c9-4681-8468-945a4aa4373f",
-            FirstName = "Snoop",
-            LastName = "Dogg",
-            Email = "snoopdogg@hotmail.com",
-            NormalizedEmail = "SNOOPDOGG@HOTMAIL.COM",
-            NormalizedUserName = "SNOOPDOGG",
-            EmailConfirmed = false,
-            UserName = "snoopdogg",
-            PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
-            SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
-            ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
-            Role = UserRole.Student,
-            SelectionId = 1,
-            Status = StudentStatus.Failed
-        });
-
-            _modelBuilder.Entity<Admin>().HasData(
-                new Admin
+                new Student
                 {
-                    Id = "0b5260a0-94c9-4681-8468-945a4aa4373f",
-                    FirstName = "Malik",
-                    LastName = "Huremovic",
-                    Email = "malikhuremovic2001@hotmail.com",
-                    NormalizedEmail = "MALIKHUREMOVIC2001@HOTMAIL.COM",
-                    NormalizedUserName = "MALIKHUREM",
+                    Id = "10b5260a0-94c9-4681-8468-945a4aa4373f",
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Email = "johndoe@hotmail.com",
+                    NormalizedEmail = "JOHNDOE@HOTMAIL.COM",
+                    NormalizedUserName = "JOHNDOE",
                     EmailConfirmed = false,
-                    UserName = "malikhurem",
+                    UserName = "johndoe",
                     PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
                     SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
                     ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
-                    Role = UserRole.Admin
+                    Role = UserRole.Student,
+                    SelectionId = 1,
+                    Status = StudentStatus.Success
+                },
+                new Student
+                {
+                    Id = "1023b5260a0-94c9-4681-8468-945a4aa4373f",
+                    FirstName = "Jane",
+                    LastName = "Doe",
+                    Email = "janedoe@hotmail.com",
+                    NormalizedEmail = "JANEDOE@HOTMAIL.COM",
+                    NormalizedUserName = "JANEDOE",
+                    EmailConfirmed = false,
+                    UserName = "janedoe",
+                    PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
+                    SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
+                    ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
+                    Role = UserRole.Student,
+                    SelectionId = 2,
+                    Status = StudentStatus.Failed
+                },
+                new Student
+                {
+                    Id = "1230b5260a0-94c9-4681-8468-945a4aa4373f",
+                    FirstName = "Snoop",
+                    LastName = "Dogg",
+                    Email = "snoopdogg@hotmail.com",
+                    NormalizedEmail = "SNOOPDOGG@HOTMAIL.COM",
+                    NormalizedUserName = "SNOOPDOGG",
+                    EmailConfirmed = false,
+                    UserName = "snoopdogg",
+                    PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
+                    SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
+                    ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
+                    Role = UserRole.Student,
+                    SelectionId = 1,
+                    Status = StudentStatus.Failed
                 });
+
+            _modelBuilder.Entity<Admin>().HasData(
+                 new Admin
+                 {
+                     Id = "0b5260a0-94c9-4681-8468-945a4aa4373f",
+                     FirstName = "Malik",
+                     LastName = "Huremovic",
+                     Email = "malikhuremovic2001@hotmail.com",
+                     NormalizedEmail = "MALIKHUREMOVIC2001@HOTMAIL.COM",
+                     NormalizedUserName = "MALIKHUREM",
+                     EmailConfirmed = false,
+                     UserName = "malikhurem",
+                     PasswordHash = "AQAAAAEAACcQAAAAEAT9mk3FWTVJa/q7eobHLC7r4P8wMbs9fcfttAYtUF/7eGFX+sOtz9gosH5zWhNXiQ==",
+                     SecurityStamp = "B4WFEMAOZ47PNHKJF642V6QWHWK2JHPN",
+                     ConcurrencyStamp = "0af37133-6d9e-4e43-aa0a-e88240493840",
+                     Role = UserRole.Admin
+                 });
         }
 
         public DbSet<User> Users { get; set; }

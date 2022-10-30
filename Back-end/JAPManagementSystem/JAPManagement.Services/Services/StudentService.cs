@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using JAPManagement.Common;
+using JAPManagement.Common.FetchConfigs;
 using JAPManagement.Core.DTOs.Comment;
 using JAPManagement.Core.DTOs.JapItemDTOs;
 using JAPManagement.Core.DTOs.StudentDTOs;

@@ -4,7 +4,7 @@ using JAPManagement.Core.Models.SelectionModel;
 using JAPManagement.Database.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace JAPManagement.Repositories
+namespace JAPManagement.Repositories.Repositories
 {
     public class SelectionRepository : ISelectionRepository
     {
