@@ -17,10 +17,6 @@ namespace JAPManagement.Database.Data
         {
             base.OnModelCreating(_modelBuilder);
 
-            _modelBuilder.Entity<JapProgram>().HasKey(j => j.Id);
-
-            _modelBuilder.Entity<JapItem>().HasKey(l => l.Id);
-
             _modelBuilder.Entity<JapItem>()
             .HasMany(p => p.Programs)
             .WithMany(p => p.Items)
