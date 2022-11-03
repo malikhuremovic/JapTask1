@@ -1,0 +1,31 @@
+CREATE PROCEDURE GetSelectionSuccessRate
+AS
+
+SELECT selection.Name as SelectionName, ProgramJoin.Name as ProgramName, isNull((AVG(SelectionSuccessCount) * 100 / SUM(AllSelectionsSuccessCount)),0) as SelectionSuccessRate
+INTO #table_selection_success
+FROM Selections AS selection
+	   LEFT JOIN(
+          SELECT users.SelectionId, COUNT(users.Status) as SelectionSuccessCount
+          FROM AspNetUsers AS users
+          WHERE users.Discriminator = 'Student' AND users.Status = 2
+		  GROUP BY users.SelectionId)
+       AS joined ON selection.Id = joined.SelectionId
+	   LEFT JOIN(
+	      SELECT users1.SelectionId, COUNT(users1.Status) as AllSelectionsSuccessCount
+		  FROM AspNetUsers as users1
+		  WHERE users1.Discriminator = 'Student'
+		  GROUP BY users1.SelectionId
+	   ) AS joined1 ON selection.Id = joined1.SelectionId
+	   LEFT JOIN JapPrograms as ProgramJoin ON selection.JapProgramId = ProgramJoin.Id
+      GROUP BY
+	  selection.Name,
+	  selection.Status,
+	  ProgramJoin.Name
+
+SELECT isNull((SUM(SelectionSuccessRate) / COUNT(SelectionSuccessRate)),0) as OverallSuccessRate INTO #table_overall from #table_selection_success
+SELECT * FROM #table_selection_success CROSS JOIN #table_overall
+
+DROP TABLE #table_overall
+DROP TABLE #table_selection_success
+
+GO
