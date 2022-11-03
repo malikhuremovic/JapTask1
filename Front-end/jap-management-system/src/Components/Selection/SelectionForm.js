@@ -52,11 +52,7 @@ const SelectionForm = ({
         </Col>
       </Form.Group>
 
-      <Form.Group
-        as={Row}
-        className="mb-3"
-        controlId="formHorizontalStudentStatus"
-      >
+      <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentStatus">
         <Form.Label column sm={2}>
           Selection status
         </Form.Label>
@@ -64,27 +60,19 @@ const SelectionForm = ({
           <Form.Select
             name="status"
             className="form-select"
-            defaultValue={
-              selectionFormData.status ? selectionFormData.status : 'none'
-            }
+            defaultValue={selectionFormData.status ? selectionFormData.status : 'none'}
             aria-label="Default select example"
             required
             onChange={handleSelectionFormInput}
           >
-            {!selectionFormData.status && (
-              <option value="none">Select Status</option>
-            )}
+            {!selectionFormData.status && <option value="none">Select Status</option>}
             <option value="Active">Active</option>
             <option value="Completed">Completed</option>
           </Form.Select>
         </Col>
       </Form.Group>
 
-      <Form.Group
-        as={Row}
-        className="mb-3"
-        controlId="formHorizontalStudentStatus"
-      >
+      <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentStatus">
         <Form.Label column sm={2}>
           Program
         </Form.Label>
@@ -92,18 +80,12 @@ const SelectionForm = ({
           <Form.Select
             name="program"
             className="form-select"
-            defaultValue={
-              selectionFormData.japProgramId
-                ? selectionFormData.japProgramId
-                : 'none'
-            }
+            defaultValue={selectionFormData.japProgramId ? selectionFormData.japProgramId : 'none'}
             aria-label="Default select example"
             required
             onChange={handleSelectionFormInput}
           >
-            {!selectionFormData.japProgramId && (
-              <option value="none">Select Program</option>
-            )}
+            {!selectionFormData.japProgramId && <option value="none">Select Program</option>}
             {availablePrograms.map(s => {
               return (
                 <option key={s.id} value={s.id}>
@@ -119,12 +101,12 @@ const SelectionForm = ({
       <Form.Group as={Row} className="mb-3">
         <Col sm={{ span: 10, offset: 2 }}>
           {formType === 'add' && (
-            <Button style={{ width: 70 }} type="submit">
-              Add
+            <Button style={{ position: 'relative', left: '-20%' }} type="submit">
+              Add new selection
             </Button>
           )}
           {formType === 'edit' && (
-            <Button style={{ width: 70 }} type="submit" variant="success">
+            <Button style={{ position: 'relative', left: '-20%' }} type="submit" variant="success">
               Edit
             </Button>
           )}

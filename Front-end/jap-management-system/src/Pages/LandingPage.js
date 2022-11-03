@@ -1,9 +1,9 @@
 import React from 'react';
 
-import StudentDetailsPage from './StudentDetailsPage';
-import MainLandingComponent from '../Components/Students/MainLandingComponent';
+import StudentDetailsPage from './Student/StudentDetailsPage';
+import MainLandingComponent from '../Components/Student/MainLandingComponent';
 
-import classes from './LandingPage.module.css';
+import classes from './Style/LandingPage.module.css';
 
 const LandingPage = ({ role }) => {
   if (role === 'Admin') {

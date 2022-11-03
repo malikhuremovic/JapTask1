@@ -3,7 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JAPManagementSystem", "JAPManagementSystem\JAPManagementSystem.csproj", "{63C40903-B09E-435E-ADA7-422DC7C81C89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Core", "JAPManagement.Core\JAPManagement.Core.csproj", "{D42666F8-B963-420A-B7A6-86770AD870D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Database", "JAPManagement.Database\JAPManagement.Database.csproj", "{7B379DC7-A07D-4BEF-9EFF-2888E4F10C14}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D42666F8-B963-420A-B7A6-86770AD870D5} = {D42666F8-B963-420A-B7A6-86770AD870D5}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Services", "JAPManagement.Services\JAPManagement.Services.csproj", "{AB9CC546-D4D9-4DEF-B8D4-B2D61A790EFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Common", "JAPManagement.Common\JAPManagement.Common.csproj", "{B914AD60-3429-4D0B-AB28-248B797EB7DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.API", "JAPManagement.API\JAPManagement.API.csproj", "{1B357784-765E-4ABE-8197-DEF60841E99A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Tests", "JAPManagement.Tests\JAPManagement.Tests.csproj", "{84BB8CF2-13BE-4D5B-A01E-DEB0A1FA6D95}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Utils", "JAPManagement.Utils\JAPManagement.Utils.csproj", "{BD2B4F29-4D26-47A7-A837-09797D9437B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Repositories", "JAPManagement.Repositories\JAPManagement.Repositories.csproj", "{68FF4884-8EE0-4128-B97D-E7933B930142}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JAPManagement.Exceptions", "JAPManagement.Exceptions\JAPManagement.Exceptions.csproj", "{88904231-7F19-4D39-BB17-37C9FC337397}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +30,42 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{63C40903-B09E-435E-ADA7-422DC7C81C89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63C40903-B09E-435E-ADA7-422DC7C81C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63C40903-B09E-435E-ADA7-422DC7C81C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63C40903-B09E-435E-ADA7-422DC7C81C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D42666F8-B963-420A-B7A6-86770AD870D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D42666F8-B963-420A-B7A6-86770AD870D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D42666F8-B963-420A-B7A6-86770AD870D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D42666F8-B963-420A-B7A6-86770AD870D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B379DC7-A07D-4BEF-9EFF-2888E4F10C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B379DC7-A07D-4BEF-9EFF-2888E4F10C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B379DC7-A07D-4BEF-9EFF-2888E4F10C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B379DC7-A07D-4BEF-9EFF-2888E4F10C14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB9CC546-D4D9-4DEF-B8D4-B2D61A790EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB9CC546-D4D9-4DEF-B8D4-B2D61A790EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB9CC546-D4D9-4DEF-B8D4-B2D61A790EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB9CC546-D4D9-4DEF-B8D4-B2D61A790EFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B914AD60-3429-4D0B-AB28-248B797EB7DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B914AD60-3429-4D0B-AB28-248B797EB7DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B914AD60-3429-4D0B-AB28-248B797EB7DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B914AD60-3429-4D0B-AB28-248B797EB7DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B357784-765E-4ABE-8197-DEF60841E99A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B357784-765E-4ABE-8197-DEF60841E99A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B357784-765E-4ABE-8197-DEF60841E99A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B357784-765E-4ABE-8197-DEF60841E99A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84BB8CF2-13BE-4D5B-A01E-DEB0A1FA6D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84BB8CF2-13BE-4D5B-A01E-DEB0A1FA6D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84BB8CF2-13BE-4D5B-A01E-DEB0A1FA6D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84BB8CF2-13BE-4D5B-A01E-DEB0A1FA6D95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD2B4F29-4D26-47A7-A837-09797D9437B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2B4F29-4D26-47A7-A837-09797D9437B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2B4F29-4D26-47A7-A837-09797D9437B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2B4F29-4D26-47A7-A837-09797D9437B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68FF4884-8EE0-4128-B97D-E7933B930142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68FF4884-8EE0-4128-B97D-E7933B930142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68FF4884-8EE0-4128-B97D-E7933B930142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68FF4884-8EE0-4128-B97D-E7933B930142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88904231-7F19-4D39-BB17-37C9FC337397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88904231-7F19-4D39-BB17-37C9FC337397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88904231-7F19-4D39-BB17-37C9FC337397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88904231-7F19-4D39-BB17-37C9FC337397}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

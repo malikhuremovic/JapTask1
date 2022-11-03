@@ -1,4 +1,4 @@
-JAP Management System is an application designed to meet the needs of all those included in supervising the flow of the Junior Accelerator Program. The application can be configured to fit other programs and companies as well.
+JAP Management System is an application designed to meet the needs of all those included in supervising the flow of the Junior Accelerator Program. The application can be configured to fit other programs as well.
 
 The application features CRUD implementation for the following entities: Student, Program and Selection.
 
@@ -6,7 +6,7 @@ Manages programs and selection within the JAP program.
 
 Technologies used: .NET Core & SQL Express Server React.js & Bootstrap
 
-How to start the application 
+How to start the application
 
 Server-side
 1. Make sure to fetch or clone the repository on your local computer

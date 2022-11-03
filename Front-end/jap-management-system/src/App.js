@@ -2,21 +2,25 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import React, { useContext } from 'react';
 
-import routes from './Data/routes';
-
 import UserContext from './Store/userContext';
 
-import LoginPage from './Pages/LoginPage';
 import LandingPage from './Pages/LandingPage';
-import StudentDetailsPageAdmin from './Pages/StudentDetailsPageAdmin';
-import ProgramPage from './Pages/ProgramPage';
-import LogoutPage from './Pages/LogoutPage';
-import PageLayoutWrapper from './Pages/PageLayoutWrapper';
-import MainSelectionComponent from './Components/Selection/MainSelectionComponent';
+import StudentDetailsPageAdmin from './Pages/Student/StudentDetailsPageAdmin';
+import ProgramPage from './Pages/Program/ProgramPage';
+import ReportPage from './Pages/ReportPage';
+import LoginPage from './Pages/Authentication/LoginPage';
+import LogoutPage from './Pages/Authentication/LogoutPage';
+import PageLayoutWrapper from './Components/PageLayoutWrapper';
 import ProtectedRoute from './Pages/ProtectedRoute';
 
+import SelectionsPage from './Pages/SelectionsPage';
+import LecturesPage from './Pages/LecturesPage';
+
+import routes from './Data/routes';
+
 import './App.module.css';
-import ReportPage from './Pages/ReportPage';
+import ProgramDetailsPage from './Pages/Program/ProgramDetailsPage';
+import PersonalReportComponent from './Components/PersonalReport/PersonalReportComponent';
 
 function App() {
   const { userDataState } = useContext(UserContext);
@@ -31,10 +35,19 @@ function App() {
           <LogoutPage />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.selections} roles={['Admin']}>
-          <MainSelectionComponent />
+          <SelectionsPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path={routes.programDetailsPage} roles={['Admin']}>
+          <ProgramDetailsPage />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.programDetails} roles={['Admin']}>
           <ProgramPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path={routes.lectures} roles={['Admin']}>
+          <LecturesPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path={routes.studentReport} roles={['Student', 'Admin']}>
+          <PersonalReportComponent />
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.report} roles={['Admin']}>
           <ReportPage />

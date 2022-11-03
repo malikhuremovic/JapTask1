@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../Data/axiosConfig';
+import config from '../Data/config';
 import tokenUtil from '../Util/tokenUtil';
 
 const login = data => {

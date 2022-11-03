@@ -4,8 +4,11 @@ const routes = {
   logout: '/logout',
   studentDetails: '/student',
   programDetails: '/program',
+  programDetailsPage: '/program/details',
   selections: '/selections',
-  report: '/report'
+  lectures: '/lectures',
+  report: '/report',
+  studentReport: '/student/report'
 };
 
 export default routes;

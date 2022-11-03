@@ -7,7 +7,8 @@ import programService from '../../Services/programService';
 import SelectionTable from './SelectionTable';
 import SelectionActionForms from './SelectionActionForms';
 
-import classes from '../Students/LandingComponent.module.css';
+import classes from '../Style/MainComponent.module.css';
+import config from '../../Data/config';
 
 const MainSelectionComponent = () => {
   const [availablePrograms, setAvailablePrograms] = useState([]);
@@ -19,9 +20,7 @@ const MainSelectionComponent = () => {
     status: '',
     japProgramId: ''
   };
-  const [selectionFormData, setSelectionFormData] = useState(
-    INITIAL_SELECTION_FORM_DATA
-  );
+  const [selectionFormData, setSelectionFormData] = useState(INITIAL_SELECTION_FORM_DATA);
   const [selections, setSelections] = useState([]);
 
   const INITIAL_SEARCH_STATE = {
@@ -44,7 +43,7 @@ const MainSelectionComponent = () => {
   const [sortState, setSortState] = useState(INITIAL_SORT_STATE);
   const INITIAL_PAGE_STATE = {
     page: 1,
-    pageSize: 2
+    pageSize: config.PAGE_SIZE
   };
   const [pageState, setPageState] = useState(INITIAL_PAGE_STATE);
   const INITIAL_PAGINATION_INFO_STATE = {
@@ -53,9 +52,7 @@ const MainSelectionComponent = () => {
     pageSize: 0,
     recordCount: 0
   };
-  const [paginationInfo, setPaginationInfoState] = useState(
-    INITIAL_PAGINATION_INFO_STATE
-  );
+  const [paginationInfo, setPaginationInfoState] = useState(INITIAL_PAGINATION_INFO_STATE);
 
   const handleFetchAvailablePrograms = useCallback(() => {
     programService
@@ -67,10 +64,7 @@ const MainSelectionComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      (actionState.action === 'add' || actionState.action === 'edit') &&
-      actionState.show
-    )
+    if ((actionState.action === 'add' || actionState.action === 'edit') && actionState.show)
       handleFetchAvailablePrograms();
   }, [actionState, handleFetchAvailablePrograms]);
 
@@ -103,8 +97,7 @@ const MainSelectionComponent = () => {
     setSortState(previousSort => {
       const UPDATED_SORT = {
         sort,
-        descending:
-          sort === previousSort.sort ? !previousSort.descending : false
+        descending: sort === previousSort.sort ? !previousSort.descending : false
       };
       return UPDATED_SORT;
     });
@@ -134,9 +127,11 @@ const MainSelectionComponent = () => {
   };
 
   const handleAddState = () => {
-    setSelectionFormData(() => {
-      return INITIAL_SELECTION_FORM_DATA;
-    });
+    if (!actionState.show) {
+      setSelectionFormData(() => {
+        return INITIAL_SELECTION_FORM_DATA;
+      });
+    }
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
         action: 'add',
@@ -147,6 +142,20 @@ const MainSelectionComponent = () => {
   };
 
   const handleEditState = ev => {
+    if (!actionState.show) {
+      const id = +ev.target.childNodes[0].id;
+      const selection = selections.find(s => s.id === id);
+      setSelectionFormData(() => {
+        return {
+          id: selection.id,
+          name: selection.name,
+          dateStart: selection.dateStart,
+          dateEnd: selection.dateEnd,
+          status: selection.status,
+          japProgramId: selection.japProgram.id
+        };
+      });
+    }
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
         action: 'edit',
@@ -154,34 +163,24 @@ const MainSelectionComponent = () => {
       };
       return UPDATED_ACTION_STATE;
     });
-    const id = +ev.target.childNodes[0].id;
-    const selection = selections.find(s => s.id === id);
-    setSelectionFormData(() => {
-      return {
-        id: selection.id,
-        name: selection.name,
-        dateStart: selection.dateStart,
-        dateEnd: selection.dateEnd,
-        status: selection.status,
-        japProgramId: selection.japProgram.id
-      };
-    });
   };
 
   const handleDeleteState = ev => {
+    if (!actionState.show) {
+      const id = +ev.target.childNodes[0].id;
+      const selection = selections.find(s => s.id === id);
+      setSelectionFormData(() => {
+        return {
+          id: selection.id
+        };
+      });
+    }
     setActionState(prevState => {
       const UPDATED_ACTION_STATE = {
         action: 'delete',
         show: prevState.action === 'delete' ? !prevState.show : true
       };
       return UPDATED_ACTION_STATE;
-    });
-    const id = +ev.target.childNodes[0].id;
-    const selection = selections.find(s => s.id === id);
-    setSelectionFormData(() => {
-      return {
-        id: selection.id
-      };
     });
   };
 
@@ -220,9 +219,7 @@ const MainSelectionComponent = () => {
           };
         });
         setSelections(prevState => {
-          let selection = prevState.findIndex(
-            s => s.id === selectionFormData.id
-          );
+          let selection = prevState.findIndex(s => s.id === selectionFormData.id);
           prevState[selection] = response.data.data;
           return prevState;
         });
@@ -284,19 +281,19 @@ const MainSelectionComponent = () => {
   return (
     <div className={classes.table__container}>
       <div className={classes.student_table_actions}>
-        <Button
-          style={{ marginLeft: 20, minWidth: 170 }}
-          variant="primary"
-          onClick={handleAddState}
-        >
+        <Button style={{ marginLeft: 20, minWidth: 170 }} variant="primary" onClick={handleAddState}>
           Add new selection
         </Button>
       </div>
       <SelectionActionForms
+        formModel="selection"
         handleSelectionFormInput={handleSelectionFormInput}
         handleAddSelection={handleAddSelection}
         handleEditSelection={handleEditSelection}
         handleDeleteSelection={handleDeleteSelection}
+        handleAddState={handleAddState}
+        handleEditState={handleEditState}
+        handleDeleteState={handleDeleteState}
         actionState={actionState}
         selectionFormData={selectionFormData}
         availablePrograms={availablePrograms}
